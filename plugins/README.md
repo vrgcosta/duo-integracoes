@@ -6,12 +6,19 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Publicação pública **1.0.1**, formato **1**, com extensão mínima **3.71.141**. As definições
-foram validadas pelos schemas e pelo verificador de compatibilidade do Duo nessa versão
-do código. Essa validação não executa os serviços autenticados dos provedores.
+Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.0**; os demais,
+na **1.0.1**. As definições foram validadas pelos schemas e pelo verificador de
+compatibilidade do Duo nessa versão do código. Essa validação não executa os serviços
+autenticados dos provedores.
+
+A **1.1.0** do ChatGPT web envia a mensagem pela rede, de dentro da aba logada (sessão,
+verificação e anexos no mesmo protocolo da página), sem depender do editor nem da aba
+visível, e lê a resposta consultando a conversa. Também lista os modelos do seletor da
+conta. Se o envio pela rede for recusado antes de o ChatGPT aceitar a mensagem, o Duo
+usa a tela como reserva.
 
 Os arquivos estão na branch `main` do repositório público `vrgcosta/duo-integracoes`.
-Copie o link **Raw** para **Importar por URL**, ou baixe
+Copie o link **Raw** para o campo **Link do plugin** da importação, ou baixe
 o JSON para importar por arquivo:
 
 | Plugin | Definição | Raw para importar e atualizar |
@@ -22,7 +29,8 @@ o JSON para importar por arquivo:
 | Jurisprudência STJ/STF | [buscar-juris-stj-stf.blueprint.json](buscar-juris-stj-stf.blueprint.json) | [Importar STJ/STF](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json) |
 
 Os IDs foram preservados para reconhecer as instalações existentes. Quem já tem um
-desses plugins pode usar **Vincular fonte** com o Raw correspondente e depois **Atualizar**.
+desses plugins pode colar o Raw correspondente no campo **Link de atualização** do plugin
+e depois usar **Atualizar**.
 As ferramentas de jurisprudência mantêm as chaves de configuração `JURIS_VRGC_URL`,
 `JURIS_VRGC_API_KEY`, `FLOW_VRGC_URL` e `FLOW_VRGC_API_KEY`: os valores continuam locais.
 Os providers web usam a sessão do usuário nos respectivos serviços.
@@ -31,8 +39,8 @@ Os providers web usam a sessão do usuário nos respectivos serviços.
 
 A versão 1.0.1 preserva os IDs, receitas de execução e chaves de configuração da
 publicação 1.0.0; muda a origem de atualização para este repositório público. Quem
-instalou da branch de revisão do repositório anterior deve usar **Vincular fonte** com
-o Raw correspondente desta tabela e depois **Atualizar**. O Duo mantém a origem
+instalou da branch de revisão do repositório anterior deve colar o Raw correspondente
+desta tabela no campo **Link de atualização** e depois usar **Atualizar**. O Duo mantém a origem
 aprovada localmente e não troca essa origem silenciosamente. Os nomes dos arquivos
 não levam datas para que os endereços sejam mantidos entre publicações.
 
@@ -40,8 +48,9 @@ não levam datas para que os endereços sejam mantidos entre publicações.
 
 Cada plugin publicado deve ter um arquivo próprio nesta pasta. No GitHub, abra o JSON
 e copie o link do arquivo ou o botão **Raw**. No Duo, abra **Configurações → Plugins →
-Importar plugin → Importar por URL**. Depois disso, o Duo verifica novas versões ao
-abrir o gerenciador e oferece **Verificar atualizações** e **Atualizar**.
+Importar plugin** e cole o endereço em **Link do plugin**. Depois disso, o Duo verifica
+novas versões ao abrir o gerenciador e oferece **Verificar** e **Atualizar** no detalhe
+do plugin.
 
 Para um arquivo `plugins/meu-plugin.json` na branch `main`, os endereços são:
 
@@ -52,8 +61,8 @@ Esses endereços são exemplos: `meu-plugin.json` ainda não foi publicado. Repo
 arquivo precisam estar públicos. Se usar outra branch, ajuste o endereço. Para branches
 com barra no nome, use o endereço fornecido pelo botão Raw.
 
-Plugins já instalados por arquivo podem usar **Vincular fonte** no detalhe do plugin.
-O vínculo confere o id e o tipo; não substitui a definição instalada. A atualização
+Plugins já instalados por arquivo podem receber o endereço no campo **Link de
+atualização**, no detalhe do plugin. O Duo confere o id e o tipo ao sair do campo; não substitui a definição instalada. A atualização
 continua dependendo do aceite do usuário.
 
 ## Metadados de publicação

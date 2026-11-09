@@ -12,7 +12,7 @@
   "modelos": [
     {
       "id": "padrao",
-      "label": "Seleção atual do ChatGPT (sessão)"
+      "label": "Padrão da conta"
     }
   ],
   "contexto": [],
@@ -211,6 +211,10 @@
         "ate": ""
       },
       {
+        "de": "<Cite ",
+        "ate": "/>"
+      },
+      {
         "de": ":::",
         "ate": "\n"
       }
@@ -241,8 +245,7 @@
       "menu": "[role=\"menu\"]",
       "itemModelo": "[role=\"menuitemradio\"]",
       "esforco": "[role=\"slider\"]",
-      "arquivo": "input[type=\"file\"]",
-      "pensar": "form button[aria-pressed]"
+      "arquivo": "input[type=\"file\"]"
     },
     "avisos": [
       {
@@ -273,25 +276,230 @@
       "headerConta": "ChatGPT-Account-Id",
       "campoAccessToken": "accessToken",
       "campoContaId": "account.id",
-      "hostWs": "chatgpt.com"
-    }
+      "hostWs": "chatgpt.com",
+      "polling": {
+        "campoConversaEnviada": "conversation_id",
+        "campoMensagemEnviada": "messages.0.id",
+        "concluida": {
+          "status": "finished_successfully",
+          "end_turn": "true"
+        }
+      },
+      "envioDireto": {
+        "caminho": "/backend-api/f/conversation",
+        "corpo": {
+          "action": "next",
+          "messages": [
+            {
+              "id": "{mensagemId}",
+              "author": {
+                "role": "user"
+              },
+              "create_time": "{agoraSeg}",
+              "content": {
+                "content_type": "text",
+                "parts": [
+                  "{prompt}"
+                ]
+              },
+              "metadata": {}
+            }
+          ],
+          "parent_message_id": "{pai}",
+          "model": "{modelo}",
+          "timezone_offset_min": "{fusoMin}",
+          "timezone": "{fuso}",
+          "conversation_mode": {
+            "kind": "primary_assistant"
+          },
+          "enable_message_followups": false,
+          "system_hints": [],
+          "supports_buffering": true,
+          "supported_encodings": [
+            "v1"
+          ],
+          "client_contextual_info": {
+            "is_dark_mode": false,
+            "time_since_loaded": 60,
+            "page_height": "{alturaPagina}",
+            "page_width": "{larguraPagina}",
+            "pixel_ratio": "{densidade}",
+            "screen_height": "{alturaTela}",
+            "screen_width": "{larguraTela}",
+            "app_name": "chatgpt.com"
+          },
+          "paragen_cot_summary_display_override": "allow",
+          "force_parallel_switch": "auto"
+        },
+        "corpoConversa": {
+          "conversation_id": "{convId}"
+        },
+        "corpoProjeto": {
+          "conversation_mode": {
+            "kind": "gizmo_interaction",
+            "gizmo_id": "{projetoId}"
+          },
+          "gizmo_id": "{projetoId}"
+        },
+        "paiNovo": "client-created-root",
+        "conversa": {
+          "caminho": "/backend-api/conversation/{convId}",
+          "noAtual": "current_node",
+          "projeto": "gizmo_id"
+        },
+        "campoNivel": "thinking_effort",
+        "cabecalhos": {
+          "oai-device-id": "{dispositivo}",
+          "oai-client-version": "{versaoCliente}",
+          "oai-language": "pt-BR"
+        },
+        "chaveDispositivo": "oai-did",
+        "cabecalhoVersao": "oai-client-version",
+        "sentinela": {
+          "caminho": "/backend-api/sentinel/chat-requirements",
+          "corpo": {
+            "p": ""
+          },
+          "token": "token",
+          "cabecalhoToken": "openai-sentinel-chat-requirements-token",
+          "prova": {
+            "exigida": "proofofwork.required",
+            "semente": "proofofwork.seed",
+            "dificuldade": "proofofwork.difficulty",
+            "cabecalho": "openai-sentinel-proof-token",
+            "prefixo": "gAAAAAB",
+            "posicaoContador": 3,
+            "molde": [
+              "{telaSoma}",
+              "{dataTexto}",
+              4294967296,
+              0,
+              "{agenteUsuario}",
+              null,
+              "{versaoCliente}",
+              "{idioma}",
+              "{idiomas}",
+              "{densidade}",
+              "",
+              "{atributoReact}",
+              "{eventoWebkit}",
+              "{alturaExterna}",
+              "{dispositivo}",
+              "",
+              "{nucleos}",
+              "{agoraMs}",
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "verificacao": {
+            "exigida": "turnstile.required",
+            "valor": "turnstile.dx",
+            "cabecalho": "openai-sentinel-turnstile-token"
+          }
+        },
+        "modelos": {
+          "caminho": "/backend-api/models?history_and_training_disabled=false",
+          "itens": "models",
+          "id": "slug",
+          "padrao": "default_model_slug",
+          "campoTipo": "reasoning_type",
+          "valorRaciocinio": "reasoning",
+          "campoAjustavel": "configurable_thinking_effort",
+          "niveis": {
+            "em": "thinking_efforts",
+            "campo": "thinking_effort"
+          },
+          "ordemNiveis": [
+            "max",
+            "extended",
+            "standard",
+            "min"
+          ],
+          "reserva": "auto",
+          "semRaciocinio": {
+            "valor": "none",
+            "preferidos": [
+              "{padrao}-instant"
+            ]
+          },
+          "preferidosRaciocinio": [
+            "{padrao}-thinking"
+          ],
+          "listar": {
+            "campo": "reasoning_type",
+            "valor": "auto",
+            "rotulo": "title"
+          }
+        },
+        "anexos": {
+          "campo": "messages.0.metadata.attachments",
+          "molde": {
+            "id": "{id}",
+            "name": "{nome}",
+            "size": "{tamanho}",
+            "mimeType": "{mime}"
+          },
+          "criar": {
+            "caminho": "/backend-api/files",
+            "corpo": {
+              "file_name": "{nome}",
+              "file_size": "{tamanho}",
+              "use_case": "my_files"
+            },
+            "urlEnvio": "upload_url",
+            "id": "file_id"
+          },
+          "cabecalhosEnvio": {
+            "Content-Type": "{mime}",
+            "x-ms-blob-type": "BlockBlob"
+          },
+          "confirmar": {
+            "caminho": "/backend-api/files/{id}/uploaded",
+            "corpo": {},
+            "tentativas": 3
+          }
+        },
+        "recusa": {
+          "padrao": "unusual activity|atividade incomum",
+          "pausaMin": 60
+        }
+      }
+    },
+    "corpoPensamento": {
+      "ligado": {
+        "thinking_effort": "{nivelPensamento}"
+      },
+      "desligado": {}
+    },
+    "descobrirModelos": false
   },
   "niveisPensamento": [
     {
-      "valor": 1,
-      "rotulo": "Baixa"
+      "valor": "min",
+      "rotulo": "Leve"
     },
     {
-      "valor": 2,
-      "rotulo": "Média"
+      "valor": "standard",
+      "rotulo": "Média",
+      "padrao": true
     },
     {
-      "valor": 3,
-      "rotulo": "Alta",
+      "valor": "extended",
+      "rotulo": "Alta"
+    },
+    {
+      "valor": "max",
+      "rotulo": "Extra alto",
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.0.1",
+  "versao": "1.1.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.141"
