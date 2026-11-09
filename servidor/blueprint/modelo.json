@@ -1,0 +1,233 @@
+{
+  "id": "duo-provedor-local",
+  "rotulo": "Plugin (LLM local)",
+  "icone": "nossos-robot",
+  "baseURL": "http://127.0.0.1:{PORTA}",
+  "sessao": false,
+  "destinoLocal": "{DESTINO_LOCAL}",
+  "identidade": ["contaId"],
+  "headers": { "x-duo-provedor-chave": "{CHAVE}" },
+  "modelos": [
+    { "id": "padrao", "label": "Modelo padrão do servidor" }
+  ],
+  "modelosEndpoint": { "caminho": "/api/modelos", "itens": "modelos", "id": "id", "label": "label" },
+  "contexto": [
+    {
+      "metodo": "GET",
+      "caminho": "/api/contexto",
+      "extrai": { "contaId": { "caminho": "conta" } }
+    }
+  ],
+  "conversas": {
+    "criar": {
+      "caminho": "/api/conversas",
+      "corpo": { "name": "", "model": "{modelo}" },
+      "id": { "caminho": "uuid" },
+      "campoProjeto": "project_uuid"
+    },
+    "renomear": {
+      "metodo": "PUT",
+      "caminho": "/api/conversas/{convId}",
+      "corpo": { "name": "{titulo}" }
+    },
+    "ler": {
+      "caminho": "/api/conversas/{convId}",
+      "itens": "chat_messages",
+      "arvore": {
+        "uuid": "uuid",
+        "parent": "parent_message_uuid",
+        "raiz": "00000000-0000-4000-8000-000000000000"
+      },
+      "role": { "campo": "sender", "mapa": { "human": "user", "assistant": "assistant" } },
+      "texto": {
+        "campoDireto": "text",
+        "blocos": { "em": "content", "filtroCampo": "type", "filtroValor": "text", "campoTexto": "text" }
+      },
+      "pensamento": {
+        "em": "content",
+        "filtroCampo": "type",
+        "filtroValor": "thinking",
+        "arrayCampo": "summaries",
+        "itemCampo": "summary",
+        "sufixo": "\n"
+      },
+      "ferramentas": {
+        "em": "content",
+        "call": { "filtroCampo": "type", "filtroValor": "tool_use", "id": "id", "nome": "name", "input": "input" },
+        "result": { "filtroCampo": "type", "filtroValor": "tool_result", "usoId": "tool_use_id", "conteudo": "content", "erro": "is_error" }
+      }
+    },
+    "listar": {
+      "caminho": "/api/conversas",
+      "itens": "",
+      "id": "uuid",
+      "titulo": "name",
+      "atualizadoEm": "updated_at",
+      "projetoId": "project_uuid"
+    },
+    "projetos": {
+      "caminho": "/api/projetos",
+      "itens": "",
+      "id": { "caminho": "uuid" },
+      "nome": { "caminho": "name" },
+      "rotulo": "Projeto"
+    },
+    "projetoConversas": {
+      "caminho": "/api/projetos/{projetoId}/conversas",
+      "itens": "",
+      "id": "uuid",
+      "titulo": "name",
+      "atualizadoEm": "updated_at"
+    },
+    "buscar": {
+      "caminho": "/api/conversas/busca?termo={termo}",
+      "itens": "",
+      "id": "uuid",
+      "titulo": "name",
+      "atualizadoEm": "updated_at"
+    },
+    "excluir": {
+      "metodo": "DELETE",
+      "caminho": "/api/conversas/{convId}"
+    }
+  },
+  "enviar": {
+    "caminho": "/api/conversas/{convId}/completion",
+    "corpo": {
+      "model": "{modelo}",
+      "prompt": "{prompt}",
+      "parent_message_uuid": "{leaf}",
+      "timezone": "{timezone}",
+      "system": "{sistema}",
+      "tools": [],
+      "files": [],
+      "attachments": [],
+      "opcoes": { "contexto": 0, "temperatura": -1, "ferramentas": "padrao", "max_rodadas": 0 }
+    }
+  },
+  "anexos": {
+    "upload": {
+      "caminho": "/api/upload",
+      "campoArquivo": "file",
+      "id": { "caminho": "file_uuid" }
+    },
+    "campoFiles": "files",
+    "campoAttachments": "attachments",
+    "attachment": {
+      "file_name": "{nome}",
+      "file_type": "text/markdown",
+      "file_size": "{tamanho}",
+      "extracted_content": "{conteudo}"
+    },
+    "maxArquivoMB": 30,
+    "maxArquivos": 10
+  },
+  "stream": {
+    "framing": "sse",
+    "texto": {
+      "tipoEvento": "content_block_delta",
+      "igual": { "delta.type": "text_delta" },
+      "caminhoTexto": "delta.text"
+    },
+    "usage": {
+      "tipoEvento": "message_delta",
+      "entrada": "usage.input_tokens",
+      "saida": "usage.output_tokens"
+    }
+  },
+  "ferramentas": {
+    "campoTools": "tools",
+    "campoCatalogo": "catalogo",
+    "toolCall": {
+      "tipoEvento": "content_block_start",
+      "igual": { "content_block.type": "tool_use" },
+      "caminhoNome": "content_block.name",
+      "caminhoId": "content_block.id"
+    },
+    "toolCallInput": {
+      "tipoEvento": "content_block_delta",
+      "igual": { "delta.type": "input_json_delta" },
+      "caminhoTexto": "delta.partial_json"
+    },
+    "toolCallFim": {
+      "tipoEvento": "content_block_stop"
+    },
+    "enviarResultado": {
+      "caminho": "/api/conversas/{convId}/tool_result",
+      "corpo": {
+        "tool_use_id": "{toolCallId}",
+        "content": [{ "type": "text", "text": "{content}" }],
+        "is_error": false
+      }
+    }
+  },
+  "pensamento": {
+    "ligar": [
+      {
+        "metodo": "PUT",
+        "caminho": "/api/conversas/{convId}/pensamento",
+        "corpo": { "ativo": true },
+        "extrai": {}
+      }
+    ],
+    "desligar": [
+      {
+        "metodo": "PUT",
+        "caminho": "/api/conversas/{convId}/pensamento",
+        "corpo": { "ativo": false },
+        "extrai": {}
+      }
+    ],
+    "stream": [
+      {
+        "tipoEvento": "content_block_delta",
+        "igual": { "delta.type": "thinking_delta" },
+        "caminhoTexto": "delta.thinking"
+      }
+    ]
+  },
+  "retryTransitorio": { "padrao": "Já há um envio em andamento", "tentativas": 10 },
+  "janelaContexto": {
+    "ler": { "caminho": "/api/conversas/{convId}/janela", "campoContexto": "opcoes.contexto" },
+    "excluir": { "metodo": "PUT", "caminho": "/api/conversas/{convId}/janela" },
+    "compactar": { "caminho": "/api/conversas/{convId}/compactar" },
+    "descompactar": { "metodo": "DELETE", "caminho": "/api/conversas/{convId}/compactar" }
+  },
+  "configuraveis": [
+    {
+      "caminho": "enviar.corpo.opcoes.contexto",
+      "rotulo": "Janela de contexto (tokens)",
+      "descricao": "0 = padrão do servidor (config.json)",
+      "tipo": "numero",
+      "min": 0,
+      "max": 262144
+    },
+    {
+      "caminho": "enviar.corpo.opcoes.temperatura",
+      "rotulo": "Temperatura",
+      "descricao": "-1 = padrão do servidor",
+      "tipo": "numero",
+      "min": -1,
+      "max": 2
+    },
+    {
+      "caminho": "enviar.corpo.opcoes.ferramentas",
+      "rotulo": "Modo de ferramentas",
+      "tipo": "opcoes",
+      "opcoes": [
+        { "valor": "padrao", "rotulo": "Padrão do servidor" },
+        { "valor": "auto", "rotulo": "Automático" },
+        { "valor": "nativo", "rotulo": "Nativo (tool-calling do modelo)" },
+        { "valor": "cercas", "rotulo": "Emulado (blocos de texto)" }
+      ]
+    },
+    {
+      "caminho": "enviar.corpo.opcoes.max_rodadas",
+      "rotulo": "Máximo de rodadas de ferramentas",
+      "descricao": "0 = padrão do servidor",
+      "tipo": "numero",
+      "min": 0,
+      "max": 50
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "", "tool_calls": [{"index": 0, "id": "call_aaaa1111", "type": "function", "function": {"name": "listar_documentos", "arguments": ""}}]}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "", "tool_calls": [{"index": 1, "id": "call_bbbb2222", "type": "function", "function": {"name": "ler_documento", "arguments": ""}}]}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "tool_calls": [{"index": 1, "function": {"arguments": "{\"id\""}}]}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "tool_calls": [{"index": 0, "function": {"arguments": "{}"}}]}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "tool_calls": [{"index": 1, "function": {"arguments": ":\"7\"}"}}]}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": ""}, "finish_reason": "tool_calls"}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [], "usage": {"prompt_tokens": 168, "completion_tokens": 28, "total_tokens": 196}}
+
+data: [DONE]
+

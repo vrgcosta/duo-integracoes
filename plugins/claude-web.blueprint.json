@@ -1,0 +1,272 @@
+{
+  "id": "Claude-WEB",
+  "rotulo": "Plugin (claude web)",
+  "icone": "nossos-claude",
+  "baseURL": "https://claude.ai",
+  "sessao": true,
+  "headers": {
+    "origin": "https://claude.ai"
+  },
+  "modelosEndpoint": {
+    "caminho": "/api/bootstrap",
+    "itens": "account.memberships.0.organization.claude_ai_bootstrap_models_config",
+    "id": "model",
+    "label": "name",
+    "ignorarSe": [
+      "inactive"
+    ]
+  },
+  "contexto": [
+    {
+      "metodo": "GET",
+      "caminho": "/api/organizations",
+      "extrai": {
+        "orgId": {
+          "acharNoArray": {
+            "campo": "capabilities",
+            "contem": "chat"
+          },
+          "pega": "uuid"
+        }
+      }
+    }
+  ],
+  "conversas": {
+    "criar": {
+      "caminho": "/api/organizations/{orgId}/chat_conversations",
+      "corpo": {
+        "name": "",
+        "model": "{modelo}"
+      },
+      "id": {
+        "caminho": "uuid"
+      },
+      "campoProjeto": "project_uuid"
+    },
+    "renomear": {
+      "metodo": "PUT",
+      "caminho": "/api/organizations/{orgId}/chat_conversations/{convId}",
+      "corpo": {
+        "name": "{titulo}"
+      }
+    },
+    "ler": {
+      "caminho": "/api/organizations/{orgId}/chat_conversations/{convId}?tree=true&rendering_mode=messages&render_all_tools=true",
+      "itens": "chat_messages",
+      "arvore": {
+        "uuid": "uuid",
+        "parent": "parent_message_uuid",
+        "raiz": "00000000-0000-4000-8000-000000000000"
+      },
+      "role": {
+        "campo": "sender",
+        "mapa": {
+          "human": "user",
+          "assistant": "assistant"
+        }
+      },
+      "texto": {
+        "campoDireto": "text",
+        "blocos": {
+          "em": "content",
+          "filtroCampo": "type",
+          "filtroValor": "text",
+          "campoTexto": "text"
+        }
+      },
+      "pensamento": {
+        "em": "content",
+        "filtroCampo": "type",
+        "filtroValor": "thinking",
+        "arrayCampo": "summaries",
+        "itemCampo": "summary",
+        "sufixo": "\n"
+      }
+    },
+    "listar": {
+      "caminho": "/api/organizations/{orgId}/chat_conversations?limit=100",
+      "itens": "",
+      "id": "uuid",
+      "titulo": "name",
+      "atualizadoEm": "updated_at",
+      "projetoId": "project_uuid"
+    },
+    "projetos": {
+      "caminho": "/api/organizations/{orgId}/projects",
+      "itens": "",
+      "id": {
+        "caminho": "uuid"
+      },
+      "nome": {
+        "caminho": "name"
+      },
+      "rotulo": "Projeto"
+    },
+    "projetoConversas": {
+      "caminho": "/api/organizations/{orgId}/projects/{projetoId}/conversations",
+      "itens": "",
+      "id": "uuid",
+      "titulo": "name",
+      "atualizadoEm": "updated_at"
+    },
+    "buscar": {
+      "caminho": "/api/organizations/{orgId}/chat_conversations_v2?limit=100&offset=0&searchQuery={termo}&consistency=eventual",
+      "itens": "data",
+      "id": "uuid",
+      "titulo": "name",
+      "atualizadoEm": "updated_at"
+    },
+    "excluir": {
+      "metodo": "DELETE",
+      "caminho": "/api/organizations/{orgId}/chat_conversations/{convId}"
+    }
+  },
+  "enviar": {
+    "caminho": "/api/organizations/{orgId}/chat_conversations/{convId}/completion",
+    "corpo": {
+      "timezone": "{timezone}",
+      "locale": "pt-BR",
+      "model": "{modelo}",
+      "tools": [],
+      "personalized_styles": [
+        {
+          "type": "default",
+          "key": "Default",
+          "name": "Normal",
+          "nameKey": "normal_style_name",
+          "prompt": "Normal\n",
+          "summary": "Default responses from Claude",
+          "summaryKey": "normal_style_summary",
+          "isDefault": true
+        }
+      ],
+      "rendering_mode": "messages",
+      "prompt": "{prompt}",
+      "parent_message_uuid": "{leaf}",
+      "files": [],
+      "attachments": [],
+      "effort": "{nivelPensamento}",
+      "thinking_mode": "auto"
+    }
+  },
+  "anexos": {
+    "upload": {
+      "caminho": "/api/{orgId}/upload",
+      "campoArquivo": "file",
+      "id": {
+        "caminho": "file_uuid"
+      }
+    },
+    "campoFiles": "files",
+    "campoAttachments": "attachments",
+    "attachment": {
+      "file_name": "{nome}",
+      "file_type": "text/markdown",
+      "file_size": "{tamanho}",
+      "extracted_content": "{conteudo}"
+    },
+    "maxArquivoMB": 30,
+    "maxArquivos": 20
+  },
+  "stream": {
+    "framing": "sse",
+    "texto": {
+      "tipoEvento": "content_block_delta",
+      "igual": {
+        "delta.type": "text_delta"
+      },
+      "caminhoTexto": "delta.text"
+    },
+    "usage": {
+      "tipoEvento": "message_delta",
+      "entrada": "usage.input_tokens",
+      "saida": "usage.output_tokens"
+    }
+  },
+  "ferramentas": {
+    "campoTools": "tools",
+    "toolCall": {
+      "tipoEvento": "content_block_start",
+      "igual": {
+        "content_block.type": "tool_use"
+      },
+      "caminhoNome": "content_block.name",
+      "caminhoId": "content_block.id"
+    },
+    "toolCallInput": {
+      "tipoEvento": "content_block_delta",
+      "igual": {
+        "delta.type": "input_json_delta"
+      },
+      "caminhoTexto": "delta.partial_json"
+    },
+    "toolCallFim": {
+      "tipoEvento": "content_block_stop"
+    },
+    "enviarResultado": {
+      "caminho": "/api/organizations/{orgId}/chat_conversations/{convId}/tool_result",
+      "corpo": {
+        "tool_use_id": "{toolCallId}",
+        "content": [
+          {
+            "type": "text",
+            "text": "{content}"
+          }
+        ],
+        "is_error": false
+      }
+    }
+  },
+  "retryTransitorio": {
+    "padrao": "invalid authorization",
+    "tentativas": 1
+  },
+  "pensamento": {
+    "ligar": [],
+    "desligar": [],
+    "stream": [
+      {
+        "tipoEvento": "content_block_delta",
+        "igual": {
+          "delta.type": "thinking_summary_delta"
+        },
+        "caminhoTexto": "delta.summary.summary",
+        "rotulo": true
+      }
+    ]
+  },
+  "pensamentoSempreLigado": true,
+  "niveisPensamento": [
+    {
+      "valor": "low",
+      "rotulo": "Baixo"
+    },
+    {
+      "valor": "medium",
+      "rotulo": "Médio",
+      "detalhe": "recomendado",
+      "padrao": true
+    },
+    {
+      "valor": "high",
+      "rotulo": "Alto"
+    },
+    {
+      "valor": "xhigh",
+      "rotulo": "Extra"
+    },
+    {
+      "valor": "max",
+      "rotulo": "Máx",
+      "detalhe": "consome os limites mais rápido"
+    }
+  ],
+  "versao": "1.0.1",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.141"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "id": "buscar_juris_tjba",
+  "nome": "Buscar jurisprudencia TJBA",
+  "descricao": "Pesquisa jurisprudencia do TJBA (~365 mil acórdãos). juris.vrgc.com.br Fluxo: (1) busca com query e filtros retorna ate 10 julgados ranqueados com ementas truncadas e assuntos; (2) para aprofundar, passe processos[] com os numeros para recuperar ementas integrais. Em temas de alta repeticao (execucao fiscal, DPVAT, PAD seriado), use dedup=true. Use termos juridicos precisos. Operadores: \"frase exata\", campo:termo (ementa:culpa, relator:silva), OR/AND, -exclusao. Refine com filtros (orgao, classe, periodo, relator) antes de reformular a query.",
+  "baseUrlConfig": "JURIS_VRGC_URL",
+  "baseUrlOpcoes": [
+    "https://vrgc.com.br",
+    "http://localhost:3000"
+  ],
+  "segredos": {
+    "apiKey": "JURIS_VRGC_API_KEY"
+  },
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Texto de busca (min 3 caracteres). Ex.: \"dano moral contratual\", \"abandono afetivo indenizacao\"."
+      },
+      "orgao_julgador": {
+        "type": "string",
+        "description": "Filtro por orgao julgador. Ex.: \"Primeira Camara Civel\"."
+      },
+      "relator": {
+        "type": "string",
+        "description": "Filtro por nome do relator."
+      },
+      "classe_processual": {
+        "type": "string",
+        "description": "Sigla da classe. Ex.: \"APL\" (apelacao), \"AI\" (agravo de instrumento)."
+      },
+      "data_inicio": {
+        "type": "string",
+        "description": "Data inicial do periodo (YYYY-MM-DD)."
+      },
+      "data_fim": {
+        "type": "string",
+        "description": "Data final do periodo (YYYY-MM-DD)."
+      },
+      "max_resultados": {
+        "type": "number",
+        "description": "Maximo de resultados (default 10, max 20)."
+      },
+      "processos": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Numeros de processo (CNJ) para ementas integrais. Quando presente, ignora query e detalha esses processos. Use apos uma busca inicial para aprofundar."
+      },
+      "dedup": {
+        "type": "boolean",
+        "description": "Se true, elimina ementas quase-identicas (litigancia serial). Default false."
+      }
+    }
+  },
+  "execucao": [
+    {
+      "quando": "processos",
+      "fanout": "processos",
+      "juntar": "\n---\n",
+      "passo": {
+        "metodo": "GET",
+        "caminho": "/api/ai/processo/{item}",
+        "headers": {
+          "Authorization": "Bearer {segredo:apiKey}"
+        }
+      }
+    },
+    {
+      "padrao": true,
+      "passo": {
+        "metodo": "GET",
+        "caminho": "/api/ai/busca",
+        "query": {
+          "q": "{query}",
+          "detalhe": "tool",
+          "orgao_julgador": "{orgao_julgador?}",
+          "relator": "{relator?}",
+          "classe_processual": "{classe_processual?}",
+          "data_inicio": "{data_inicio?}",
+          "data_fim": "{data_fim?}",
+          "max_resultados": "{max_resultados?}",
+          "dedup": "{dedup?}"
+        },
+        "headers": {
+          "Authorization": "Bearer {segredo:apiKey}"
+        }
+      }
+    }
+  ],
+  "resultado": "texto",
+  "versao": "1.0.1",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.141"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-tjba.blueprint.json"
+  }
+}

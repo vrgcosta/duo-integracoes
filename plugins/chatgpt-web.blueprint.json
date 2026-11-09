@@ -1,0 +1,302 @@
+{
+  "id": "ChatGPT-WEB-NATIVO",
+  "rotulo": "Plugin (ChatGPT web)",
+  "icone": "nossos-openai",
+  "baseURL": "https://chatgpt.com",
+  "sessao": true,
+  "execucao": "pagina",
+  "identidade": [
+    "contaId"
+  ],
+  "headers": {},
+  "modelos": [
+    {
+      "id": "padrao",
+      "label": "Seleção atual do ChatGPT (sessão)"
+    }
+  ],
+  "contexto": [],
+  "conversas": {
+    "listar": {
+      "caminho": "/backend-api/conversations?offset=0&limit=100&order=updated&is_archived=false",
+      "itens": "items",
+      "id": "id",
+      "titulo": "title",
+      "atualizadoEm": "update_time",
+      "projetoId": "gizmo_id"
+    },
+    "ler": {
+      "caminho": "/backend-api/conversation/{convId}",
+      "itens": "mapping",
+      "itensMapa": true,
+      "arvore": {
+        "uuid": "id",
+        "parent": "parent",
+        "raiz": "client-created-root",
+        "folhaAtiva": "current_node"
+      },
+      "role": {
+        "campo": "message.author.role",
+        "mapa": {
+          "user": "user",
+          "assistant": "assistant"
+        }
+      },
+      "texto": {
+        "blocos": {
+          "em": "message.content.parts",
+          "filtroCampo": "",
+          "filtroValor": "",
+          "campoTexto": ""
+        }
+      }
+    },
+    "renomear": {
+      "metodo": "PATCH",
+      "caminho": "/backend-api/conversation/{convId}",
+      "corpo": {
+        "title": "{titulo}"
+      }
+    },
+    "excluir": {
+      "metodo": "PATCH",
+      "caminho": "/backend-api/conversation/{convId}",
+      "corpo": {
+        "is_visible": false
+      }
+    },
+    "buscar": {
+      "caminho": "/backend-api/conversations/search?query={termo}&cursor=",
+      "itens": "items",
+      "id": "conversation_id",
+      "titulo": "title",
+      "atualizadoEm": "update_time"
+    },
+    "projetos": {
+      "caminho": "/backend-api/gizmos/snorlax/sidebar?conversations_per_gizmo=0&limit=50&owned_only=false",
+      "itens": "items",
+      "id": {
+        "caminho": "gizmo.gizmo.id"
+      },
+      "nome": {
+        "caminho": "gizmo.gizmo.display.name"
+      },
+      "rotulo": "GPT"
+    },
+    "projetoConversas": {
+      "caminho": "/backend-api/gizmos/{projetoId}/conversations?cursor=0",
+      "itens": "items",
+      "id": "id",
+      "titulo": "title",
+      "atualizadoEm": "update_time"
+    }
+  },
+  "enviar": {
+    "caminho": "/backend-api/f/conversation",
+    "corpo": {}
+  },
+  "stream": {
+    "framing": "sse",
+    "delta": {
+      "versao": "v1",
+      "campoIndiceMensagem": "c",
+      "envelope": {
+        "mensagem": "message",
+        "conversaId": "conversation_id",
+        "erro": "error"
+      },
+      "eventos": {
+        "campoTipo": "type",
+        "eventoDelta": "delta",
+        "handshake": "delta_encoding",
+        "feito": "[DONE]",
+        "campoConversaId": "conversation_id",
+        "titulo": {
+          "tipo": "title_generation",
+          "campo": "title"
+        },
+        "fim": [
+          "message_stream_complete"
+        ],
+        "erro": {
+          "tipos": [
+            "error"
+          ],
+          "campos": [
+            "error",
+            "message"
+          ]
+        }
+      },
+      "visivel": [
+        {
+          "caminho": "author.role",
+          "em": [
+            "assistant"
+          ]
+        },
+        {
+          "caminho": "content.content_type",
+          "em": [
+            "text",
+            "multimodal_text"
+          ]
+        },
+        {
+          "caminho": "recipient",
+          "em": [
+            null,
+            "all"
+          ]
+        },
+        {
+          "caminho": "channel",
+          "em": [
+            null,
+            "final"
+          ]
+        },
+        {
+          "caminho": "metadata.is_visually_hidden_from_conversation",
+          "em": [
+            null,
+            false
+          ]
+        }
+      ],
+      "raciocinio": [
+        {
+          "caminho": "author.role",
+          "em": [
+            "assistant"
+          ]
+        },
+        {
+          "caminho": "content.content_type",
+          "em": [
+            "thoughts",
+            "reasoning_recap"
+          ]
+        }
+      ],
+      "textoVisivel": {
+        "em": "content.parts",
+        "campoTextoItem": "text"
+      },
+      "textoRaciocinio": {
+        "direto": {
+          "quando": {
+            "caminho": "content.content_type",
+            "em": [
+              "reasoning_recap"
+            ]
+          },
+          "pega": "content.content",
+          "rotulo": true
+        },
+        "blocos": {
+          "em": "content.thoughts",
+          "campos": [
+            "summary",
+            "content"
+          ],
+          "sepCampos": "\n",
+          "sepBlocos": "\n\n"
+        }
+      }
+    },
+    "limpezaTexto": [
+      {
+        "de": "",
+        "ate": ""
+      },
+      {
+        "de": ":::",
+        "ate": "\n"
+      }
+    ]
+  },
+  "ferramentas": {
+    "emulacao": "cercas",
+    "limiteInline": 24000,
+    "maxRodadas": 15
+  },
+  "configuraveis": [
+    {
+      "caminho": "ferramentas.maxRodadas",
+      "rotulo": "Máximo de rodadas de ferramentas",
+      "descricao": "Quantas vezes seguidas a IA pode pedir ferramentas num mesmo turno. Tarefas com muitos processos precisam de mais.",
+      "tipo": "numero",
+      "min": 1,
+      "max": 200
+    }
+  ],
+  "pagina": {
+    "seletores": {
+      "editor": "form div.ProseMirror[contenteditable=\"true\"]",
+      "enviar": "form button[type=\"submit\"]",
+      "parar": "form button[data-testid=\"stop-button\"], form button[aria-label*=\"Parar\" i], form button[aria-label*=\"Stop\" i]",
+      "seletorModelo": "form button[aria-haspopup=\"menu\"][data-composer-navigation-target=\"reasoning\"]",
+      "seletorModeloAlt": "form button[aria-haspopup=\"menu\"][aria-label*=\"modelo\" i], form button[aria-haspopup=\"menu\"][aria-label*=\"model\" i]",
+      "menu": "[role=\"menu\"]",
+      "itemModelo": "[role=\"menuitemradio\"]",
+      "esforco": "[role=\"slider\"]",
+      "arquivo": "input[type=\"file\"]",
+      "pensar": "form button[aria-pressed]"
+    },
+    "avisos": [
+      {
+        "padrao": "too many requests|requests too quickly|temporarily limited access|muitas solicita[cç][oõ]es|solicita[cç][oõ]es (muito )?r[aá]pid|limitamos temporariamente",
+        "mensagem": "O ChatGPT limitou temporariamente a sua conta por excesso de pedidos seguidos. Aguarde alguns minutos antes de tentar de novo (abrir muitas conversas de uma vez provoca isso)."
+      },
+      {
+        "padrao": "reached (your|the) .{0,40}limit|hit (your|the) .{0,30}limit|atingiu (o|seu) limite",
+        "mensagem": "Você atingiu o limite de uso deste modelo no ChatGPT. Escolha outro modelo ou aguarde o horário de liberação que o ChatGPT indicar."
+      },
+      {
+        "padrao": "session (has )?expired|sess[aã]o (expirou|expirada)|log in again|fa[cç]a login novamente|entre novamente",
+        "mensagem": "A sessão do ChatGPT expirou. Abra o ChatGPT no navegador, entre de novo e repita o pedido."
+      }
+    ],
+    "navegarPara": {
+      "conversa": "/c/{convId}",
+      "projeto": "/g/{projetoUrl}/project",
+      "raiz": "/"
+    },
+    "leituraVia": "pagina",
+    "rede": {
+      "reEnvio": "^/backend-api/(f/)?conversation$",
+      "reUpload": "/backend-api/files|oaiusercontent|blob\\.core\\.windows\\.net",
+      "reApiProibida": "/f/conversation|/sentinel/",
+      "apiPrefixo": "/backend-api/",
+      "caminhoSessao": "/api/auth/session",
+      "headerConta": "ChatGPT-Account-Id",
+      "campoAccessToken": "accessToken",
+      "campoContaId": "account.id",
+      "hostWs": "chatgpt.com"
+    }
+  },
+  "niveisPensamento": [
+    {
+      "valor": 1,
+      "rotulo": "Baixa"
+    },
+    {
+      "valor": 2,
+      "rotulo": "Média"
+    },
+    {
+      "valor": 3,
+      "rotulo": "Alta",
+      "detalhe": "consome a cota mais rápido"
+    }
+  ],
+  "versao": "1.0.1",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.141"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json"
+  }
+}

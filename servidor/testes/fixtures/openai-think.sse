@@ -1,0 +1,12 @@
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "<th"}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "ink>a</thi"}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "nk>b"}, "finish_reason": null}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [{"index": 0, "delta": {"role": "assistant", "content": ""}, "finish_reason": "stop"}]}
+
+data: {"id": "chatcmpl-664", "object": "chat.completion.chunk", "created": 1792684944, "model": "qwen3:0.6b", "system_fingerprint": "fp_ollama", "choices": [], "usage": {"prompt_tokens": 24, "completion_tokens": 6, "total_tokens": 30}}
+
+data: [DONE]
+

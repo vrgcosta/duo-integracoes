@@ -1,0 +1,123 @@
+{
+  "id": "buscar_juris_stj_stf",
+  "nome": "Buscar jurisprudencia STJ e STF",
+  "descricao": "Pesquisa jurisprudencia dos tribunais SUPERIORES: STJ (~1,73 milhao de acordaos, 1989-2026) e STF (~403 mil, 1892-2026). So ementas de acórdaos. Fluxo: (1) busca com query e filtros retorna acordaos com ementa INTEGRAL, citacao pronta no padrao do tribunal e as facetas do conjunto; (2) para o acordao de um processo especifico, passe processos[] com os numeros. Consultas curtas e focadas (3-5 termos) funcionam melhor que frases longas: os termos sao combinados com E, entao cada palavra a mais estreita o resultado. Operadores: \"frase exata\", -exclusao, +obrigatorio, | (OU), (agrupamento). Nunca use operadores junto com numero de processo. Refine pelas FACETAS que a resposta devolve (valores exatos com contagem) em vez de adivinhar o valor do filtro.",
+  "baseUrlConfig": "FLOW_VRGC_URL",
+  "baseUrlOpcoes": [
+    "https://flow-api.vrgc.com.br",
+    "http://localhost:8009"
+  ],
+  "segredos": {
+    "apiKey": "FLOW_VRGC_API_KEY"
+  },
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Termos de busca sobre a ementa, ou um numero de processo. Ex.: \"abandono afetivo\" dano moral · usucapiao -urbana · REsp 1793476."
+      },
+      "tribunal": {
+        "type": "string",
+        "description": "Restringe aos tribunais indicados, CSV. Valores: stj, stf. Omita para buscar nos dois."
+      },
+      "classe_sigla": {
+        "type": "string",
+        "description": "Classes processuais por sigla exata, CSV. STJ: AREsp, REsp, HC, Ag, RHC, RMS, CC, EREsp. STF: RE, AI, ARE, HC, RHC, Rcl, RMS, MS."
+      },
+      "relator": {
+        "type": "string",
+        "description": "Id CANONICO do relator, como a faceta devolve (\"stj:nancy-andrighi\", \"stf:luis-roberto-barroso\") — nao o nome em texto livre. CSV para varios."
+      },
+      "orgao_julgador": {
+        "type": "string",
+        "description": "Id CANONICO do orgao, como a faceta devolve (\"stj:corte-especial\", \"stf:primeira-turma\"). CSV para varios."
+      },
+      "data_inicio": {
+        "type": "string",
+        "description": "Publicacao a partir de (YYYY-MM-DD). Filtra a PUBLICACAO, nao o julgamento."
+      },
+      "data_fim": {
+        "type": "string",
+        "description": "Publicacao ate (YYYY-MM-DD). Filtra a PUBLICACAO, nao o julgamento."
+      },
+      "ordenar": {
+        "type": "string",
+        "enum": [
+          "relevancia",
+          "data"
+        ],
+        "description": "relevancia (padrao) para pesquisa de tese; data para o entendimento mais recente ou para checar se um precedente foi superado."
+      },
+      "max_resultados": {
+        "type": "number",
+        "description": "Acordaos por pagina (default 20). O teto real vem do plano da chave usada; pedir acima dele nao da erro, so entrega o teto."
+      },
+      "pagina": {
+        "type": "number",
+        "description": "Pagina do resultado (default 1). Nao pagine fundo: resultado relevante na pagina 50 e sinal de query mal formulada, e acima de ~10.000 acumulados a busca e recusada."
+      },
+      "relacao": {
+        "type": "string",
+        "description": "So para busca por NUMERO de processo: quais relacoes trazer, CSV de processo (o proprio), menciona (cita o numero na ementa), cita (aponta como precedente), similar (o STJ marcou como parecido). Prefixe com - para excluir. Padrao: todas."
+      },
+      "processos": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Numeros de processo para trazer o proprio acordao de cada um. Quando presente, ignora query e os demais filtros."
+      }
+    }
+  },
+  "execucao": [
+    {
+      "quando": "processos",
+      "fanout": "processos",
+      "juntar": "\n---\n",
+      "passo": {
+        "metodo": "GET",
+        "caminho": "/api/v1/busca",
+        "query": {
+          "q": "{item}",
+          "relacao": "processo"
+        },
+        "headers": {
+          "Authorization": "Bearer {segredo:apiKey}"
+        }
+      }
+    },
+    {
+      "padrao": true,
+      "passo": {
+        "metodo": "GET",
+        "caminho": "/api/v1/busca",
+        "query": {
+          "q": "{query}",
+          "tribunal": "{tribunal?}",
+          "classe_sigla": "{classe_sigla?}",
+          "relator": "{relator?}",
+          "orgao_julgador": "{orgao_julgador?}",
+          "data_inicio": "{data_inicio?}",
+          "data_fim": "{data_fim?}",
+          "ordenar": "{ordenar?}",
+          "tamanho": "{max_resultados?}",
+          "pagina": "{pagina?}",
+          "relacao": "{relacao?}"
+        },
+        "headers": {
+          "Authorization": "Bearer {segredo:apiKey}"
+        }
+      }
+    }
+  ],
+  "resultado": "texto",
+  "versao": "1.0.1",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.141"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json"
+  }
+}

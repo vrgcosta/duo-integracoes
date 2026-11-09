@@ -1,0 +1,3 @@
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:00Z","message":{"role":"assistant","content":"Olá"},"done":false}
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:01Z","message":{"role":"assistant","content":", mundo!"},"done":false}
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:02Z","message":{"role":"assistant","content":""},"done":true,"done_reason":"stop","total_duration":1000,"prompt_eval_count":120,"eval_count":30}

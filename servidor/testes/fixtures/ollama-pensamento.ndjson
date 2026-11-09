@@ -1,0 +1,4 @@
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:00Z","message":{"role":"assistant","content":"","thinking":"Vou pensar"},"done":false}
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:01Z","message":{"role":"assistant","content":"","thinking":" um pouco."},"done":false}
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:02Z","message":{"role":"assistant","content":"Pronto."},"done":false}
+{"model":"qwen3:0.6b","created_at":"2026-10-22T10:00:03Z","message":{"role":"assistant","content":""},"done":true,"done_reason":"stop","prompt_eval_count":50,"eval_count":12}
