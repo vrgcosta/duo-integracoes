@@ -6,8 +6,8 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.0**; os demais,
-na **1.0.1**. As definições foram validadas pelos schemas e pelo verificador de
+Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.1**; os demais,
+na **1.0.2**. As definições foram validadas pelos schemas e pelo verificador de
 compatibilidade do Duo nessa versão do código. Essa validação não executa os serviços
 autenticados dos provedores.
 
