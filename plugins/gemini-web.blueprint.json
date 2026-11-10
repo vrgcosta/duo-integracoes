@@ -1,0 +1,242 @@
+{
+  "id": "Gemini-WEB-NATIVO",
+  "rotulo": "Plugin (Gemini web)",
+  "icone": "nossos-gemini",
+  "baseURL": "https://gemini.google.com",
+  "sessao": true,
+  "execucao": "pagina",
+  "headers": {},
+  "modelos": [
+    {
+      "id": "56fdd199312815e2",
+      "label": "3.8 Flash"
+    },
+    {
+      "id": "e6fa609c3fa255c0",
+      "label": "3.1 Pro"
+    },
+    {
+      "id": "argon",
+      "label": "4 Argon"
+    },
+    {
+      "id": "8c46e95b1a07cecc",
+      "label": "3.5 Flash-Lite"
+    }
+  ],
+  "niveisPensamento": [
+    {
+      "valor": 0,
+      "rotulo": "Baixo",
+      "detalhe": "Rápido e eficiente"
+    },
+    {
+      "valor": 1,
+      "rotulo": "Médio",
+      "detalhe": "Aprofundamento equilibrado",
+      "padrao": true
+    },
+    {
+      "valor": 2,
+      "rotulo": "Alto",
+      "detalhe": "Muito detalhado"
+    }
+  ],
+  "pensamentoSempreLigado": true,
+  "contexto": [],
+  "conversas": {
+    "ler": {
+      "caminho": "",
+      "rpc": {
+        "id": "hNvQHb",
+        "args": [
+          "{convId}",
+          1000,
+          null,
+          1,
+          [
+            1
+          ],
+          [
+            4
+          ],
+          null,
+          1
+        ]
+      },
+      "itens": "0",
+      "turnos": {
+        "recentePrimeiro": true,
+        "id": "0.1",
+        "usuario": "2.0.0",
+        "assistente": "3.0.0.1.0"
+      },
+      "arvore": {
+        "uuid": "0.1",
+        "parent": "1.1",
+        "raiz": ""
+      },
+      "role": {
+        "campo": "",
+        "mapa": {}
+      },
+      "texto": {}
+    }
+  },
+  "enviar": {
+    "caminho": "/_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate",
+    "corpo": {}
+  },
+  "stream": {
+    "framing": "quadros",
+    "quadros": {
+      "versao": "v1",
+      "prefixo": ")]}'",
+      "envelope": {
+        "marca": "wrb.fr",
+        "carga": 2,
+        "erro": 5
+      },
+      "conversa": "1.0",
+      "resposta": "1.1",
+      "candidato": "4.0.0",
+      "texto": "4.0.1.0",
+      "titulo": "2.11.0",
+      "fim": "e"
+    },
+    "limpezaTexto": [
+      {
+        "de": "[cite_start",
+        "ate": "]"
+      },
+      {
+        "de": "[cite:",
+        "ate": "]"
+      }
+    ]
+  },
+  "ferramentas": {
+    "emulacao": "cercas",
+    "limiteInline": 24000,
+    "maxRodadas": 15
+  },
+  "configuraveis": [
+    {
+      "caminho": "ferramentas.maxRodadas",
+      "rotulo": "Máximo de rodadas de ferramentas",
+      "descricao": "Quantas vezes seguidas a IA pode pedir ferramentas num mesmo turno. Tarefas com muitos processos precisam de mais.",
+      "tipo": "numero",
+      "min": 1,
+      "max": 200
+    }
+  ],
+  "pagina": {
+    "seletores": {
+      "editor": "rich-textarea .ql-editor[contenteditable=\"true\"]",
+      "enviar": "button.send-button, button[aria-label*=\"Enviar\" i]",
+      "parar": "button[aria-label=\"Parar resposta\" i], button[aria-label=\"Stop response\" i]",
+      "seletorModelo": "[data-test-id=\"bard-mode-menu-button\"]",
+      "menu": "[role=\"menu\"]",
+      "itemModelo": "[role=\"menuitemradio\"][data-mode-id]",
+      "itemModeloPorId": "[data-mode-id=\"{modelo}\"]",
+      "esforco": "[role=\"slider\"]",
+      "nivel": {
+        "abrir": "[value=\"thinking_level\"]",
+        "itens": "[role=\"menuitemradio\"]:not([data-mode-id])"
+      },
+      "arquivo": "input[type=\"file\"]"
+    },
+    "navegarPara": {
+      "conversa": "/app/{convId}",
+      "raiz": "/app"
+    },
+    "prefixoConversa": "c_",
+    "leituraVia": "pagina",
+    "descobrirModelos": false,
+    "rede": {
+      "reEnvio": "^/_/BardChatUi/data/assistant\\.lamda\\.BardFrontendService/StreamGenerate$",
+      "reUpload": "^https://(push\\.clients6\\.google\\.com/upload/|gemini\\.google\\.com/_/BardChatUi/data/assistant\\.lamda\\.BardFrontendService/ProcessFile)",
+      "apiPrefixo": "/_/BardChatUi/",
+      "caminhoSessao": "/app",
+      "formulario": {
+        "tokens": {
+          "objeto": "WIZ_global_data",
+          "campos": {
+            "at": "SNlM0e",
+            "bl": "cfb2h",
+            "sid": "FdrFJe"
+          },
+          "recarregar": "/app"
+        },
+        "vars": {
+          "idioma": "pt-BR"
+        },
+        "cabecalhos": {
+          "x-same-domain": "1"
+        },
+        "rpc": {
+          "caminho": "/_/BardChatUi/data/batchexecute?rpcids={rpc}&source-path=%2Fapp&bl={bl}&f.sid={sid}&hl={idioma}&_reqid={reqid}&rt=c",
+          "campos": {
+            "f.req": {
+              "$json": [
+                [
+                  [
+                    "{rpc}",
+                    {
+                      "$json": "{args}"
+                    },
+                    null,
+                    "generic"
+                  ]
+                ]
+              ]
+            },
+            "at": "{at}"
+          },
+          "envelope": {
+            "prefixo": ")]}'",
+            "marca": "wrb.fr",
+            "id": 1,
+            "carga": 2,
+            "erro": 5
+          }
+        },
+        "tela": {
+          "conversa": {
+            "rpc": "hNvQHb",
+            "args": [
+              "{convId}",
+              10,
+              null,
+              1,
+              [
+                1
+              ],
+              [
+                4
+              ],
+              null,
+              1
+            ],
+            "itens": "0",
+            "recentePrimeiro": true,
+            "id": "0.1",
+            "candidato": "3.3",
+            "texto": "3.0.0.1.0",
+            "usuario": "2.0.0"
+          },
+          "esperaMaxMin": 15,
+          "intervaloSeg": 2
+        }
+      }
+    }
+  },
+  "versao": "1.0.0",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.145"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json"
+  }
+}

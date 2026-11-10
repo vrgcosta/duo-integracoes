@@ -6,16 +6,25 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.1**; os demais,
-na **1.0.2**. As definições foram validadas pelos schemas e pelo verificador de
-compatibilidade do Duo nessa versão do código. Essa validação não executa os serviços
-autenticados dos provedores.
+Formato **1**, com extensão mínima **3.71.141** (o Gemini web exige a **3.71.145**).
+ChatGPT web está na **1.1.1**; Gemini web, na **1.0.0**; os demais, na **1.0.2**. As
+definições foram validadas pelos schemas e pelo verificador de compatibilidade do Duo
+nessa versão do código. Essa validação não executa os serviços autenticados dos
+provedores.
 
 A **1.1.0** do ChatGPT web envia a mensagem pela rede, de dentro da aba logada (sessão,
 verificação e anexos no mesmo protocolo da página), sem depender do editor nem da aba
 visível, e lê a resposta consultando a conversa. Também lista os modelos do seletor da
 conta. Se o envio pela rede for recusado antes de o ChatGPT aceitar a mensagem, o Duo
 usa a tela como reserva.
+
+A **1.0.0** do Gemini web envia pela tela da aba logada: escolhe o modelo e o nível de
+raciocínio no menu do próprio Gemini, cola os anexos no editor e lê a resposta na conversa
+quando ela fica pronta. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite,
+com raciocínio Baixo, Médio (padrão) ou Alto. Pela tela, com o modelo escolhido, a
+resposta vem em segundos; pela rede, só o modelo padrão da conta respondia rápido. O
+envio pela tela depende de recursos da extensão **3.71.145**: em versões anteriores, o
+Duo explica a exigência e não instala o plugin.
 
 Os arquivos estão na branch `main` do repositório público `vrgcosta/duo-integracoes`.
 Copie o link **Raw** para o campo **Link do plugin** da importação, ou baixe
@@ -25,6 +34,7 @@ o JSON para importar por arquivo:
 |---|---|---|
 | Claude web | [claude-web.blueprint.json](claude-web.blueprint.json) | [Importar Claude](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json) |
 | ChatGPT web | [chatgpt-web.blueprint.json](chatgpt-web.blueprint.json) | [Importar ChatGPT](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json) |
+| Gemini web | [gemini-web.blueprint.json](gemini-web.blueprint.json) | [Importar Gemini](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json) |
 | Jurisprudência TJBA | [buscar-juris-tjba.blueprint.json](buscar-juris-tjba.blueprint.json) | [Importar TJBA](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-tjba.blueprint.json) |
 | Jurisprudência STJ/STF | [buscar-juris-stj-stf.blueprint.json](buscar-juris-stj-stf.blueprint.json) | [Importar STJ/STF](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json) |
 
