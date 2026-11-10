@@ -226,7 +226,12 @@
             "usuario": "2.0.0"
           },
           "esperaMaxMin": 15,
-          "intervaloSeg": 2
+          "intervaloSeg": 2,
+          "recusa": {
+            "padrao": "modelo de linguagem|alem das minhas (habilidades|habiliades|capacidades)|\\bia (com base|baseada) em texto|nao (posso|consigo|tenho como) (te )?ajudar|nao fui programad|so consigo gerar texto|language model|text-based ai|outside (of )?my capabilities|(can'?t|cannot) (help|assist) with that",
+            "continuar": "continue",
+            "tentativas": 2
+          }
         }
       }
     }

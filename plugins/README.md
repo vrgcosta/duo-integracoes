@@ -22,7 +22,9 @@ A **1.0.0** do Gemini web envia pela tela da aba logada: escolhe o modelo e o n�
 raciocínio no menu do próprio Gemini, cola os anexos no editor e lê a resposta na conversa
 quando ela fica pronta. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite,
 com raciocínio Baixo, Médio (padrão) ou Alto. Pela tela, com o modelo escolhido, a
-resposta vem em segundos; pela rede, só o modelo padrão da conta respondia rápido. O
+resposta vem em segundos; pela rede, só o modelo padrão da conta respondia rápido. Quando
+o Gemini devolve a recusa pronta ("Sou um modelo de linguagem...") no lugar da resposta, o
+Duo manda "continue" na mesma conversa (até duas vezes) e entrega a resposta seguinte. O
 envio pela tela depende de recursos da extensão **3.71.145**: em versões anteriores, o
 Duo explica a exigência e não instala o plugin.
 
