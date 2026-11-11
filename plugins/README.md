@@ -6,7 +6,7 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.1**, Claude web
+Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.2**, Claude web
 na **1.1.0** e os de jurisprudência na **1.0.2**. As definições foram validadas pelos
 schemas e pelo verificador de compatibilidade do Duo nessa versão do código. Essa
 validação não executa os serviços autenticados dos provedores.
@@ -23,6 +23,12 @@ verificação e anexos no mesmo protocolo da página), sem depender do editor ne
 visível, e lê a resposta consultando a conversa. Também lista os modelos do seletor da
 conta. Se o envio pela rede for recusado antes de o ChatGPT aceitar a mensagem, o Duo
 usa a tela como reserva.
+
+A **1.1.2** do ChatGPT web declara quantas sessões o plugin roda ao mesmo tempo: 2 por
+padrão e até 5, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas configurações
+do plugin. Cada turno em andamento usa uma aba do ChatGPT aberta pelo Duo, e o limite
+acompanha as 5 abas que o Duo abre por site. As versões da extensão sem esse recurso
+ignoram o campo.
 
 Os arquivos estão na branch `main` do repositório público `vrgcosta/duo-integracoes`.
 Copie o link **Raw** para o campo **Link do plugin** da importação, ou baixe

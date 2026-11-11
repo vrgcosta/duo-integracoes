@@ -220,6 +220,11 @@
       }
     ]
   },
+  "sessoes": {
+    "padrao": 2,
+    "limite": 5,
+    "intervaloInicioMs": 1000
+  },
   "ferramentas": {
     "emulacao": "cercas",
     "limiteInline": 24000,
@@ -499,7 +504,7 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.1.1",
+  "versao": "1.1.2",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.141"
