@@ -24,11 +24,15 @@ mensagem sair. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite, c
 Baixo, Médio (padrão) ou Alto.
 
 - **Rede** (principal nesta versão, para teste): manda o pedido pela API interna da página
-  (`StreamGenerate`), no formato atual, sem depender da aba visível. **3.1 Pro e 4 Argon
-  vão com o modelo e o nível escolhidos.** **3.8 Flash e 3.5 Flash-Lite vão no modelo padrão
-  da conta (o Flash-Lite)**, porque com o Flash escolhido a rede devolve a recusa pronta ou
-  trava. As etapas do turno no Duo mostram "enviado pela rede (modelo …)". A rede oscila:
-  o mesmo Pro já respondeu em 14 s e já ficou mais de 4 min na fila.
+  (`StreamGenerate`), no formato atual, sem depender da aba visível. **3.5 Flash-Lite, 3.1
+  Pro e 4 Argon vão com o modelo e o nível escolhidos**, e o Duo confere na resposta qual
+  modelo a serviu: se o Gemini responder com outro, o turno falha dizendo qual respondeu, em
+  vez de mostrar a resposta errada. **O 3.8 Flash vai sempre pela tela**: medido em
+  2026-11-11, todo pedido que chega nele pela rede (todos os formatos de cabeçalho e os ids de
+  compatibilidade) devolve a recusa pronta ou nunca responde. Nada vai no "modelo padrão da
+  conta" no lugar do escolhido. As etapas do turno no Duo mostram "enviado pela rede (modelo
+  …)" ou "a rede não enviou (…); vai pela tela". A rede oscila: o mesmo Pro já respondeu em
+  11 s e já ficou mais de 4 min na fila.
 - **Tela** (reserva nesta versão): escolhe o modelo e o nível no menu do próprio Gemini, cola
   os anexos no editor e lê a resposta na conversa quando ela fica pronta. Medido em
   2026-11-11, todos os modelos e níveis responderam certo em 4,6 a 16,8 s. Quando o Gemini

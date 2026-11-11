@@ -102,7 +102,9 @@
       "candidato": "4.0.0",
       "texto": "4.0.1.0",
       "titulo": "2.11.0",
-      "fim": "e"
+      "fim": "e",
+      "modelo": "39",
+      "rotuloModelo": "42"
     },
     "limpezaTexto": [
       {
@@ -354,17 +356,27 @@
             "x-goog-ext-525005358-jspb": "[\"{uuid}\",1]"
           },
           "modelos": {
+            "8c46e95b1a07cecc": {
+              "idModelo": "8c46e95b1a07cecc",
+              "familia": 6,
+              "rotulo": "Flash Lite"
+            },
             "e6fa609c3fa255c0": {
               "idModelo": "e6fa609c3fa255c0",
-              "familia": 3
+              "familia": 3,
+              "rotulo": "Pro"
             },
             "argon": {
               "idModelo": "95a4c0abcba24364",
-              "familia": 8
+              "familia": 8,
+              "rotulo": "Argon"
             }
           },
+          "exigirModelo": true,
+          "conferirModelo": "{idModelo}",
+          "conferirRotulo": "{rotulo}",
           "cabecalhosModelo": {
-            "x-goog-ext-525001261-jspb": "[1,null,null,null,\"{idModelo}\",null,null,0,[4,5,6,8],null,null,{familia},null,null,{familia},{nivelRede}]",
+            "x-goog-ext-525001261-jspb": "[1,null,null,null,\"{idModelo}\",null,null,0,[4,5,6,8,4,5,6,8],null,null,2,null,null,{familia},{nivelRede},\"{uuid}\"]",
             "x-goog-ext-73010989-jspb": "[0]",
             "x-goog-ext-73010990-jspb": "[0,0,0]"
           },
@@ -402,7 +414,8 @@
             "recentePrimeiro": true,
             "id": "0.1",
             "candidato": "3.3",
-            "texto": "3.0.0.1.0"
+            "texto": "3.0.0.1.0",
+            "modelo": "3.21"
           },
           "silencioSeg": 30,
           "esperaMaxMin": 15,
