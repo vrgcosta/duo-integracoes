@@ -175,7 +175,7 @@
           "familia": null,
           "nivelRede": null
         },
-        "principal": "tela",
+        "principal": "rede",
         "cabecalhos": {
           "x-same-domain": "1"
         },

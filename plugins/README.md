@@ -18,18 +18,26 @@ visível, e lê a resposta consultando a conversa. Também lista os modelos do s
 conta. Se o envio pela rede for recusado antes de o ChatGPT aceitar a mensagem, o Duo
 usa a tela como reserva.
 
-A **1.0.0** do Gemini web envia pela tela da aba logada: escolhe o modelo e o nível de
-raciocínio no menu do próprio Gemini, cola os anexos no editor e lê a resposta na conversa
-quando ela fica pronta. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite,
-com raciocínio Baixo, Médio (padrão) ou Alto. Pela tela, com o modelo escolhido, a
-resposta vem em segundos; pela rede, só o modelo padrão da conta respondia rápido. Quando
-o Gemini devolve a recusa pronta ("Sou um modelo de linguagem...") no lugar da resposta, o
-Duo manda "continue" na mesma conversa (até duas vezes) e entrega a resposta seguinte. Se
-a tela falhar antes de enviar (por exemplo, o Gemini mudou o menu), o Duo envia pela rede:
-3.1 Pro e 4 Argon com o modelo escolhido, os demais no modelo padrão da conta. Qual caminho
-vai primeiro é escolhido no próprio plugin (`formulario.principal`). O envio pela tela
-depende de recursos da extensão **3.71.145**: em versões anteriores, o Duo explica a
-exigência e não instala o plugin.
+A **1.0.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
+(`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a
+mensagem sair. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite, com raciocínio
+Baixo, Médio (padrão) ou Alto.
+
+- **Rede** (principal nesta versão, para teste): manda o pedido pela API interna da página
+  (`StreamGenerate`), no formato atual, sem depender da aba visível. **3.1 Pro e 4 Argon
+  vão com o modelo e o nível escolhidos.** **3.8 Flash e 3.5 Flash-Lite vão no modelo padrão
+  da conta (o Flash-Lite)**, porque com o Flash escolhido a rede devolve a recusa pronta ou
+  trava. As etapas do turno no Duo mostram "enviado pela rede (modelo …)". A rede oscila:
+  o mesmo Pro já respondeu em 14 s e já ficou mais de 4 min na fila.
+- **Tela** (reserva nesta versão): escolhe o modelo e o nível no menu do próprio Gemini, cola
+  os anexos no editor e lê a resposta na conversa quando ela fica pronta. Medido em
+  2026-11-11, todos os modelos e níveis responderam certo em 4,6 a 16,8 s. Quando o Gemini
+  devolve a recusa pronta ("Sou um modelo de linguagem..."), o Duo manda "continue" na mesma
+  conversa (até duas vezes).
+
+Para comparar com a tela, troque `"principal": "rede"` por `"principal": "tela"` no JSON e
+importe de novo. Os dois caminhos dependem de recursos da extensão **3.71.145**: em versões
+anteriores, o Duo explica a exigência e não instala o plugin.
 
 Os arquivos estão na branch `main` do repositório público `vrgcosta/duo-integracoes`.
 Copie o link **Raw** para o campo **Link do plugin** da importação, ou baixe
