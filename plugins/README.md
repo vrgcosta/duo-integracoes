@@ -24,9 +24,12 @@ quando ela fica pronta. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flas
 com raciocínio Baixo, Médio (padrão) ou Alto. Pela tela, com o modelo escolhido, a
 resposta vem em segundos; pela rede, só o modelo padrão da conta respondia rápido. Quando
 o Gemini devolve a recusa pronta ("Sou um modelo de linguagem...") no lugar da resposta, o
-Duo manda "continue" na mesma conversa (até duas vezes) e entrega a resposta seguinte. O
-envio pela tela depende de recursos da extensão **3.71.145**: em versões anteriores, o
-Duo explica a exigência e não instala o plugin.
+Duo manda "continue" na mesma conversa (até duas vezes) e entrega a resposta seguinte. Se
+a tela falhar antes de enviar (por exemplo, o Gemini mudou o menu), o Duo envia pela rede:
+3.1 Pro e 4 Argon com o modelo escolhido, os demais no modelo padrão da conta. Qual caminho
+vai primeiro é escolhido no próprio plugin (`formulario.principal`). O envio pela tela
+depende de recursos da extensão **3.71.145**: em versões anteriores, o Duo explica a
+exigência e não instala o plugin.
 
 Os arquivos estão na branch `main` do repositório público `vrgcosta/duo-integracoes`.
 Copie o link **Raw** para o campo **Link do plugin** da importação, ou baixe

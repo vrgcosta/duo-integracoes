@@ -164,13 +164,18 @@
           "campos": {
             "at": "SNlM0e",
             "bl": "cfb2h",
-            "sid": "FdrFJe"
+            "sid": "FdrFJe",
+            "push": "qKIAYe",
+            "urlUpload": "h1eoVe"
           },
           "recarregar": "/app"
         },
         "vars": {
-          "idioma": "pt-BR"
+          "idioma": "pt-BR",
+          "familia": null,
+          "nivelRede": null
         },
+        "principal": "tela",
         "cabecalhos": {
           "x-same-domain": "1"
         },
@@ -199,6 +204,221 @@
             "id": 1,
             "carga": 2,
             "erro": 5
+          }
+        },
+        "envio": {
+          "caminho": "/_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate?bl={bl}&f.sid={sid}&hl={idioma}&_reqid={reqid}&rt=c&source-path=%2Fapp",
+          "campos": {
+            "f.req": {
+              "$json": [
+                null,
+                {
+                  "$json": [
+                    [
+                      "{prompt}",
+                      0,
+                      null,
+                      "{arquivos}",
+                      null,
+                      null,
+                      0
+                    ],
+                    [
+                      "{idioma}"
+                    ],
+                    [
+                      "{conversa}",
+                      "{resposta}",
+                      "{candidato}",
+                      null,
+                      null,
+                      null,
+                      null,
+                      null,
+                      null,
+                      ""
+                    ],
+                    null,
+                    null,
+                    null,
+                    [
+                      1
+                    ],
+                    1,
+                    null,
+                    null,
+                    1,
+                    0,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    [
+                      [
+                        0
+                      ]
+                    ],
+                    0,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    1,
+                    null,
+                    null,
+                    [
+                      4
+                    ],
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    [
+                      1
+                    ],
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0,
+                    null,
+                    null,
+                    null,
+                    0,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    "{uuid}",
+                    null,
+                    [],
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0,
+                    2,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    "{familia}",
+                    "{nivelRede}",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    1,
+                    null,
+                    null,
+                    null,
+                    null,
+                    1,
+                    null,
+                    1
+                  ]
+                }
+              ]
+            },
+            "at": "{at}"
+          },
+          "cabecalhos": {
+            "x-goog-ext-525005358-jspb": "[\"{uuid}\",1]"
+          },
+          "modelos": {
+            "e6fa609c3fa255c0": {
+              "idModelo": "e6fa609c3fa255c0",
+              "familia": 3
+            },
+            "argon": {
+              "idModelo": "95a4c0abcba24364",
+              "familia": 8
+            }
+          },
+          "cabecalhosModelo": {
+            "x-goog-ext-525001261-jspb": "[1,null,null,null,\"{idModelo}\",null,null,0,[4,5,6,8],null,null,{familia},null,null,{familia},{nivelRede}]",
+            "x-goog-ext-73010989-jspb": "[0]",
+            "x-goog-ext-73010990-jspb": "[0,0,0]"
+          },
+          "niveis": {
+            "0": {
+              "nivelRede": 1
+            },
+            "1": {
+              "nivelRede": 4
+            },
+            "2": {
+              "nivelRede": 2
+            },
+            "max": {
+              "nivelRede": 2
+            }
+          },
+          "conversa": {
+            "rpc": "hNvQHb",
+            "args": [
+              "{convId}",
+              10,
+              null,
+              1,
+              [
+                1
+              ],
+              [
+                4
+              ],
+              null,
+              1
+            ],
+            "itens": "0",
+            "recentePrimeiro": true,
+            "id": "0.1",
+            "candidato": "3.3",
+            "texto": "3.0.0.1.0"
+          },
+          "silencioSeg": 30,
+          "esperaMaxMin": 15,
+          "anexos": {
+            "urlToken": "urlUpload",
+            "campoArquivo": "file",
+            "cabecalhos": {
+              "Push-ID": "{push}",
+              "X-Tenant-Id": "bard-storage"
+            },
+            "molde": [
+              [
+                "{id}"
+              ],
+              "{nome}"
+            ]
           }
         },
         "tela": {
