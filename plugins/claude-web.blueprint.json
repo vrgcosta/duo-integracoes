@@ -183,6 +183,11 @@
       "saida": "usage.output_tokens"
     }
   },
+  "sessoes": {
+    "padrao": 4,
+    "limite": 6,
+    "intervaloInicioMs": 1000
+  },
   "ferramentas": {
     "campoTools": "tools",
     "toolCall": {
@@ -215,7 +220,8 @@
         ],
         "is_error": false
       }
-    }
+    },
+    "prazoResultadoMs": 240000
   },
   "retryTransitorio": {
     "padrao": "invalid authorization",
@@ -261,7 +267,7 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.0.2",
+  "versao": "1.1.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.141"
