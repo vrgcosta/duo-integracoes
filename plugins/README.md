@@ -6,8 +6,8 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.2.0**, Claude web na **1.2.0** e Gemini web na
-**1.4.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+Formato **1**. ChatGPT web está na **1.3.0**, Claude web na **1.3.0** e Gemini web na
+**1.5.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -75,6 +75,26 @@ junto (`ler.turnos.pensamento`). A conta Google logada na aba passa a identifica
 processo→conversa (`identidade` com `formulario.contexto`, lido da própria página), e trocar
 de conta não mistura as conversas. Conferido em 2026-11-12 na aba logada. Ainda não: uma
 conversa nova enviada com um Gem escolhido nasce fora do Gem (o envio não leva o Gem).
+
+A **1.5.0** do Gemini web cria a conversa nova dentro do Gem escolhido: o envio pela rede leva
+o id do Gem na posição do pedido em que a própria página o manda (`{projetoId}` no molde do
+`StreamGenerate`; conferido em 2026-11-12 enviando pela página dentro de um Gem e depois pela
+rede, com a conversa listada entre as do Gem). Pela tela, que é só a reserva, a conversa nova
+ainda nasce fora do Gem. As listas de conversas (geral, do Gem e a busca) seguem as páginas
+seguintes da chamada RPC (`rpc.paginas`: o marcador da próxima página vem na resposta e volta
+na chamada), até 5 páginas de 100 conversas na lista e 3 na busca.
+
+A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
+(`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
+porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os
+trabalhos do Duo Forge só param quando o estado é de alerta ou quando a janela passa do teto
+(90%); dentro do limite, seguem.
+
+A **1.3.0** do ChatGPT web identifica a conta logada (`contexto` com a leitura da conta,
+`/backend-api/me`), e trocar de conta não mistura os vínculos processo→conversa. Os vínculos
+gravados antes, sem conta, passam para a primeira conta identificada. O ChatGPT não informa a
+cota de mensagens nem o uso de tokens no stream (conferido em 2026-11-12), então o plugin não
+declara `stream.limite` nem `stream.usage`.
 
 A **1.2.0** do ChatGPT web traz o raciocínio de volta ao reabrir uma conversa
 (`conversas.ler.pensamento`): o ChatGPT grava o raciocínio numa mensagem própria, antes da

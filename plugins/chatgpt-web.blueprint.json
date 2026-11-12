@@ -15,7 +15,17 @@
       "label": "Padrão da conta"
     }
   ],
-  "contexto": [],
+  "contexto": [
+    {
+      "metodo": "GET",
+      "caminho": "/backend-api/me",
+      "extrai": {
+        "contaId": {
+          "caminho": "id"
+        }
+      }
+    }
+  ],
   "conversas": {
     "listar": {
       "caminho": "/backend-api/conversations?offset=0&limit=100&order=updated&is_archived=false",
@@ -599,7 +609,7 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.2.0",
+  "versao": "1.3.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

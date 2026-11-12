@@ -99,7 +99,12 @@
               null,
               1
             ]
-          ]
+          ],
+          "paginas": {
+            "cursor": "1",
+            "arg": "1",
+            "max": 5
+          }
         },
         {
           "id": "MaZiqc",
@@ -111,7 +116,12 @@
               null,
               1
             ]
-          ]
+          ],
+          "paginas": {
+            "cursor": "1",
+            "arg": "1",
+            "max": 5
+          }
         }
       ],
       "itens": "2",
@@ -128,7 +138,12 @@
         "args": [
           "{termo}",
           50
-        ]
+        ],
+        "paginas": {
+          "cursor": "1",
+          "arg": "2",
+          "max": 3
+        }
       },
       "itens": "0",
       "id": "0.0",
@@ -198,7 +213,12 @@
               1,
               "{projetoId}"
             ]
-          ]
+          ],
+          "paginas": {
+            "cursor": "1",
+            "arg": "1",
+            "max": 5
+          }
         },
         {
           "id": "MaZiqc",
@@ -211,7 +231,12 @@
               1,
               "{projetoId}"
             ]
-          ]
+          ],
+          "paginas": {
+            "cursor": "1",
+            "arg": "1",
+            "max": 5
+          }
         }
       ],
       "itens": "2",
@@ -474,7 +499,7 @@
                       ]
                     ],
                     0,
-                    null,
+                    "{projetoId}",
                     null,
                     null,
                     null,
@@ -709,7 +734,7 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.4.0",
+  "versao": "1.5.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

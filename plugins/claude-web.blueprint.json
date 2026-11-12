@@ -198,6 +198,21 @@
       "tipoEvento": "message_delta",
       "entrada": "usage.input_tokens",
       "saida": "usage.output_tokens"
+    },
+    "limite": {
+      "tipoEvento": "message_limit",
+      "escala": 1,
+      "severidade": "message_limit.type",
+      "severidades": {
+        "within_limit": "normal",
+        "approaching_limit": "alerta",
+        "exceeded_limit": "esgotada"
+      },
+      "janelas": {
+        "em": "message_limit.windows",
+        "percentual": "utilization",
+        "severidade": "status"
+      }
     }
   },
   "sessoes": {
@@ -352,7 +367,7 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.2.0",
+  "versao": "1.3.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
