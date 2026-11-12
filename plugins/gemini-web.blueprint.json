@@ -167,7 +167,7 @@
       {
         "tipo": "falha_pronta",
         "origem": "resposta",
-        "texto": "modelo de linguagem|alem das minhas (habilidades|habiliades|capacidades)|\\bia (com base|baseada) em texto|nao (posso|consigo|tenho como) (te )?ajudar|nao fui programad|so consigo gerar texto|language model|text-based ai|outside (of )?my capabilities|(can'?t|cannot) (help|assist) with that",
+        "texto": "modelo de linguagem|alem das minhas (habilidades|habiliades|capacidades)|\\bia (com base|baseada) em texto|nao fui programad|so consigo gerar texto|language model|text-based ai|outside (of )?my capabilities",
         "maxCaracteres": 300,
         "continuar": "continue",
         "tentativas": 2
