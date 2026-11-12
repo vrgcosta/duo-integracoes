@@ -54,6 +54,8 @@ do plugin. Cada turno em andamento usa uma aba do ChatGPT aberta pelo Duo, e o l
 acompanha as 5 abas que o Duo abre por site. As versões da extensão sem esse recurso
 ignoram o campo.
 
+A **1.2.0** do Gemini web lê a lista de modelos da própria conta (`formulario.catalogo`, pela chamada RPC de catálogo da página): o nome no seletor, o id e a família de cada modelo vêm de lá, e um modelo renomeado pelo Google aparece com o nome novo sem mudar o plugin. A lista `modelos` fica só como reserva para quando o catálogo não responde. `catalogo.sobrepor` corrige o nome que o catálogo traz errado para um id (hoje o 4 Argon, que o catálogo chama de 4 Carbon), `porFamilia` leva os campos próprios do modo do Argon e `idNoMenu` diz o id do item no menu para o caminho da tela.
+
 A **1.1.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
 (`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a
 mensagem sair. Oferece 4 Hydrogen (padrão; o antigo 3.8 Flash, renomeado pelo Google em 2026-11-12 com o mesmo id), 3.1 Pro, 4 Argon e 3.5 Flash-Lite, com raciocínio
