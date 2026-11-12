@@ -159,6 +159,11 @@
         "texto": "/sorry/|unusual traffic|trafego incomum"
       },
       {
+        "tipo": "bloqueio",
+        "origem": "dialogo",
+        "texto": "/sorry/|unusual traffic|trafego incomum"
+      },
+      {
         "tipo": "sessao",
         "status": [
           401,
