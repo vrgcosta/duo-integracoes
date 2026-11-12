@@ -7,7 +7,7 @@ consulta busca apenas o arquivo público no GitHub.
 ## Plugins disponíveis
 
 Formato **1**. ChatGPT web está na **1.1.4**, Claude web na **1.1.2** e Gemini web na
-**1.1.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+**1.3.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -55,6 +55,11 @@ acompanha as 5 abas que o Duo abre por site. As versões da extensão sem esse r
 ignoram o campo.
 
 A **1.2.0** do Gemini web lê a lista de modelos da própria conta (`formulario.catalogo`, pela chamada RPC de catálogo da página): o nome no seletor, o id e a família de cada modelo vêm de lá, e um modelo renomeado pelo Google aparece com o nome novo sem mudar o plugin. A lista `modelos` fica só como reserva para quando o catálogo não responde. `catalogo.sobrepor` corrige o nome que o catálogo traz errado para um id (hoje o 4 Argon, que o catálogo chama de 4 Carbon), `porFamilia` leva os campos próprios do modo do Argon e `idNoMenu` diz o id do item no menu para o caminho da tela.
+
+A **1.3.0** do Gemini web mostra o raciocínio do modelo enquanto a resposta chega
+(`stream.quadros.raciocinio`): o resumo do raciocínio que o Gemini manda junto da resposta
+aparece no bloco de raciocínio do Duo (conferido em 2026-11-12 pelo caminho da rede, com o
+4 Hydrogen).
 
 A **1.1.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
 (`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a

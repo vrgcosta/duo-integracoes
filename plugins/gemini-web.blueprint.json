@@ -101,6 +101,7 @@
       "resposta": "1.1",
       "candidato": "4.0.0",
       "texto": "4.0.1.0",
+      "raciocinio": "4.0.37.0.0",
       "titulo": "2.11.0",
       "fim": "e",
       "modelo": "39",
@@ -566,7 +567,7 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.2.0",
+  "versao": "1.3.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
