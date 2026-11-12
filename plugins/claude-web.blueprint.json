@@ -289,6 +289,7 @@
       },
       {
         "tipo": "bloqueio",
+        "origem": "envio",
         "texto": "just a moment",
         "verificacao": true
       }
@@ -334,7 +335,7 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.1.1",
+  "versao": "1.1.2",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

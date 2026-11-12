@@ -6,8 +6,8 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.1.3**, Claude web na **1.1.1** e Gemini web na
-**1.1.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+Formato **1**. ChatGPT web está na **1.1.4**, Claude web na **1.1.2** e Gemini web na
+**1.1.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -23,6 +23,17 @@ liberação e se o limite é do modelo ou da conta (trocar de modelo só aparece
 bloqueio da conta ou do acesso (sem insistir) e verificação do Cloudflare. No ChatGPT web,
 os avisos da página (`pagina.avisos`) passaram para essa seção, como regras de diálogo. As
 versões da extensão sem esse recurso não instalam essas versões.
+
+ChatGPT web **1.1.4**, Claude web **1.1.2** e Gemini web **1.1.1** dizem de onde vem cada
+regra de bloqueio (`origem`: a recusa do envio, o erro no stream ou o aviso da página), para
+a frase nunca casar com o texto de uma resposta do modelo. O aviso de limite do ChatGPT em
+português também reconhece "atingiu o seu limite".
+
+No ChatGPT web, "unusual activity" aparece em dois lugares, com papéis diferentes, e os dois
+ficam: `pagina.rede.envioDireto.recusa` decide o caminho do envio (na recusa 403 com essa
+frase, a rede fica pausada por 60 minutos e o turno vai pela tela) e a regra `bloqueio` de
+`erros` dá o tipo do erro, que só aparece se a tela também falhar. Não há aviso em dobro: a
+pausa não mostra nada ao usuário.
 
 A **1.1.0** do Claude web declara quantas sessões o plugin roda ao mesmo tempo: 4 por
 padrão e até 6, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas

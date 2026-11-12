@@ -155,6 +155,12 @@
       },
       {
         "tipo": "bloqueio",
+        "origem": "envio",
+        "texto": "/sorry/|unusual traffic|trafego incomum"
+      },
+      {
+        "tipo": "bloqueio",
+        "origem": "dialogo",
         "texto": "/sorry/|unusual traffic|trafego incomum"
       },
       {
@@ -533,7 +539,7 @@
       }
     }
   },
-  "versao": "1.1.0",
+  "versao": "1.1.1",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
