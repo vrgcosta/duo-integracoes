@@ -6,10 +6,23 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**, com extensão mínima **3.71.141**. ChatGPT web está na **1.1.2**, Claude web
-na **1.1.0** e os de jurisprudência na **1.0.2**. As definições foram validadas pelos
-schemas e pelo verificador de compatibilidade do Duo nessa versão do código. Essa
-validação não executa os serviços autenticados dos provedores.
+Formato **1**. ChatGPT web está na **1.1.3**, Claude web na **1.1.1** e Gemini web na
+**1.1.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
+verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
+serviços autenticados dos provedores.
+
+A extensão mínima **3.71.146** é a versão prevista para a entrega que lê a seção `erros`;
+confira o número quando essa versão da extensão for publicada e ajuste os três JSONs se
+ela sair com outro número.
+
+ChatGPT web **1.1.3**, Claude web **1.1.1** e Gemini web **1.1.0** declaram, na seção
+`erros`, como reconhecer as falhas de cada provedor. Com isso, o Duo diz o que aconteceu e
+o que fazer: sessão expirada (abrir o site e entrar de novo), limite de uso com a hora de
+liberação e se o limite é do modelo ou da conta (trocar de modelo só aparece quando resolve),
+bloqueio da conta ou do acesso (sem insistir) e verificação do Cloudflare. No ChatGPT web,
+os avisos da página (`pagina.avisos`) passaram para essa seção, como regras de diálogo. As
+versões da extensão sem esse recurso não instalam essas versões.
 
 A **1.1.0** do Claude web declara quantas sessões o plugin roda ao mesmo tempo: 4 por
 padrão e até 6, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas
@@ -30,6 +43,33 @@ do plugin. Cada turno em andamento usa uma aba do ChatGPT aberta pelo Duo, e o l
 acompanha as 5 abas que o Duo abre por site. As versões da extensão sem esse recurso
 ignoram o campo.
 
+A **1.1.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
+(`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a
+mensagem sair. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite, com raciocínio
+Baixo, Médio (padrão) ou Alto.
+
+- **Rede** (principal): manda o pedido pela API interna da página (`StreamGenerate`), sem
+  depender da aba visível. **Todos os modelos vão pela rede com o modelo e o nível
+  escolhidos**, inclusive o 3.8 Flash (conferido em 2026-11-12: 3.8 Flash e 4 Argon
+  responderam pela rede com o modelo pedido). O 4 Argon leva os campos próprios do modo dele
+  no pedido. O Duo confere na resposta qual modelo a serviu: se o Gemini responder com outro,
+  o turno falha dizendo qual respondeu, em vez de mostrar a resposta errada. Nada vai no
+  "modelo padrão da conta" no lugar do escolhido.
+- **Tela** (reserva): escolhe o modelo e o nível no menu do próprio Gemini, cola os anexos
+  no editor e lê a resposta na conversa quando ela fica pronta.
+
+Nos dois caminhos, quando o Gemini devolve a resposta pronta de falha ("Sou um modelo de
+linguagem..."), o Duo manda "continue" na mesma conversa (até duas vezes); se ainda assim
+não vier resposta, o turno termina com o aviso de falha. O limite de uso do Gemini é da
+conta (o 3.5 Flash-Lite não conta nele): quando ele acaba, o Duo consulta a página de uso
+do Gemini para mostrar a hora de liberação. Se a resposta não começar em 60 s, o turno é
+dado como travado.
+
+O pedido pela rede leva o tier da conta fixo em 2 (Google AI Pro), no cabeçalho
+`x-goog-ext-525001261-jspb`. Esse valor foi validado só numa conta AI Pro; numa conta
+gratuita, Plus ou Ultra, se a rede falhar, troque `"principal": "rede"` por
+`"principal": "tela"` no JSON e importe de novo, e avise para conferirmos o valor.
+
 Os arquivos estão na branch `main` do repositório público `vrgcosta/duo-integracoes`.
 Copie o link **Raw** para o campo **Link do plugin** da importação, ou baixe
 o JSON para importar por arquivo:
@@ -38,6 +78,7 @@ o JSON para importar por arquivo:
 |---|---|---|
 | Claude web | [claude-web.blueprint.json](claude-web.blueprint.json) | [Importar Claude](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json) |
 | ChatGPT web | [chatgpt-web.blueprint.json](chatgpt-web.blueprint.json) | [Importar ChatGPT](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json) |
+| Gemini web | [gemini-web.blueprint.json](gemini-web.blueprint.json) | [Importar Gemini](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json) |
 | Jurisprudência TJBA | [buscar-juris-tjba.blueprint.json](buscar-juris-tjba.blueprint.json) | [Importar TJBA](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-tjba.blueprint.json) |
 | Jurisprudência STJ/STF | [buscar-juris-stj-stf.blueprint.json](buscar-juris-stj-stf.blueprint.json) | [Importar STJ/STF](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json) |
 
