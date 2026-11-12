@@ -56,12 +56,12 @@ ignoram o campo.
 
 A **1.1.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
 (`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a
-mensagem sair. Oferece 3.8 Flash (padrão), 3.1 Pro, 4 Argon e 3.5 Flash-Lite, com raciocínio
+mensagem sair. Oferece 4 Hydrogen (padrão; o antigo 3.8 Flash, renomeado pelo Google em 2026-11-12 com o mesmo id), 3.1 Pro, 4 Argon e 3.5 Flash-Lite, com raciocínio
 Baixo, Médio (padrão) ou Alto.
 
 - **Rede** (principal): manda o pedido pela API interna da página (`StreamGenerate`), sem
   depender da aba visível. **Todos os modelos vão pela rede com o modelo e o nível
-  escolhidos**, inclusive o 3.8 Flash (conferido em 2026-11-12: 3.8 Flash e 4 Argon
+  escolhidos**, inclusive o 4 Hydrogen (conferido em 2026-11-12: 4 Hydrogen, ex-3.8 Flash, e 4 Argon
   responderam pela rede com o modelo pedido). O 4 Argon leva os campos próprios do modo dele
   no pedido. O Duo confere na resposta qual modelo a serviu: se o Gemini responder com outro,
   o turno falha dizendo qual respondeu, em vez de mostrar a resposta errada. Nada vai no

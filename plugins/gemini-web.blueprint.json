@@ -9,7 +9,7 @@
   "modelos": [
     {
       "id": "56fdd199312815e2",
-      "label": "3.8 Flash"
+      "label": "4 Hydrogen"
     },
     {
       "id": "e6fa609c3fa255c0",
@@ -426,7 +426,7 @@
             "56fdd199312815e2": {
               "idModelo": "56fdd199312815e2",
               "familia": 1,
-              "rotulo": "Flash"
+              "rotulo": "Hydrogen"
             },
             "8c46e95b1a07cecc": {
               "idModelo": "8c46e95b1a07cecc",
@@ -539,7 +539,7 @@
       }
     }
   },
-  "versao": "1.1.1",
+  "versao": "1.1.2",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
