@@ -47,7 +47,7 @@ link do arquivo no GitHub, verificar novas versões e oferecer **Atualizar**, na
 da extensão que incluem esse recurso. Os requisitos da extensão ficam declarados em
 cada plugin. Consulte o [guia de publicação](plugins/README.md).
 
-Há quatro plugins públicos na branch `main`: Claude web, ChatGPT web, busca de
+Há cinco plugins públicos na branch `main`: Claude web, ChatGPT web, Gemini web, busca de
 jurisprudência TJBA e busca de jurisprudência STJ/STF. Os links de importação e as versões
 estão no [catálogo de plugins](plugins/README.md#plugins-disponíveis).
 O molde do servidor local continua separado em `servidor/blueprint/modelo.json`, pois

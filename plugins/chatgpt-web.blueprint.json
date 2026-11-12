@@ -240,6 +240,84 @@
       "max": 200
     }
   ],
+  "erros": {
+    "regras": [
+      {
+        "tipo": "limite",
+        "status": [
+          429
+        ],
+        "caminho": "detail.code",
+        "igual": "model_cap_exceeded",
+        "escopo": "modelo",
+        "liberaEm": [
+          {
+            "caminho": "detail.clears_in",
+            "unidade": "segundos"
+          },
+          {
+            "caminho": "detail.resets_after",
+            "unidade": "iso"
+          }
+        ]
+      },
+      {
+        "tipo": "limite",
+        "status": [
+          429
+        ],
+        "escopo": "conta",
+        "liberaEm": [
+          {
+            "cabecalho": "retry-after",
+            "unidade": "segundos"
+          }
+        ]
+      },
+      {
+        "tipo": "sessao",
+        "status": [
+          401
+        ]
+      },
+      {
+        "tipo": "sessao",
+        "caminho": "detail.code",
+        "igual": "token_expired"
+      },
+      {
+        "tipo": "sessao",
+        "caminho": "detail.code",
+        "igual": "invalid_token"
+      },
+      {
+        "tipo": "bloqueio",
+        "texto": "unusual activity|atividade incomum"
+      },
+      {
+        "tipo": "bloqueio",
+        "texto": "just a moment|verify you are human",
+        "verificacao": true
+      },
+      {
+        "tipo": "limite",
+        "origem": "dialogo",
+        "texto": "too many requests|requests too quickly|temporarily limited access|muitas solicita[cç][oõ]es|solicita[cç][oõ]es (muito )?r[aá]pid|limitamos temporariamente",
+        "escopo": "conta"
+      },
+      {
+        "tipo": "limite",
+        "origem": "dialogo",
+        "texto": "reached (your|the) .{0,40}limit|hit (your|the) .{0,30}limit|atingiu (o|seu) limite",
+        "escopo": "modelo"
+      },
+      {
+        "tipo": "sessao",
+        "origem": "dialogo",
+        "texto": "session (has )?expired|sess[aã]o (expirou|expirada)|log in again|fa[cç]a login novamente|entre novamente"
+      }
+    ]
+  },
   "pagina": {
     "seletores": {
       "editor": "form div.ProseMirror[contenteditable=\"true\"]",
@@ -252,20 +330,6 @@
       "esforco": "[role=\"slider\"]",
       "arquivo": "input[type=\"file\"]"
     },
-    "avisos": [
-      {
-        "padrao": "too many requests|requests too quickly|temporarily limited access|muitas solicita[cç][oõ]es|solicita[cç][oõ]es (muito )?r[aá]pid|limitamos temporariamente",
-        "mensagem": "O ChatGPT limitou temporariamente a sua conta por excesso de pedidos seguidos. Aguarde alguns minutos antes de tentar de novo (abrir muitas conversas de uma vez provoca isso)."
-      },
-      {
-        "padrao": "reached (your|the) .{0,40}limit|hit (your|the) .{0,30}limit|atingiu (o|seu) limite",
-        "mensagem": "Você atingiu o limite de uso deste modelo no ChatGPT. Escolha outro modelo ou aguarde o horário de liberação que o ChatGPT indicar."
-      },
-      {
-        "padrao": "session (has )?expired|sess[aã]o (expirou|expirada)|log in again|fa[cç]a login novamente|entre novamente",
-        "mensagem": "A sessão do ChatGPT expirou. Abra o ChatGPT no navegador, entre de novo e repita o pedido."
-      }
-    ],
     "navegarPara": {
       "conversa": "/c/{convId}",
       "projeto": "/g/{projetoUrl}/project",
@@ -504,10 +568,10 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.1.2",
+  "versao": "1.1.3",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.141"
+    "extensaoMinima": "3.71.146"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json"

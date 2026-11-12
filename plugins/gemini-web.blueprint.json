@@ -132,6 +132,64 @@
       "max": 200
     }
   ],
+  "erros": {
+    "limiteEscopo": "conta",
+    "foraDoLimite": [
+      "8c46e95b1a07cecc"
+    ],
+    "espera": {
+      "primeiroDadoSeg": 60
+    },
+    "regras": [
+      {
+        "tipo": "limite",
+        "origem": "stream",
+        "caminho": "5.2.0.1.0",
+        "igual": 1037
+      },
+      {
+        "tipo": "bloqueio",
+        "origem": "stream",
+        "caminho": "5.2.0.1.0",
+        "igual": 1060
+      },
+      {
+        "tipo": "bloqueio",
+        "texto": "/sorry/|unusual traffic|trafego incomum"
+      },
+      {
+        "tipo": "sessao",
+        "status": [
+          401,
+          403
+        ]
+      },
+      {
+        "tipo": "falha_pronta",
+        "origem": "resposta",
+        "texto": "modelo de linguagem|alem das minhas (habilidades|habiliades|capacidades)|\\bia (com base|baseada) em texto|nao (posso|consigo|tenho como) (te )?ajudar|nao fui programad|so consigo gerar texto|language model|text-based ai|outside (of )?my capabilities|(can'?t|cannot) (help|assist) with that",
+        "maxCaracteres": 300,
+        "continuar": "continue",
+        "tentativas": 2
+      }
+    ],
+    "consultaLiberacao": {
+      "rpc": "jSf9Qc",
+      "args": [],
+      "caminho": "/_/BardChatUi/data/batchexecute?rpcids={rpc}&source-path=%2Fusage&bl={bl}&f.sid={sid}&hl={idioma}&_reqid={reqid}&rt=c",
+      "itens": "1",
+      "esgotado": {
+        "caminho": "0",
+        "igual": 0
+      },
+      "reserva": {
+        "caminho": "2",
+        "igual": 1
+      },
+      "reset": "3.0.0",
+      "unidade": "s"
+    }
+  },
   "pagina": {
     "seletores": {
       "editor": "rich-textarea .ql-editor[contenteditable=\"true\"]",
@@ -175,7 +233,12 @@
         "vars": {
           "idioma": "pt-BR",
           "familia": null,
-          "nivelRede": null
+          "nivelRede": null,
+          "f30": [
+            4
+          ],
+          "f49": 0,
+          "f83": null
         },
         "principal": "rede",
         "cabecalhos": {
@@ -273,9 +336,7 @@
                     1,
                     null,
                     null,
-                    [
-                      4
-                    ],
+                    "{f30}",
                     null,
                     null,
                     null,
@@ -296,7 +357,7 @@
                     null,
                     null,
                     null,
-                    0,
+                    "{f49}",
                     null,
                     null,
                     null,
@@ -330,7 +391,7 @@
                     "{nivelRede}",
                     null,
                     null,
-                    null,
+                    "{f83}",
                     null,
                     null,
                     null,
@@ -356,6 +417,11 @@
             "x-goog-ext-525005358-jspb": "[\"{uuid}\",1]"
           },
           "modelos": {
+            "56fdd199312815e2": {
+              "idModelo": "56fdd199312815e2",
+              "familia": 1,
+              "rotulo": "Flash"
+            },
             "8c46e95b1a07cecc": {
               "idModelo": "8c46e95b1a07cecc",
               "familia": 6,
@@ -369,7 +435,10 @@
             "argon": {
               "idModelo": "95a4c0abcba24364",
               "familia": 8,
-              "rotulo": "Argon"
+              "rotulo": "Argon",
+              "f30": [],
+              "f49": 40,
+              "f83": 1
             }
           },
           "exigirModelo": true,
@@ -459,20 +528,15 @@
             "usuario": "2.0.0"
           },
           "esperaMaxMin": 15,
-          "intervaloSeg": 2,
-          "recusa": {
-            "padrao": "modelo de linguagem|alem das minhas (habilidades|habiliades|capacidades)|\\bia (com base|baseada) em texto|nao (posso|consigo|tenho como) (te )?ajudar|nao fui programad|so consigo gerar texto|language model|text-based ai|outside (of )?my capabilities|(can'?t|cannot) (help|assist) with that",
-            "continuar": "continue",
-            "tentativas": 2
-          }
+          "intervaloSeg": 2
         }
       }
     }
   },
-  "versao": "1.0.0",
+  "versao": "1.1.0",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.145"
+    "extensaoMinima": "3.71.146"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json"

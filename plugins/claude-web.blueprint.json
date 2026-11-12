@@ -227,6 +227,73 @@
     "padrao": "invalid authorization",
     "tentativas": 1
   },
+  "erros": {
+    "regras": [
+      {
+        "tipo": "sessao",
+        "status": [
+          401
+        ]
+      },
+      {
+        "tipo": "sessao",
+        "status": [
+          403
+        ],
+        "caminho": "error.details.error_code",
+        "igual": "account_session_invalid"
+      },
+      {
+        "tipo": "generico",
+        "status": [
+          403
+        ],
+        "caminho": "error.type",
+        "igual": "permission_error",
+        "texto": "origin not allowed"
+      },
+      {
+        "tipo": "limite",
+        "status": [
+          429
+        ],
+        "caminho": "error.message.type",
+        "igual": "exceeded_limit",
+        "jsonNoTexto": true,
+        "escopo": {
+          "caminho": "error.message.perModelLimit",
+          "seVerdadeiro": "modelo",
+          "seFalso": "conta"
+        },
+        "liberaEm": [
+          {
+            "caminho": "error.message.resetsAt",
+            "unidade": "s"
+          },
+          {
+            "caminho": "error.message.resolved.limit.resets_at",
+            "unidade": "iso"
+          }
+        ]
+      },
+      {
+        "tipo": "sobrecarga",
+        "status": [
+          529
+        ]
+      },
+      {
+        "tipo": "sobrecarga",
+        "caminho": "error.type",
+        "texto": "overloaded"
+      },
+      {
+        "tipo": "bloqueio",
+        "texto": "just a moment",
+        "verificacao": true
+      }
+    ]
+  },
   "pensamento": {
     "ligar": [],
     "desligar": [],
@@ -267,10 +334,10 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.1.0",
+  "versao": "1.1.1",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.141"
+    "extensaoMinima": "3.71.146"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json"
