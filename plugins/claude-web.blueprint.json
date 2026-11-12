@@ -81,6 +81,23 @@
         "arrayCampo": "summaries",
         "itemCampo": "summary",
         "sufixo": "\n"
+      },
+      "ferramentas": {
+        "em": "content",
+        "call": {
+          "filtroCampo": "type",
+          "filtroValor": "tool_use",
+          "id": "id",
+          "nome": "name",
+          "input": "input"
+        },
+        "result": {
+          "filtroCampo": "type",
+          "filtroValor": "tool_result",
+          "usoId": "tool_use_id",
+          "conteudo": "content",
+          "erro": "is_error"
+        }
       }
     },
     "listar": {
@@ -335,7 +352,7 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.1.2",
+  "versao": "1.2.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

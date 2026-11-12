@@ -6,7 +6,7 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.1.4**, Claude web na **1.1.2** e Gemini web na
+Formato **1**. ChatGPT web está na **1.1.4**, Claude web na **1.2.0** e Gemini web na
 **1.3.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
@@ -41,6 +41,11 @@ configurações do plugin. Declara também o prazo que o claude.ai dá ao result
 ferramenta (4 minutos): perto dele, os subagentes devolvem o que ficou pronto, em vez de o
 resultado inteiro se perder. As versões da extensão sem esses recursos ignoram os dois
 campos, e o plugin funciona como na 1.0.2.
+
+A **1.2.0** do Claude web reconstrói as ferramentas ao reabrir uma conversa
+(`conversas.ler.ferramentas`): cada chamada (`tool_use`) e o resultado dela (`tool_result`),
+gravados pelo claude.ai na resposta do assistente, voltam como ferramentas usadas, na ordem em
+que aconteceram, em vez de a releitura mostrar só o texto.
 
 A **1.1.0** do ChatGPT web envia a mensagem pela rede, de dentro da aba logada (sessão,
 verificação e anexos no mesmo protocolo da página), sem depender do editor nem da aba
