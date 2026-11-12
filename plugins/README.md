@@ -7,7 +7,7 @@ consulta busca apenas o arquivo público no GitHub.
 ## Plugins disponíveis
 
 Formato **1**. ChatGPT web está na **1.3.0**, Claude web na **1.3.0** e Gemini web na
-**1.5.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+**1.5.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -83,6 +83,13 @@ rede, com a conversa listada entre as do Gem). Pela tela, que é só a reserva, 
 ainda nasce fora do Gem. As listas de conversas (geral, do Gem e a busca) seguem as páginas
 seguintes da chamada RPC (`rpc.paginas`: o marcador da próxima página vem na resposta e volta
 na chamada), até 5 páginas de 100 conversas na lista e 3 na busca.
+
+A **1.5.1** do Gemini web diz quais recusas da chamada RPC significam "conversa que não existe"
+(`rpc.envelope.naoEncontrado`, com o código lido em `codigoErro`): a leitura de uma conversa
+que não existe para a conta logada responde com o código 5 (NOT_FOUND), e o Duo passa a tratá-la como o
+404 dos outros plugins, limpando o vínculo do processo com a conversa que não abre mais.
+Conferido em 2026-11-12 na aba logada: id de conversa inexistente dá 5 (erro 1167, o mesmo da conversa apagada); id malformado
+dá 3, que segue como falha comum.
 
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em

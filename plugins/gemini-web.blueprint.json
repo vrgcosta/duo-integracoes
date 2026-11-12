@@ -442,7 +442,9 @@
             "marca": "wrb.fr",
             "id": 1,
             "carga": 2,
-            "erro": 5
+            "erro": 5,
+            "codigoErro": "0",
+            "naoEncontrado": [5]
           }
         },
         "envio": {
@@ -734,7 +736,7 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.5.0",
+  "versao": "1.5.1",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
