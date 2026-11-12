@@ -7,16 +7,29 @@ consulta busca apenas o arquivo público no GitHub.
 ## Plugins disponíveis
 
 Formato **1**, com extensão mínima **3.71.141** (o Gemini web exige a **3.71.145**).
-ChatGPT web está na **1.1.1**; Gemini web, na **1.0.0**; os demais, na **1.0.2**. As
-definições foram validadas pelos schemas e pelo verificador de compatibilidade do Duo
-nessa versão do código. Essa validação não executa os serviços autenticados dos
-provedores.
+ChatGPT web está na **1.1.2**, Claude web na **1.1.0**, Gemini web na **1.0.0** e os de
+jurisprudência na **1.0.2**. As definições foram validadas pelos schemas e pelo verificador
+de compatibilidade do Duo nessa versão do código. Essa validação não executa os serviços
+autenticados dos provedores.
+
+A **1.1.0** do Claude web declara quantas sessões o plugin roda ao mesmo tempo: 4 por
+padrão e até 6, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas
+configurações do plugin. Declara também o prazo que o claude.ai dá ao resultado de uma
+ferramenta (4 minutos): perto dele, os subagentes devolvem o que ficou pronto, em vez de o
+resultado inteiro se perder. As versões da extensão sem esses recursos ignoram os dois
+campos, e o plugin funciona como na 1.0.2.
 
 A **1.1.0** do ChatGPT web envia a mensagem pela rede, de dentro da aba logada (sessão,
 verificação e anexos no mesmo protocolo da página), sem depender do editor nem da aba
 visível, e lê a resposta consultando a conversa. Também lista os modelos do seletor da
 conta. Se o envio pela rede for recusado antes de o ChatGPT aceitar a mensagem, o Duo
 usa a tela como reserva.
+
+A **1.1.2** do ChatGPT web declara quantas sessões o plugin roda ao mesmo tempo: 2 por
+padrão e até 5, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas configurações
+do plugin. Cada turno em andamento usa uma aba do ChatGPT aberta pelo Duo, e o limite
+acompanha as 5 abas que o Duo abre por site. As versões da extensão sem esse recurso
+ignoram o campo.
 
 A **1.0.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
 (`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a
