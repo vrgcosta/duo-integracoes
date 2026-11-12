@@ -43,6 +43,9 @@
     }
   ],
   "pensamentoSempreLigado": true,
+  "identidade": [
+    "conta"
+  ],
   "contexto": [],
   "conversas": {
     "ler": {
@@ -69,7 +72,8 @@
         "recentePrimeiro": true,
         "id": "0.1",
         "usuario": "2.0.0",
-        "assistente": "3.0.0.1.0"
+        "assistente": "3.0.0.1.0",
+        "pensamento": "3.0.0.37.0.0"
       },
       "arvore": {
         "uuid": "0.1",
@@ -81,6 +85,141 @@
         "mapa": {}
       },
       "texto": {}
+    },
+    "listar": {
+      "caminho": "",
+      "rpc": [
+        {
+          "id": "MaZiqc",
+          "args": [
+            100,
+            null,
+            [
+              1,
+              null,
+              1
+            ]
+          ]
+        },
+        {
+          "id": "MaZiqc",
+          "args": [
+            100,
+            null,
+            [
+              0,
+              null,
+              1
+            ]
+          ]
+        }
+      ],
+      "itens": "2",
+      "id": "0",
+      "titulo": "1",
+      "atualizadoEm": "5.0",
+      "atualizadoEmUnidade": "s",
+      "projetoId": "7"
+    },
+    "buscar": {
+      "caminho": "",
+      "rpc": {
+        "id": "qNCTkf",
+        "args": [
+          "{termo}",
+          50
+        ]
+      },
+      "itens": "0",
+      "id": "0.0",
+      "titulo": "0.1",
+      "atualizadoEm": "2.0.2.0",
+      "atualizadoEmUnidade": "s"
+    },
+    "renomear": {
+      "caminho": "",
+      "rpc": {
+        "id": "MUAZcd",
+        "args": [
+          null,
+          [
+            [
+              "title"
+            ]
+          ],
+          [
+            "{convId}",
+            "{titulo}"
+          ]
+        ]
+      }
+    },
+    "excluir": {
+      "caminho": "",
+      "rpc": {
+        "id": "GzXR5e",
+        "args": [
+          "{convId}"
+        ]
+      }
+    },
+    "projetos": {
+      "caminho": "",
+      "rpc": {
+        "id": "CNgdBe",
+        "args": [
+          2,
+          [
+            "pt-BR"
+          ],
+          0
+        ]
+      },
+      "itens": "2",
+      "id": {
+        "caminho": "0"
+      },
+      "nome": {
+        "caminho": "1.0"
+      },
+      "rotulo": "Gem"
+    },
+    "projetoConversas": {
+      "caminho": "",
+      "rpc": [
+        {
+          "id": "MaZiqc",
+          "args": [
+            100,
+            null,
+            [
+              1,
+              null,
+              1,
+              "{projetoId}"
+            ]
+          ]
+        },
+        {
+          "id": "MaZiqc",
+          "args": [
+            100,
+            null,
+            [
+              0,
+              null,
+              1,
+              "{projetoId}"
+            ]
+          ]
+        }
+      ],
+      "itens": "2",
+      "id": "0",
+      "titulo": "1",
+      "atualizadoEm": "5.0",
+      "atualizadoEmUnidade": "s",
+      "projetoId": "7"
     }
   },
   "enviar": {
@@ -236,6 +375,9 @@
             "urlUpload": "h1eoVe"
           },
           "recarregar": "/app"
+        },
+        "contexto": {
+          "conta": "qDCSke"
         },
         "vars": {
           "idioma": "pt-BR",
@@ -567,7 +709,7 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.3.0",
+  "versao": "1.4.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

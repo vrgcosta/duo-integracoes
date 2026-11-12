@@ -6,8 +6,8 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.1.4**, Claude web na **1.2.0** e Gemini web na
-**1.3.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+Formato **1**. ChatGPT web está na **1.2.0**, Claude web na **1.2.0** e Gemini web na
+**1.4.0**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -65,6 +65,20 @@ A **1.3.0** do Gemini web mostra o raciocínio do modelo enquanto a resposta che
 (`stream.quadros.raciocinio`): o resumo do raciocínio que o Gemini manda junto da resposta
 aparece no bloco de raciocínio do Duo (conferido em 2026-11-12 pelo caminho da rede, com o
 4 Hydrogen).
+
+A **1.4.0** do Gemini web traz o histórico do Gemini para o Duo: lista as conversas (as
+fixadas primeiro), busca pelo texto delas (inclusive pelo número do processo no título),
+renomeia e exclui, lista os Gems e as conversas de cada um, tudo pelas chamadas RPC da
+própria página (`conversas.*.rpc`; a data de cada conversa vem em segundos,
+`atualizadoEmUnidade`). Ao reabrir uma conversa, o raciocínio gravado de cada resposta volta
+junto (`ler.turnos.pensamento`). A conta Google logada na aba passa a identificar os vínculos
+processo→conversa (`identidade` com `formulario.contexto`, lido da própria página), e trocar
+de conta não mistura as conversas. Conferido em 2026-11-12 na aba logada. Ainda não: uma
+conversa nova enviada com um Gem escolhido nasce fora do Gem (o envio não leva o Gem).
+
+A **1.2.0** do ChatGPT web traz o raciocínio de volta ao reabrir uma conversa
+(`conversas.ler.pensamento`): o ChatGPT grava o raciocínio numa mensagem própria, antes da
+resposta, e o Duo junta essa mensagem ao balão da resposta (`fundir`), como aparece ao vivo.
 
 A **1.1.0** do Gemini web tem dois caminhos, e o próprio plugin escolhe qual vai primeiro
 (`formulario.principal`). O outro fica de reserva para quando o primeiro falha antes de a
