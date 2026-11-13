@@ -1,0 +1,335 @@
+{
+  "id": "COPILOT-M365-WEB",
+  "rotulo": "Plugin (Microsoft 365 Copilot web)",
+  "icone": "https://m365.cloud.microsoft/chat/",
+  "site": "https://m365.cloud.microsoft/chat/",
+  "baseURL": "https://m365.cloud.microsoft",
+  "sessao": true,
+  "execucao": "pagina",
+  "identidade": [
+    "oid"
+  ],
+  "headers": {},
+  "modelos": [
+    {
+      "id": "padrao",
+      "label": "Padrão da conta"
+    }
+  ],
+  "contexto": [],
+  "conversas": {
+    "ler": {
+      "caminho": "/chat/conversation/{convId}",
+      "itens": "0.messages",
+      "arvore": {
+        "uuid": "messageId",
+        "parent": "",
+        "raiz": "raiz",
+        "sequencial": true
+      },
+      "role": {
+        "campo": "author",
+        "mapa": {
+          "user": "user",
+          "bot": "assistant"
+        }
+      },
+      "texto": {
+        "campoDireto": "text",
+        "blocos": {
+          "em": "adaptiveCards.0.body",
+          "filtroCampo": "type",
+          "filtroValor": "TextBlock",
+          "campoTexto": "text"
+        }
+      }
+    }
+  },
+  "enviar": {
+    "caminho": "/chat",
+    "corpo": {}
+  },
+  "stream": {
+    "framing": "registros",
+    "registros": {
+      "versao": "v1",
+      "atualizacao": {
+        "quando": {
+          "type": 1,
+          "target": "update"
+        },
+        "dados": "arguments.0"
+      },
+      "final": {
+        "quando": {
+          "type": 2
+        },
+        "dados": "item",
+        "resultado": "result.value",
+        "sucesso": [
+          "Success"
+        ],
+        "mensagem": "result.message",
+        "titulo": "defaultChatName"
+      },
+      "erro": [
+        {
+          "quando": {
+            "type": 3
+          },
+          "mensagem": "error"
+        },
+        {
+          "quando": {
+            "type": 7
+          },
+          "mensagem": "error"
+        }
+      ],
+      "mensagens": "messages",
+      "resposta": [
+        {
+          "caminho": "author",
+          "em": [
+            "bot"
+          ]
+        },
+        {
+          "caminho": "messageType",
+          "em": [
+            null
+          ]
+        }
+      ],
+      "idMensagem": "messageId",
+      "texto": "text",
+      "recusa": [
+        {
+          "caminho": "messageType",
+          "em": [
+            "Disengaged"
+          ]
+        }
+      ],
+      "conversa": "conversationId"
+    }
+  },
+  "sessoes": {
+    "padrao": 2,
+    "limite": 5,
+    "intervaloInicioMs": 1000
+  },
+  "ferramentas": {
+    "emulacao": "cercas",
+    "limiteInline": 24000,
+    "maxRodadas": 15
+  },
+  "configuraveis": [
+    {
+      "caminho": "ferramentas.maxRodadas",
+      "rotulo": "Máximo de rodadas de ferramentas",
+      "descricao": "Quantas vezes seguidas a IA pode pedir ferramentas num mesmo turno. Tarefas com muitos processos precisam de mais.",
+      "tipo": "numero",
+      "min": 1,
+      "max": 200
+    }
+  ],
+  "erros": {
+    "espera": {
+      "primeiroDadoSeg": 60
+    },
+    "regras": [
+      {
+        "tipo": "limite",
+        "origem": "stream",
+        "caminho": "item.result.value",
+        "igual": "OutOfCredits",
+        "escopo": "conta"
+      },
+      {
+        "tipo": "limite",
+        "origem": "stream",
+        "caminho": "item.result.value",
+        "igual": "Throttled",
+        "escopo": "conta"
+      },
+      {
+        "tipo": "sessao",
+        "origem": "stream",
+        "caminho": "item.result.value",
+        "igual": "UnauthorizedRequest"
+      },
+      {
+        "tipo": "bloqueio",
+        "origem": "stream",
+        "caminho": "item.result.value",
+        "igual": "ForbiddenRequest"
+      },
+      {
+        "tipo": "bloqueio",
+        "origem": "stream",
+        "caminho": "item.result.value",
+        "igual": "CaptchaChallenge",
+        "verificacao": true
+      }
+    ]
+  },
+  "pagina": {
+    "seletores": {
+      "editor": "#m365-chat-editor-target-element, [contenteditable=\"true\"][role=\"textbox\"]",
+      "enviar": "button[aria-label=\"Enviar\"], button[type=\"submit\"].fai-SendButton",
+      "parar": "button[aria-label=\"Parar de gerar\"], button[aria-label*=\"Stop\" i]",
+      "seletorModelo": "button[aria-label*=\"Seletor de Modelo\"]",
+      "menu": "[role=\"menu\"]",
+      "itemModelo": "[role=\"menuitemradio\"]",
+      "esforco": "[role=\"slider\"]",
+      "arquivo": "#upload-file-button, input[type=\"file\"]"
+    },
+    "navegarPara": {
+      "conversa": "/chat/conversation/{convId}",
+      "raiz": "/chat/"
+    },
+    "leituraVia": "pagina",
+    "descobrirModelos": false,
+    "rede": {
+      "reEnvio": "^$",
+      "apiPrefixo": "/chat/",
+      "caminhoSessao": "",
+      "cabecalhosApi": {
+        "Accept": "application/json",
+        "X-Streaming": "true"
+      },
+      "envioSocket": {
+        "url": "wss://substrate.office.com/m365Copilot/Chathub/{oid}@{tid}?chatsessionid={chave}&XRoutingParameterSessionKey={sessao}&clientrequestid={chave}&X-SessionId={sessao}&ConversationId={conversa}&access_token={token}&source=%22officeweb%22&product=Office&agentHost=Bizchat.FullScreen&isEdu=false&agent=web&scenario={cenario}",
+        "token": {
+          "audiencia": "https://substrate.office.com/sydney",
+          "claims": {
+            "oid": "oid",
+            "tid": "tid"
+          }
+        },
+        "contexto": {
+          "cenario": "__staticRouterHydrationData.loaderData.root.store.scenarioContext.sydneyWebScenario"
+        },
+        "modeloPadrao": "Magic",
+        "abertura": {
+          "registro": {
+            "protocol": "json",
+            "version": 1
+          }
+        },
+        "pedido": [
+          {
+            "type": 4,
+            "target": "chat",
+            "invocationId": "0",
+            "arguments": [
+              {
+                "source": "officeweb",
+                "clientCorrelationId": "{id}",
+                "sessionId": "{sessao}",
+                "optionsSets": [],
+                "streamingMode": "ConciseWithPadding",
+                "options": {},
+                "extraExtensionParameters": {},
+                "allowedMessageTypes": [
+                  "Chat",
+                  "Disengaged",
+                  "Progress",
+                  "InternalSearchQuery",
+                  "SearchQuery",
+                  "ReferencesListComplete",
+                  "EndOfRequest",
+                  "Suggestion"
+                ],
+                "sliceIds": [],
+                "threadLevelGptId": {},
+                "requestId": "{pedidoId}",
+                "traceId": "{rastreio}",
+                "isStartOfSession": "{conversaNova}",
+                "clientInfo": {
+                  "clientPlatform": "mcmcopilot-web",
+                  "clientAppName": "Office",
+                  "clientEntrypoint": "mcmcopilot-officeweb",
+                  "clientSessionId": "{sessao}",
+                  "ProductCategory": "Chat",
+                  "clientAppType": "Web",
+                  "productEntryPoint": "ChatPanel",
+                  "deviceOS": "Windows",
+                  "deviceType": "Desktop"
+                },
+                "message": {
+                  "author": "user",
+                  "inputMethod": "Keyboard",
+                  "text": "{texto}",
+                  "requestId": "{pedidoId}",
+                  "locale": "pt-br",
+                  "messageType": "Chat",
+                  "experienceType": "Default",
+                  "adaptiveCards": [],
+                  "clientPreferences": {}
+                },
+                "plugins": [],
+                "isSbsSupported": true,
+                "tone": "{modelo}",
+                "renderReferencesBehindEOS": true,
+                "disconnectBehavior": "continue"
+              }
+            ]
+          },
+          {
+            "type": 1,
+            "target": "Metrics",
+            "arguments": [
+              {
+                "Timestamps": {
+                  "ConnectionStart": "{agora}",
+                  "UserInputSubmit": "{agora}",
+                  "UserInputStart": "{agora}",
+                  "ConnectionEstablished": "{agora}",
+                  "RequestSent": "{agora}"
+                }
+              }
+            ]
+          }
+        ],
+        "ping": {
+          "quando": {
+            "type": 6
+          },
+          "resposta": {
+            "type": 6
+          }
+        },
+        "fim": [
+          {
+            "type": 3
+          },
+          {
+            "type": 7
+          }
+        ],
+        "esperaMaxMin": 15,
+        "catalogo": {
+          "caminho": "/resources/app-shell-action",
+          "metodo": "POST",
+          "corpo": {
+            "action": "GetAgentList"
+          },
+          "opcoes": "store.bizchatAsAgentGpt.clientPreferences.modelSelectorMetadata.availableModelSelectionOptions",
+          "grupo": "itemGroup",
+          "id": "id",
+          "rotulo": "menuItemTitle"
+        }
+      }
+    }
+  },
+  "versao": "1.0.0",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.146"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-m365-web.blueprint.json"
+  }
+}
