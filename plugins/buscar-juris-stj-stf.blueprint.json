@@ -1,6 +1,7 @@
 {
   "id": "buscar_juris_stj_stf",
   "nome": "Buscar jurisprudencia STJ e STF",
+  "icone": "https://flow.vrgc.com.br",
   "descricao": "Pesquisa jurisprudencia dos tribunais SUPERIORES: STJ (~1,73 milhao de acordaos, 1989-2026) e STF (~403 mil, 1892-2026). So ementas de acórdaos. Fluxo: (1) busca com query e filtros retorna acordaos com ementa INTEGRAL, citacao pronta no padrao do tribunal e as facetas do conjunto; (2) para o acordao de um processo especifico, passe processos[] com os numeros. Consultas curtas e focadas (3-5 termos) funcionam melhor que frases longas: os termos sao combinados com E, entao cada palavra a mais estreita o resultado. Operadores: \"frase exata\", -exclusao, +obrigatorio, | (OU), (agrupamento). Nunca use operadores junto com numero de processo. Refine pelas FACETAS que a resposta devolve (valores exatos com contagem) em vez de adivinhar o valor do filtro.",
   "baseUrlConfig": "FLOW_VRGC_URL",
   "baseUrlOpcoes": [
@@ -112,7 +113,7 @@
     }
   ],
   "resultado": "texto",
-  "versao": "1.0.2",
+  "versao": "1.0.3",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.141"
