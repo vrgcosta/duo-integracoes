@@ -112,7 +112,13 @@
         }
       ],
       "conversa": "conversationId"
-    }
+    },
+    "limpezaTexto": [
+      {
+        "de": "",
+        "ate": ""
+      }
+    ]
   },
   "sessoes": {
     "padrao": 2,
