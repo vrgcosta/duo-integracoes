@@ -7,7 +7,7 @@ consulta busca apenas o arquivo público no GitHub.
 ## Plugins disponíveis
 
 Formato **1**. ChatGPT web está na **1.3.0**, Claude web na **1.3.0** e Gemini web na
-**1.5.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.2**,
+**1.5.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -161,6 +161,31 @@ instalou da branch de revisão do repositório anterior deve colar o Raw corresp
 desta tabela no campo **Link de atualização** e depois usar **Atualizar**. O Duo mantém a origem
 aprovada localmente e não troca essa origem silenciosamente. Os nomes dos arquivos
 não levam datas para que os endereços sejam mantidos entre publicações.
+
+## Teste dos plugins
+
+Antes de publicar uma mudança em qualquer plugin, rode na raiz do repositório:
+
+```
+py -m unittest discover -s plugins/testes -v
+```
+
+O teste confere cada JSON contra `contrato-motor.json`, o contrato do motor do Duo, gerado no
+PJe✚R por `apps/extension/scripts/exportar-contrato-plugins.ts` (não edite à mão). O contrato diz,
+campo a campo, a quem ele se aplica (`escopo`: `comum` a todos, ou um mecanismo como `pagina`,
+`servidor`, `emulacao`, `nativo`, `formulario`, `quadros`, `sse`) e se precisa estar lá
+(`nivel`: `obrigatorio`, `recomendado`, `opcional`). O teste falha:
+
+- com campo que o motor não conhece (erro de digitação, ou campo que saiu do motor);
+- com campo de um mecanismo que o plugin não usa (cópia errada de outro plugin);
+- com campo obrigatório ausente;
+- com campo recomendado ausente sem motivo em `alinhamento.json`. Quando o motor ganha um campo
+  recomendado, ou um plugin passa a usar um, os outros param aqui até adotar o campo ou registrar
+  por que ele não se aplica. Motivo com **PENDENTE** é lacuna conhecida, a resolver;
+- com o JSON mudado em relação à `origin/main` sem subir a `versao`, com o link de atualização
+  apontando para outro arquivo, ou com a versão atual ausente deste README.
+
+Quando o motor mudar o formato, gere o contrato de novo no PJe✚R e publique-o aqui junto.
 
 ## Instalação e atualização
 

@@ -1,0 +1,20 @@
+{
+  "descricao": "Campos recomendados pelo contrato do motor que um plugin nao declara, com o motivo. PENDENTE no motivo = lacuna conhecida, a resolver; o teste aceita, mas a lista deve encolher.",
+  "excecoes": {
+    "buscar-juris-tjba.blueprint.json": {
+      "icone": "PENDENTE: o STJ/STF ja declara icone e site; falta definir os do TJBA."
+    },
+    "chatgpt-web.blueprint.json": {
+      "stream.limite": "O ChatGPT nao informa a cota de mensagens no stream (conferido em 2026-11-12, ver README, ChatGPT web 1.3.0).",
+      "erros.limiteEscopo": "PENDENTE: conferir se o limite do ChatGPT e da conta ou do modelo; sem isso o Duo nunca sugere trocar de modelo."
+    },
+    "claude-web.blueprint.json": {
+      "identidade": "O contexto do Claude web ja e so a identidade da conta (orgId); sem o campo, o motor usa o contexto inteiro.",
+      "modelos": "PENDENTE: lista de reserva para quando a consulta de modelos (modelosEndpoint) falhar.",
+      "erros.limiteEscopo": "PENDENTE: conferir se o limite do claude.ai e da conta ou do modelo; sem isso o Duo nunca sugere trocar de modelo."
+    },
+    "gemini-web.blueprint.json": {
+      "stream.limite": "A cota do Gemini vem pela consulta de liberacao (erros.consultaLiberacao), e nao pelo stream."
+    }
+  }
+}

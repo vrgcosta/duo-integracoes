@@ -1,0 +1,3193 @@
+{
+  "formato": 1,
+  "descricao": "Campos que o motor do Duo aceita nos plugins. Gerado por apps/extension/scripts/exportar-contrato-plugins.ts no PJe+R; nao edite a mao.",
+  "versaoExtensao": "3.71.142",
+  "escopos": [
+    "comum",
+    "pagina",
+    "servidor",
+    "emulacao",
+    "nativo",
+    "formulario",
+    "envioDireto",
+    "quadros",
+    "sse",
+    "interno"
+  ],
+  "niveis": [
+    "obrigatorio",
+    "recomendado",
+    "opcional"
+  ],
+  "detectarTipo": {
+    "ferramenta": {
+      "campo": "inputSchema",
+      "existe": true
+    }
+  },
+  "mecanismos": {
+    "provedor": {
+      "pagina": {
+        "campo": "execucao",
+        "igual": "pagina"
+      },
+      "servidor": {
+        "campo": "execucao",
+        "diferente": "pagina"
+      },
+      "emulacao": {
+        "campo": "ferramentas.emulacao",
+        "igual": "cercas"
+      },
+      "nativo": {
+        "campo": "ferramentas.campoTools",
+        "existe": true
+      },
+      "envioDireto": {
+        "campo": "pagina.rede.envioDireto",
+        "existe": true
+      },
+      "formulario": {
+        "campo": "pagina.rede.formulario",
+        "existe": true
+      },
+      "quadros": {
+        "campo": "stream.framing",
+        "igual": "quadros"
+      },
+      "sse": {
+        "campo": "stream.framing",
+        "igual": "sse"
+      }
+    },
+    "ferramenta": {}
+  },
+  "tipos": {
+    "provedor": {
+      "campos": {
+        "anexos": {
+          "escopo": "servidor",
+          "nivel": "recomendado",
+          "doc": "envio de documentos."
+        },
+        "anexos.attachment": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Molde de cada attachment de texto."
+        },
+        "anexos.campoAttachments": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "doc": "Campo do corpo do envio que recebe o array de attachments de texto."
+        },
+        "anexos.campoFiles": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "doc": "Campo do corpo do envio que recebe o array de ids dos binarios."
+        },
+        "anexos.maxArquivoMB": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "Limite por arquivo binario (MB)."
+        },
+        "anexos.maxArquivos": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "Limite de anexos por envio."
+        },
+        "anexos.upload": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "doc": "Upload multipart de um binario: POST `caminho` (form-data, campo `campoArquivo`); `id` extrai o identificador do arquivo na resposta."
+        },
+        "anexos.upload.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "anexos.upload.campoArquivo": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "anexos.upload.id": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "anexos.upload.id.acharNoArray": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "anexos.upload.id.acharNoArray.campo": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "anexos.upload.id.acharNoArray.contem": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "anexos.upload.id.caminho": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "anexos.upload.id.pega": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "atualizacao": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "atualizacao.url": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "baseURL": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "compatibilidade": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "compatibilidade.extensaoMaxima": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "compatibilidade.extensaoMinima": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "configuraveis": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "campos deste blueprint que o USUARIO pode ajustar na tela do plugin (ex.: `ferramentas.maxRodadas`)."
+        },
+        "configuraveis.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Dot-path do campo no blueprint (ex.: 'ferramentas.maxRodadas')."
+        },
+        "configuraveis.descricao": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "configuraveis.max": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "configuraveis.min": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "(numero) faixa aceita; fora dela vale o padrao do blueprint."
+        },
+        "configuraveis.opcoes": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "(opcoes) valores aceitos."
+        },
+        "configuraveis.opcoes.rotulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "configuraveis.opcoes.valor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "configuraveis.rotulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "configuraveis.tipo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "contexto": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "contexto.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "contexto.corpo": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "contexto.extrai": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "contexto.headers": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "headers SO deste passo, somados aos `Blueprint.headers`."
+        },
+        "contexto.metodo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.buscar": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "busca server-side de conversas (ex.: ...?searchQuery={termo})."
+        },
+        "conversas.buscar.atualizadoEm": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.buscar.atualizadoEmUnidade": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "`atualizadoEm` e um numero de epoch, em segundos ('s') ou milissegundos ('ms')."
+        },
+        "conversas.buscar.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.buscar.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.buscar.itens": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.buscar.projetoId": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "caminho ate o id do projeto de cada conversa (exibicao/filtro)."
+        },
+        "conversas.buscar.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a lista vem de chamada(s) RPC da aba, e nao do GET."
+        },
+        "conversas.buscar.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.buscar.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.buscar.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.buscar.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.buscar.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.buscar.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "conversas.buscar.titulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.criar": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "conversas.criar.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "conversas.criar.campoProjeto": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "conversas.criar.corpo": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.criar.id": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "conversas.criar.id.acharNoArray": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "conversas.criar.id.acharNoArray.campo": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "conversas.criar.id.acharNoArray.contem": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "conversas.criar.id.caminho": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "conversas.criar.id.pega": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "conversas.excluir": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "exclui a conversa no servidor."
+        },
+        "conversas.excluir.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.excluir.corpo": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "conversas.excluir.metodo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.excluir.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.excluir.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.excluir.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.excluir.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.excluir.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.excluir.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.excluir.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "conversas.ler": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.arvore": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "`folhaAtiva` (opcional): caminho, no JSON da resposta, ate o id do no folha ATIVO (a ponta do ramo corrente)."
+        },
+        "conversas.ler.arvore.folhaAtiva": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.arvore.parent": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.arvore.raiz": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.arvore.uuid": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "reconstroi o historico de TOOLS na releitura."
+        },
+        "conversas.ler.ferramentas.call": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.call.filtroCampo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.call.filtroValor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.call.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.call.input": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.call.nome": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.em": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.result": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.result.conteudo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.result.erro": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.ferramentas.result.filtroCampo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.result.filtroValor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.ferramentas.result.usoId": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.itens": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.itensMapa": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "`itens` aponta para um OBJETO (dicionario de nos id->no), nao um array."
+        },
+        "conversas.ler.pensamento": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "extrai o pensamento (resumos) gravado em cada mensagem."
+        },
+        "conversas.ler.pensamento.arrayCampo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.pensamento.em": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho ate os blocos da mensagem."
+        },
+        "conversas.ler.pensamento.filtroCampo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.pensamento.filtroValor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.pensamento.fundir": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "o servidor grava o pensamento como mensagem PROPRIA do assistente, sem texto."
+        },
+        "conversas.ler.pensamento.itemCampo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.pensamento.itemCampos": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "varios campos de cada item, juntados por `sepCampos` (os vazios ficam de fora)."
+        },
+        "conversas.ler.pensamento.sepCampos": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.pensamento.sufixo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.role": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.role.campo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.role.mapa": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.ler.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a conversa e lida por uma chamada RPC da propria pagina (`pagina.rede.formulario.rpc`), e nao por GET."
+        },
+        "conversas.ler.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.ler.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.ler.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.ler.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.ler.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "conversas.ler.texto": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.texto.blocos": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.texto.blocos.campoTexto": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.texto.blocos.em": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.texto.blocos.filtroCampo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.texto.blocos.filtroValor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.texto.campoDireto": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.ler.turnos": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "cada item e um TURNO inteiro (pergunta e resposta juntas), e nao uma mensagem."
+        },
+        "conversas.ler.turnos.assistente": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.turnos.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.ler.turnos.pensamento": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "caminho (no item) do pensamento gravado da resposta."
+        },
+        "conversas.ler.turnos.recentePrimeiro": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Os itens vem do mais novo para o mais antigo."
+        },
+        "conversas.ler.turnos.usuario": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.listar": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "conversas.listar.atualizadoEm": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.listar.atualizadoEmUnidade": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "`atualizadoEm` e um numero de epoch, em segundos ('s') ou milissegundos ('ms')."
+        },
+        "conversas.listar.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.listar.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.listar.itens": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.listar.projetoId": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "caminho ate o id do projeto de cada conversa (exibicao/filtro)."
+        },
+        "conversas.listar.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a lista vem de chamada(s) RPC da aba, e nao do GET."
+        },
+        "conversas.listar.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.listar.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.listar.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.listar.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.listar.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.listar.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "conversas.listar.titulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetoConversas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "lista conversas de um projeto (ex.: GET /projects/{projetoId}/conversations)."
+        },
+        "conversas.projetoConversas.atualizadoEm": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetoConversas.atualizadoEmUnidade": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "`atualizadoEm` e um numero de epoch, em segundos ('s') ou milissegundos ('ms')."
+        },
+        "conversas.projetoConversas.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetoConversas.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetoConversas.itens": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetoConversas.projetoId": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "caminho ate o id do projeto de cada conversa (exibicao/filtro)."
+        },
+        "conversas.projetoConversas.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a lista vem de chamada(s) RPC da aba, e nao do GET."
+        },
+        "conversas.projetoConversas.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.projetoConversas.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetoConversas.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.projetoConversas.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.projetoConversas.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.projetoConversas.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "conversas.projetoConversas.titulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "lista os projetos do servidor (ex.: GET /projects)."
+        },
+        "conversas.projetos.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.id.acharNoArray": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.id.acharNoArray.campo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.id.acharNoArray.contem": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.id.caminho": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.id.pega": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.itens": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.nome": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.nome.acharNoArray": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.nome.acharNoArray.campo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.nome.acharNoArray.contem": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.nome.caminho": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.nome.pega": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.rotulo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.projetos.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.projetos.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.projetos.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.projetos.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.projetos.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.projetos.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "conversas.renomear": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "renomeia a conversa no primeiro turno."
+        },
+        "conversas.renomear.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.renomear.corpo": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "conversas.renomear.metodo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.renomear.rpc": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "conversas.renomear.rpc.args": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "conversas.renomear.rpc.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "conversas.renomear.rpc.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "a resposta traz o marcador da proxima pagina."
+        },
+        "conversas.renomear.rpc.paginas.arg": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, nos `args`, onde o marcador vai na chamada seguinte."
+        },
+        "conversas.renomear.rpc.paginas.cursor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho, na carga da resposta, do marcador da proxima pagina."
+        },
+        "conversas.renomear.rpc.paginas.max": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Teto de paginas lidas (a primeira conta)."
+        },
+        "destinoLocal": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "o blueprint declara que o destino dos dados e a maquina do proprio usuario (ex.: um servidor local)."
+        },
+        "enviar": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "enviar.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "enviar.corpo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "enviar.headers": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "erros": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "regras que classificam o erro do turno (sessao, limite, bloqueio...)."
+        },
+        "erros.consultaLiberacao": {
+          "escopo": "formulario",
+          "nivel": "opcional"
+        },
+        "erros.consultaLiberacao.args": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "erros.consultaLiberacao.caminho": {
+          "escopo": "formulario",
+          "nivel": "opcional",
+          "doc": "molde do caminho do pedido no lugar do de `formulario.rpc` (mesmas vars)."
+        },
+        "erros.consultaLiberacao.esgotado": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "O medidor esgotado (vale o reset dele; com mais de um, o mais tarde)."
+        },
+        "erros.consultaLiberacao.esgotado.caminho": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "erros.consultaLiberacao.esgotado.igual": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "erros.consultaLiberacao.itens": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "Caminho da lista de medidores na carga."
+        },
+        "erros.consultaLiberacao.reserva": {
+          "escopo": "formulario",
+          "nivel": "opcional",
+          "doc": "o medidor cujo reset vale quando nenhum esta esgotado."
+        },
+        "erros.consultaLiberacao.reserva.caminho": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "erros.consultaLiberacao.reserva.igual": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "erros.consultaLiberacao.reset": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "Caminho do reset, relativo ao item."
+        },
+        "erros.consultaLiberacao.rpc": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "Id da chamada RPC e os argumentos dela."
+        },
+        "erros.consultaLiberacao.unidade": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "erros.espera": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "erros.espera.primeiroDadoSeg": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "erros.foraDoLimite": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.limiteEscopo": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "erros.regras": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "erros.regras.bloqueados": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho de lista de ids."
+        },
+        "erros.regras.caminho": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho no JSON do fato."
+        },
+        "erros.regras.continuar": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So 'falha_pronta': texto do reenvio."
+        },
+        "erros.regras.escopo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.escopo.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "erros.regras.escopo.seFalso": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.escopo.seVerdadeiro": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "erros.regras.existe": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.igual": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.jsonNoTexto": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Ao descer um caminho, strings no meio dele sao lidas como JSON."
+        },
+        "erros.regras.liberaEm": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "A primeira que der numero valido vence."
+        },
+        "erros.regras.liberaEm.cabecalho": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.liberaEm.caminho": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.liberaEm.unidade": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "erros.regras.maxCaracteres": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So com origem 'resposta' (o schema recusa em outra origem)."
+        },
+        "erros.regras.origem": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.recurso": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho do nome do recurso."
+        },
+        "erros.regras.status": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "erros.regras.tentativas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So 'falha_pronta': reenvios automaticos (0-3)."
+        },
+        "erros.regras.texto": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Regex, comparada sem acento e em minusculas."
+        },
+        "erros.regras.tipo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "erros.regras.verificacao": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "execucao": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "ONDE o turno executa."
+        },
+        "ferramentas": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "PROTOCOLO de tool-calling do servidor (NAO declara as tools — os schemas vem de `options.tools`/providers/tools)."
+        },
+        "ferramentas.campoCatalogo": {
+          "escopo": "nativo",
+          "nivel": "opcional",
+          "doc": "Dot-path no corpo do POST que recebe o catalogo compacto ({favoritas, resumos}) do turno, ao lado das defs completas de `campoTools`."
+        },
+        "ferramentas.campoTools": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Dot-path no corpo do POST que recebe o array de defs de tools (ex.: 'tools')."
+        },
+        "ferramentas.emulacao": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Modo de ferramentas."
+        },
+        "ferramentas.enviarResultado": {
+          "escopo": "nativo",
+          "nivel": "recomendado",
+          "doc": "Devolve o resultado da tool por um endpoint DEDICADO (NAO o /completion), como side-channel: a resposta e um ack JSON ({tool_uuid,user_uuid}) que o motor DRENA "
+        },
+        "ferramentas.enviarResultado.caminho": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "ferramentas.enviarResultado.corpo": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "ferramentas.limiteInline": {
+          "escopo": "emulacao",
+          "nivel": "opcional",
+          "doc": "(emulacao) limite, em chars, do resultado inline antes de virar anexo."
+        },
+        "ferramentas.maxRodadas": {
+          "escopo": "emulacao",
+          "nivel": "recomendado",
+          "doc": "(emulacao) teto de rodadas de ferramenta por turno."
+        },
+        "ferramentas.prazoResultadoMs": {
+          "escopo": "nativo",
+          "nivel": "recomendado",
+          "doc": "Quanto o servidor do plugin espera o resultado de uma ferramenta antes de desistir dela (ms)."
+        },
+        "ferramentas.toolCall": {
+          "escopo": "nativo",
+          "nivel": "recomendado",
+          "doc": "Evento SSE de inicio de tool_call."
+        },
+        "ferramentas.toolCall.caminhoId": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "ferramentas.toolCall.caminhoNome": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "ferramentas.toolCall.igual": {
+          "escopo": "nativo",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "ferramentas.toolCall.tipoEvento": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "ferramentas.toolCallFim": {
+          "escopo": "nativo",
+          "nivel": "recomendado",
+          "doc": "Evento SSE de fim do bloco de tool_call (ex.: 'content_block_stop')."
+        },
+        "ferramentas.toolCallFim.igual": {
+          "escopo": "nativo",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "ferramentas.toolCallFim.tipoEvento": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "ferramentas.toolCallInput": {
+          "escopo": "nativo",
+          "nivel": "recomendado",
+          "doc": "Evento SSE de acumulo do JSON de entrada da tool (ex.: 'delta.partial_json')."
+        },
+        "ferramentas.toolCallInput.caminhoTexto": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "ferramentas.toolCallInput.igual": {
+          "escopo": "nativo",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "ferramentas.toolCallInput.tipoEvento": {
+          "escopo": "nativo",
+          "nivel": "obrigatorio"
+        },
+        "headers": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "headers aplicados a TODA requisicao do blueprint (resolucao de contexto, conversas, envio e upload)."
+        },
+        "icone": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "identidade": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "nomes das variaveis do contexto que IDENTIFICAM a conta (ex.: ['orgId'])."
+        },
+        "janelaContexto": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "o servidor do plugin e quem guarda o historico e conta a janela de contexto, entao as operacoes de janela (ler o uso, tirar itens, compactar) sao rotas DELE, de"
+        },
+        "janelaContexto.compactar": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "POST (padrao) com `{ modelo }`: INICIA o resumo da parte antiga da conversa em segundo plano no servidor (responde 202 na hora; 409 se ha turno aberto ou compac"
+        },
+        "janelaContexto.compactar.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "janelaContexto.compactar.metodo": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "janelaContexto.descompactar": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "DELETE (padrao): cancela a compactacao em andamento ou, sem ela, volta a usar os turnos originais."
+        },
+        "janelaContexto.descompactar.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "janelaContexto.descompactar.metodo": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "janelaContexto.excluir": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "PUT (padrao) com `{ excluidos: [id, ...] }`: grava a lista de itens fora da janela."
+        },
+        "janelaContexto.excluir.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "janelaContexto.excluir.metodo": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "janelaContexto.ler": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "doc": "GET (padrao): uso atual, com o estado da compactacao."
+        },
+        "janelaContexto.ler.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "janelaContexto.ler.campoContexto": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "De qual campo vem o tamanho da janela que o proximo envio vai usar, para o medidor contar com o mesmo: dot-path no corpo de `enviar` (`opcoes.contexto`) ou, se "
+        },
+        "janelaContexto.ler.metodo": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelos": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "Lista fixa."
+        },
+        "modelos.id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "modelos.label": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "de onde VEM a lista de modelos, em vez de enumera-la em `modelos` (que envelhece a cada lancamento do provedor)."
+        },
+        "modelosEndpoint.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.id": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.ignorarSe": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelosEndpoint.itens": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.label": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "niveisPensamento": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "Niveis de raciocinio que o provedor oferece, na ordem."
+        },
+        "niveisPensamento.detalhe": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "niveisPensamento.padrao": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "O nivel usado quando o usuario nao escolheu."
+        },
+        "niveisPensamento.rotulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "niveisPensamento.valor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "pagina": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "config do transporte de pagina (so quando execucao:'pagina')."
+        },
+        "pagina.corpoPensamento": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o raciocinio vai como CAMPOS DO CORPO do envio, e nao pela UI."
+        },
+        "pagina.corpoPensamento.desligado": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.corpoPensamento.ligado": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.descobrirModelos": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "ler os modelos do menu do provedor."
+        },
+        "pagina.idNoMenu": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "id do modelo no Duo -> id do item no menu do provedor (o `{modelo}` de `seletores.itemModeloPorId`), quando o menu marca algum item com outro id que o da lista "
+        },
+        "pagina.leituraVia": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Onde rodam as leituras (listar/ler/renomear/excluir)."
+        },
+        "pagina.navegarPara": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.navegarPara.conversa": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.navegarPara.projeto": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.navegarPara.raiz": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.niveisPensamento": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "niveis de raciocinio que a UI do provedor oferece, na ordem."
+        },
+        "pagina.niveisPensamento.detalhe": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.niveisPensamento.padrao": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.niveisPensamento.rotulo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.niveisPensamento.valor": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.prefixoConversa": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "prefixo que o provedor poe no id da conversa e que o endereco dela nao leva (id \"c_123\", endereco \".../123\")."
+        },
+        "pagina.rede": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Mecanica de rede do provedor (regex/caminhos/headers), toda declarativa."
+        },
+        "pagina.rede.apiPrefixo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Prefixo permitido para leituras autenticadas (o prefixo de API do provedor)."
+        },
+        "pagina.rede.caminhoSessao": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Caminho do endpoint de sessao que devolve o token."
+        },
+        "pagina.rede.campoAccessToken": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Caminho (na resposta da sessao) do accessToken e do id da conta."
+        },
+        "pagina.rede.campoContaId": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "ENVIO PELA REDE, de dentro da aba (ver ConfigEnvioRede)."
+        },
+        "pagina.rede.envioDireto.anexos": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.anexos.cabecalhosEnvio": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "PUT dos bytes na URL devolvida por `criar` (cabecalhos interpolados com {mime})."
+        },
+        "pagina.rede.envioDireto.anexos.campo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Dot-path do corpo que recebe a lista de anexos, e o molde de cada um ({id}, {nome}, {tamanho}, {mime})."
+        },
+        "pagina.rede.envioDireto.anexos.confirmar": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.anexos.confirmar.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.anexos.confirmar.corpo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioDireto.anexos.confirmar.tentativas": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.anexos.criar": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.anexos.criar.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.anexos.criar.corpo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.envioDireto.anexos.criar.id": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.anexos.criar.urlEnvio": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.anexos.molde": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.envioDireto.cabecalhos": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Cabecalhos do envio e da sentinela, interpolados (vars: dispositivo, versaoCliente)."
+        },
+        "pagina.rede.envioDireto.cabecalhoVersao": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Cabecalho que a propria pagina manda nos pedidos dela e o grampo guarda -> {versaoCliente}."
+        },
+        "pagina.rede.envioDireto.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "POST do envio (mesma origem da aba)."
+        },
+        "pagina.rede.envioDireto.campoNivel": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Campo (vindo de `corpoPensamento`) com o nivel de raciocinio."
+        },
+        "pagina.rede.envioDireto.chaveDispositivo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Chave do localStorage da pagina com o id do dispositivo -> {dispositivo}."
+        },
+        "pagina.rede.envioDireto.conversa": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Leitura da conversa antes do envio: o no atual vira {pai}; o projeto dela, {projetoId}."
+        },
+        "pagina.rede.envioDireto.conversa.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.conversa.noAtual": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.conversa.projeto": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.corpo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Corpo do envio."
+        },
+        "pagina.rede.envioDireto.corpoConversa": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Somado ao corpo quando a conversa ja existe (vars + convId)."
+        },
+        "pagina.rede.envioDireto.corpoProjeto": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Somado ao corpo quando a conversa e de um projeto (vars + projetoId)."
+        },
+        "pagina.rede.envioDireto.modelos": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.modelos.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.campoAjustavel": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.campoTipo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Modelo de raciocinio com nivel ajustavel: `campoTipo` == `valorRaciocinio` e `campoAjustavel` verdadeiro; os niveis que ele aceita estao em `niveis`."
+        },
+        "pagina.rede.envioDireto.modelos.id": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.itens": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.listar": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o catalogo vira a lista de modelos do Duo — os itens cujo `campo` vale `valor` (as familias que o seletor do provedor mostra), com o nome em `rotulo`."
+        },
+        "pagina.rede.envioDireto.modelos.listar.campo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.listar.rotulo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.listar.valor": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.niveis": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.niveis.campo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.niveis.em": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.ordemNiveis": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Niveis do mais forte para o mais fraco: sem o pedido, desce para o seguinte."
+        },
+        "pagina.rede.envioDireto.modelos.padrao": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Campo do modelo padrao da conta."
+        },
+        "pagina.rede.envioDireto.modelos.preferidosRaciocinio": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Com pensamento: moldes dos modelos a tentar primeiro ({padrao}); depois, os demais ajustaveis na ordem do catalogo."
+        },
+        "pagina.rede.envioDireto.modelos.reserva": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Modelo quando o catalogo nao ajuda (ou o escolhido for recusado)."
+        },
+        "pagina.rede.envioDireto.modelos.semRaciocinio": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Sem pensamento: so modelos cujo `campoTipo` vale `valor` (sem raciocinio nenhum — o padrao da conta pode ser um roteador que ainda pensa), na ordem dos moldes d"
+        },
+        "pagina.rede.envioDireto.modelos.semRaciocinio.preferidos": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.modelos.semRaciocinio.valor": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.valorRaciocinio": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.paiNovo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Raiz de uma conversa nova ({pai} do primeiro envio)."
+        },
+        "pagina.rede.envioDireto.recusa": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Recusa do provedor que manda o envio para a UI (regex do corpo, sem diferenciar maiusculas) e pausa o envio pela rede por `pausaMin` minutos (ex.: protecao cont"
+        },
+        "pagina.rede.envioDireto.recusa.padrao": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.recusa.pausaMin": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.sentinela": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.sentinela.cabecalhoToken": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.corpo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioDireto.sentinela.prova": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Prova de trabalho pedida na resposta."
+        },
+        "pagina.rede.envioDireto.sentinela.prova.cabecalho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.dificuldade": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.exigida": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.maxTentativas": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.molde": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.posicaoContador": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.prefixo": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioDireto.sentinela.prova.semente": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.token": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Campo do token na resposta e o cabecalho do envio que o leva."
+        },
+        "pagina.rede.envioDireto.sentinela.verificacao": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Verificacao extra pedida na resposta, repassada como veio no cabecalho declarado."
+        },
+        "pagina.rede.envioDireto.sentinela.verificacao.cabecalho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.verificacao.exigida": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.sentinela.verificacao.valor": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Regras de erro do provedor."
+        },
+        "pagina.rede.erros.consultaLiberacao": {
+          "escopo": "formulario",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.consultaLiberacao.args": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.erros.consultaLiberacao.caminho": {
+          "escopo": "formulario",
+          "nivel": "opcional",
+          "doc": "molde do caminho do pedido no lugar do de `formulario.rpc` (mesmas vars)."
+        },
+        "pagina.rede.erros.consultaLiberacao.esgotado": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "O medidor esgotado (vale o reset dele; com mais de um, o mais tarde)."
+        },
+        "pagina.rede.erros.consultaLiberacao.esgotado.caminho": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.consultaLiberacao.esgotado.igual": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.consultaLiberacao.itens": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "Caminho da lista de medidores na carga."
+        },
+        "pagina.rede.erros.consultaLiberacao.reserva": {
+          "escopo": "formulario",
+          "nivel": "opcional",
+          "doc": "o medidor cujo reset vale quando nenhum esta esgotado."
+        },
+        "pagina.rede.erros.consultaLiberacao.reserva.caminho": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.consultaLiberacao.reserva.igual": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.consultaLiberacao.reset": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "Caminho do reset, relativo ao item."
+        },
+        "pagina.rede.erros.consultaLiberacao.rpc": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio",
+          "doc": "Id da chamada RPC e os argumentos dela."
+        },
+        "pagina.rede.erros.consultaLiberacao.unidade": {
+          "escopo": "formulario",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.espera": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.espera.primeiroDadoSeg": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.foraDoLimite": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.limiteEscopo": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "pagina.rede.erros.regras": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "pagina.rede.erros.regras.bloqueados": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho de lista de ids."
+        },
+        "pagina.rede.erros.regras.caminho": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho no JSON do fato."
+        },
+        "pagina.rede.erros.regras.continuar": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So 'falha_pronta': texto do reenvio."
+        },
+        "pagina.rede.erros.regras.escopo": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.escopo.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.regras.escopo.seFalso": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.escopo.seVerdadeiro": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.regras.existe": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.igual": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.jsonNoTexto": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Ao descer um caminho, strings no meio dele sao lidas como JSON."
+        },
+        "pagina.rede.erros.regras.liberaEm": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "A primeira que der numero valido vence."
+        },
+        "pagina.rede.erros.regras.liberaEm.cabecalho": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.liberaEm.caminho": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.liberaEm.unidade": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.regras.maxCaracteres": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So com origem 'resposta' (o schema recusa em outra origem)."
+        },
+        "pagina.rede.erros.regras.origem": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.recurso": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho do nome do recurso."
+        },
+        "pagina.rede.erros.regras.status": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.tentativas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So 'falha_pronta': reenvios automaticos (0-3)."
+        },
+        "pagina.rede.erros.regras.texto": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Regex, comparada sem acento e em minusculas."
+        },
+        "pagina.rede.erros.regras.tipo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.erros.regras.verificacao": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "provedor cuja pagina fala por FORMULARIO (tokens publicados num objeto global da pagina, campos com JSON aninhado, resposta em quadros) — envio pela rede e leit"
+        },
+        "pagina.rede.formulario.cabecalhos": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Cabecalhos de todos os pedidos (interpolados)."
+        },
+        "pagina.rede.formulario.catalogo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "catalogo de modelos da conta lido por chamada RPC (ver CatalogoFormulario)."
+        },
+        "pagina.rede.formulario.catalogo.args": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.formulario.catalogo.caminho": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "molde do caminho do pedido no lugar do de `formulario.rpc` (mesmas vars)."
+        },
+        "pagina.rede.formulario.catalogo.familia": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "a familia do modelo (var {familia}); escolhe as vars de `envio.porFamilia`."
+        },
+        "pagina.rede.formulario.catalogo.id": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "O id do modelo (vira o id da lista do Duo e a var {idModelo} do envio)."
+        },
+        "pagina.rede.formulario.catalogo.ignorar": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "itens que nao entram na lista (qualquer condicao que case)."
+        },
+        "pagina.rede.formulario.catalogo.ignorar.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.catalogo.ignorar.igual": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.catalogo.itens": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "A lista de modelos na carga (\"\" = a carga e a lista)."
+        },
+        "pagina.rede.formulario.catalogo.nome": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "outro nome do modelo no item (var {nome}); o `conferirRotulo` tambem o aceita."
+        },
+        "pagina.rede.formulario.catalogo.rotulo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "O nome que o seletor do Duo mostra (salvo `sobrepor[id].label`) e a var {rotulo} do envio."
+        },
+        "pagina.rede.formulario.catalogo.rpc": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Id da chamada RPC e os argumentos dela (sem vars)."
+        },
+        "pagina.rede.formulario.catalogo.sobrepor": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "correcao explicita por id do catalogo, para o provedor que rotula um modelo com o nome de outro."
+        },
+        "pagina.rede.formulario.catalogo.vars": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "vars extras do envio lidas de cada item (var -> caminho)."
+        },
+        "pagina.rede.formulario.contexto": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "vars do CONTEXTO do motor lidas do mesmo objeto global de `tokens` (var -> chave dele), como os passos de `Blueprint.contexto` fazem por HTTP."
+        },
+        "pagina.rede.formulario.envio": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.envio.anexos": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.envio.anexos.cabecalhos": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.formulario.envio.anexos.campoArquivo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.envio.anexos.molde": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Entrada de cada arquivo em {arquivos}: vars {id} (o que o upload devolve), {nome}, {mime}."
+        },
+        "pagina.rede.formulario.envio.anexos.urlToken": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Var de token com a URL de upload (a pagina a publica; nunca um literal do blueprint)."
+        },
+        "pagina.rede.formulario.envio.cabecalhos": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.formulario.envio.cabecalhosModelo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Cabecalhos que so vao quando um modelo de `modelos` (ou do catalogo) foi escolhido."
+        },
+        "pagina.rede.formulario.envio.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "POST do envio (mesma origem): query interpolada ({reqid}, tokens, vars)."
+        },
+        "pagina.rede.formulario.envio.campoNivel": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Campo (vindo de `corpoPensamento`) com o nivel de raciocinio, e o nivel -> vars."
+        },
+        "pagina.rede.formulario.envio.campos": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Campos do formulario."
+        },
+        "pagina.rede.formulario.envio.conferirModelo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Molde do id que o provedor deve dizer que serviu a resposta (`stream.quadros.modelo`), ex.: \"{idModelo}\"."
+        },
+        "pagina.rede.formulario.envio.conferirRotulo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Molde do nome que o modelo servido deve ter, quando a resposta vem da leitura da conversa (ela nao traz o id)."
+        },
+        "pagina.rede.formulario.envio.conversa": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Leitura da conversa por RPC: a ponta (a resposta mais recente e o candidato dela) quando a aba nao a guardou, e a resposta deste envio quando o stream para ante"
+        },
+        "pagina.rede.formulario.envio.conversa.args": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.formulario.envio.conversa.candidato": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.envio.conversa.id": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.envio.conversa.itens": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.envio.conversa.modelo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o NOME do modelo que serviu o turno (pode trazer versao e nivel junto), conferido com `envio.conferirRotulo` quando a resposta e completada pela leitura."
+        },
+        "pagina.rede.formulario.envio.conversa.recentePrimeiro": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.envio.conversa.rpc": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.envio.conversa.texto": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.envio.conversa.usuario": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o texto que o usuario mandou no turno."
+        },
+        "pagina.rede.formulario.envio.esperaMaxMin": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.envio.exigirModelo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "O modelo escolhido no Duo que nao esta em `modelos` nem no catalogo NAO vai pela rede (sem isto, iria no modelo padrao da conta — outro modelo, sem aviso)."
+        },
+        "pagina.rede.formulario.envio.modeloPensamento": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Modelo de `modelos` usado quando o pensamento e pedido sem modelo escolhido."
+        },
+        "pagina.rede.formulario.envio.modelos": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Modelo escolhido no Duo (id da lista do blueprint) -> vars do envio."
+        },
+        "pagina.rede.formulario.envio.niveis": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.formulario.envio.porFamilia": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "familia do modelo ({familia}, do catalogo ou de `modelos`) -> vars do envio."
+        },
+        "pagina.rede.formulario.envio.silencioSeg": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Segundos sem quadro novo ate a aba passar a ler a conversa (default 30), e minutos de espera pela resposta antes de desistir (default 10)."
+        },
+        "pagina.rede.formulario.principal": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Com `envio` e `tela` declarados: qual vai primeiro (default 'rede')."
+        },
+        "pagina.rede.formulario.rpc": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Chamada RPC (leituras): POST com `{rpc}` e `{args}` (cru) nos moldes."
+        },
+        "pagina.rede.formulario.rpc.caminho": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Caminho (mesma origem), com a query interpolada: {rpc}, {reqid} e os tokens."
+        },
+        "pagina.rede.formulario.rpc.campos": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.formulario.rpc.envelope": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Onde a resposta traz a carga de cada chamada."
+        },
+        "pagina.rede.formulario.rpc.envelope.carga": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.rpc.envelope.codigoErro": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Caminho (dot-path) do codigo da recusa DENTRO do valor da posicao `erro`; sem ele, o codigo e o proprio valor."
+        },
+        "pagina.rede.formulario.rpc.envelope.erro": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.rpc.envelope.id": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Posicao do id da chamada na parte."
+        },
+        "pagina.rede.formulario.rpc.envelope.marca": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.rpc.envelope.naoEncontrado": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Codigos de recusa que dizem \"nao existe (para esta conta)\": a chamada responde 404, como um GET de recurso inexistente, e o Duo trata o ponteiro como morto."
+        },
+        "pagina.rede.formulario.rpc.envelope.prefixo": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.tela": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o envio vai pela UI da pagina (editor, menu de modelo, botao Enviar) e a resposta e lida da conversa quando fica pronta — para provedores cuja UI responde por u"
+        },
+        "pagina.rede.formulario.tela.conversa": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tela.conversa.args": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.formulario.tela.conversa.candidato": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tela.conversa.id": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tela.conversa.itens": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tela.conversa.modelo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o NOME do modelo que serviu o turno (pode trazer versao e nivel junto), conferido com `envio.conferirRotulo` quando a resposta e completada pela leitura."
+        },
+        "pagina.rede.formulario.tela.conversa.recentePrimeiro": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.tela.conversa.rpc": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tela.conversa.texto": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tela.conversa.usuario": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o texto que o usuario mandou no turno."
+        },
+        "pagina.rede.formulario.tela.esperaMaxMin": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Minutos de espera pela resposta antes de desistir (default 10), e segundos entre as leituras da conversa (default 2)."
+        },
+        "pagina.rede.formulario.tela.intervaloSeg": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.tokens": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Objeto global da pagina com os tokens (`objeto`) e, para cada var, a chave dele."
+        },
+        "pagina.rede.formulario.tokens.campos": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.formulario.tokens.objeto": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.tokens.recarregar": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Pagina da mesma origem cujo HTML traz os tokens frescos (\"chave\":\"valor\"), lida quando o provedor recusa os da pagina (aba aberta ha horas)."
+        },
+        "pagina.rede.formulario.vars": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Vars fixas de todos os pedidos (ex.: idioma)."
+        },
+        "pagina.rede.headerConta": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Nome do header de conta (multi-conta); valor vem da sessao."
+        },
+        "pagina.rede.hostWs": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Host a grampear no WebSocket para o handoff; vazio = sem grampo."
+        },
+        "pagina.rede.polling": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Confirma a resposta por leitura da conversa, correlacionada ao envio atual."
+        },
+        "pagina.rede.polling.campoConversaEnviada": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.polling.campoMensagemEnviada": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.polling.concluida": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.quadros": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Formato dos quadros do stream."
+        },
+        "pagina.rede.quadros.candidato": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Id do candidato de resposta escolhido (a conversa seguinte o cita)."
+        },
+        "pagina.rede.quadros.conversa": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Caminhos (dot-path) NA CARGA."
+        },
+        "pagina.rede.quadros.envelope": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "doc": "Parte que traz a carga: o 1o item vale `marca`, a carga (texto JSON) esta na posicao `carga`; sem carga, a posicao `erro` (opcional) traz o codigo da recusa."
+        },
+        "pagina.rede.quadros.envelope.carga": {
+          "escopo": "interno",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.quadros.envelope.erro": {
+          "escopo": "interno",
+          "nivel": "opcional"
+        },
+        "pagina.rede.quadros.envelope.marca": {
+          "escopo": "interno",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.quadros.fim": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Marca (1o item) da parte que encerra a resposta."
+        },
+        "pagina.rede.quadros.modelo": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Id e nome do modelo que SERVIU a resposta (opcional): o provedor pode atender com outro modelo que nao o pedido, sem erro nenhum."
+        },
+        "pagina.rede.quadros.prefixo": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Prefixo anti-sequestro de JSON no inicio do corpo (descartado)."
+        },
+        "pagina.rede.quadros.raciocinio": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Raciocinio, acumulado (opcional)."
+        },
+        "pagina.rede.quadros.resposta": {
+          "escopo": "interno",
+          "nivel": "opcional"
+        },
+        "pagina.rede.quadros.rotuloModelo": {
+          "escopo": "interno",
+          "nivel": "opcional"
+        },
+        "pagina.rede.quadros.texto": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "doc": "Texto da resposta, acumulado."
+        },
+        "pagina.rede.quadros.titulo": {
+          "escopo": "interno",
+          "nivel": "opcional"
+        },
+        "pagina.rede.quadros.versao": {
+          "escopo": "interno",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.reApiProibida": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Regex (string) de caminhos PROIBIDos para leitura (o endpoint de envio e o de anti-robo)."
+        },
+        "pagina.rede.reEnvio": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio",
+          "doc": "Regex (string) do pathname do endpoint de ENVIO a espelhar."
+        },
+        "pagina.rede.reUpload": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Regex (string) de requisicoes de UPLOAD (so para contar)."
+        },
+        "pagina.seletores": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.arquivo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.editor": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.enviar": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.esforco": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.itemModelo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.itemModeloPorId": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "o item do menu achado pelo ID do modelo no Duo ({modelo}), quando o provedor marca cada item com um id estavel — o texto do item muda a cada versao do modelo."
+        },
+        "pagina.seletores.menu": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.nivel": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "niveis de raciocinio como ITENS de um submenu do menu de modelo, em vez do slider `esforco`."
+        },
+        "pagina.seletores.nivel.abrir": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.seletores.nivel.itens": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.parar": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.pensar": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "botao-toggle de pensamento do composer."
+        },
+        "pagina.seletores.seletorModelo": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.seletores.seletorModeloAlt": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pensamento": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "pensamento estendido (thinking)."
+        },
+        "pensamento.desligar": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.desligar.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.desligar.corpo": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pensamento.desligar.extrai": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pensamento.desligar.headers": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "headers SO deste passo, somados aos `Blueprint.headers`."
+        },
+        "pensamento.desligar.metodo": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.ligar": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.ligar.caminho": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.ligar.corpo": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pensamento.ligar.extrai": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pensamento.ligar.headers": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "headers SO deste passo, somados aos `Blueprint.headers`."
+        },
+        "pensamento.ligar.metodo": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.stream": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio",
+          "doc": "Seletores de captura do pensamento no SSE."
+        },
+        "pensamento.stream.caminhoTexto": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamento.stream.igual": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pensamento.stream.rotulo": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "O que este evento traz e' o RESUMO de um segmento de raciocinio, nao o pensamento."
+        },
+        "pensamento.stream.sufixo": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "pensamento.stream.tipoEvento": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "pensamentoSempreLigado": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "o provedor nao tem como DESLIGAR o raciocinio, so escolher a intensidade (ex.: pensamento adaptativo, em que o modelo decide quanto pensar)."
+        },
+        "retryTransitorio": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "retryTransitorio.padrao": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "retryTransitorio.tentativas": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "rotulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "sessao": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "sessoes": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "limites de sessao simultanea (teto e espacamento entre inicios)."
+        },
+        "sessoes.intervaloInicioMs": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "sessoes.limite": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "sessoes.padrao": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "site": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Endereco https do servico do plugin (a pagina que a pessoa abre no navegador)."
+        },
+        "stream": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "quando presente, o SSE e decodificado como \"delta encoding\" generico (DecodificadorDelta, configurado por ESTES dados) e os eventos de alto nivel viram EvtTurno"
+        },
+        "stream.delta.campoId": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "campo com o id da mensagem (para separar mensagens consecutivas; default 'id')."
+        },
+        "stream.delta.campoIndiceMensagem": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "campo do evento que diz A QUAL mensagem (pelo indice de chegada) ele se aplica (ex.: 'c')."
+        },
+        "stream.delta.envelope": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.envelope.conversaId": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "chave do id de conversa no envelope (ex."
+        },
+        "stream.delta.envelope.erro": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "chave de erro no envelope (ex."
+        },
+        "stream.delta.envelope.mensagem": {
+          "escopo": "sse",
+          "nivel": "obrigatorio",
+          "doc": "chave que traz a nova mensagem (ex."
+        },
+        "stream.delta.eventos": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.eventos.campoConversaId": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "campo com o id de conversa nos eventos tipados (ex."
+        },
+        "stream.delta.eventos.campoTipo": {
+          "escopo": "sse",
+          "nivel": "obrigatorio",
+          "doc": "campo discriminador (ex."
+        },
+        "stream.delta.eventos.erro": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "erro: tipos + campos candidatos a mensagem (o 1o tambem detecta erro sem tipo)."
+        },
+        "stream.delta.eventos.erro.campos": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.eventos.erro.tipos": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.eventos.eventoDelta": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "nome do `event:` que forca o modo delta (ex."
+        },
+        "stream.delta.eventos.feito": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "marcador textual de fim (default '[DONE]')."
+        },
+        "stream.delta.eventos.fim": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "tipos que significam fim do turno."
+        },
+        "stream.delta.eventos.handshake": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "nome do `event:` de handshake a ignorar (ex."
+        },
+        "stream.delta.eventos.titulo": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "titulo: tipo do evento + campo com o texto."
+        },
+        "stream.delta.eventos.titulo.campo": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.eventos.titulo.tipo": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.raciocinio": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.raciocinio.caminho": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.raciocinio.em": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.raizMensagem": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "prefixo do pointer que delimita a mensagem (default '/message')."
+        },
+        "stream.delta.textoRaciocinio": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.blocos": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "blocos: junta os `campos` de cada item do array `em`."
+        },
+        "stream.delta.textoRaciocinio.blocos.campos": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.blocos.em": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.blocos.sepBlocos": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.blocos.sepCampos": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.direto": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "campo direto, quando uma condicao casa (ex.: content_type==X -> pega Y)."
+        },
+        "stream.delta.textoRaciocinio.direto.pega": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.direto.quando": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.direto.quando.caminho": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.direto.quando.em": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoRaciocinio.direto.rotulo": {
+          "escopo": "sse",
+          "nivel": "opcional"
+        },
+        "stream.delta.textoVisivel": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.textoVisivel.campoTextoItem": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "doc": "quando o item e objeto, campo que traz o texto (ex."
+        },
+        "stream.delta.textoVisivel.em": {
+          "escopo": "sse",
+          "nivel": "obrigatorio",
+          "doc": "caminho do array de partes (ex."
+        },
+        "stream.delta.versao": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.visivel": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.visivel.caminho": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.delta.visivel.em": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.framing": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "'sse': eventos `data:`."
+        },
+        "stream.limite": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "evento em que o provedor informa a situacao da cota (ver ConfigLimite)."
+        },
+        "stream.limite.escala": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Que valor vale 100% (padrao 100)."
+        },
+        "stream.limite.janelas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Varias janelas de cota (objeto ou lista em `em`): vale o MAIOR percentual entre elas e a severidade mais grave."
+        },
+        "stream.limite.janelas.em": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "stream.limite.janelas.percentual": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "stream.limite.janelas.severidade": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "stream.limite.percentual": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho do percentual usado."
+        },
+        "stream.limite.severidade": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caminho da severidade (estado) dita pelo provedor."
+        },
+        "stream.limite.severidades": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Tabela estado do provedor -> severidade do motor."
+        },
+        "stream.limite.tipoEvento": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "stream.limpezaTexto": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "trechos a REMOVER do texto do provedor (ancora de citacao, diretiva de documento/canvas) — marcacao da UI dele que vaza como lixo no Duo."
+        },
+        "stream.limpezaTexto.ate": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "stream.limpezaTexto.de": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "stream.quadros": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "o corpo e decodificado pelo DecodificadorQuadros, configurado por ESTES dados (marcas, posicoes e caminhos do provedor)."
+        },
+        "stream.quadros.candidato": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "Id do candidato de resposta escolhido (a conversa seguinte o cita)."
+        },
+        "stream.quadros.conversa": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "Caminhos (dot-path) NA CARGA."
+        },
+        "stream.quadros.envelope": {
+          "escopo": "quadros",
+          "nivel": "obrigatorio",
+          "doc": "Parte que traz a carga: o 1o item vale `marca`, a carga (texto JSON) esta na posicao `carga`; sem carga, a posicao `erro` (opcional) traz o codigo da recusa."
+        },
+        "stream.quadros.envelope.carga": {
+          "escopo": "quadros",
+          "nivel": "obrigatorio"
+        },
+        "stream.quadros.envelope.erro": {
+          "escopo": "quadros",
+          "nivel": "opcional"
+        },
+        "stream.quadros.envelope.marca": {
+          "escopo": "quadros",
+          "nivel": "obrigatorio"
+        },
+        "stream.quadros.fim": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "Marca (1o item) da parte que encerra a resposta."
+        },
+        "stream.quadros.modelo": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "Id e nome do modelo que SERVIU a resposta (opcional): o provedor pode atender com outro modelo que nao o pedido, sem erro nenhum."
+        },
+        "stream.quadros.prefixo": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "Prefixo anti-sequestro de JSON no inicio do corpo (descartado)."
+        },
+        "stream.quadros.raciocinio": {
+          "escopo": "quadros",
+          "nivel": "opcional",
+          "doc": "Raciocinio, acumulado (opcional)."
+        },
+        "stream.quadros.resposta": {
+          "escopo": "quadros",
+          "nivel": "opcional"
+        },
+        "stream.quadros.rotuloModelo": {
+          "escopo": "quadros",
+          "nivel": "opcional"
+        },
+        "stream.quadros.texto": {
+          "escopo": "quadros",
+          "nivel": "obrigatorio",
+          "doc": "Texto da resposta, acumulado."
+        },
+        "stream.quadros.titulo": {
+          "escopo": "quadros",
+          "nivel": "opcional"
+        },
+        "stream.quadros.versao": {
+          "escopo": "quadros",
+          "nivel": "obrigatorio"
+        },
+        "stream.texto": {
+          "escopo": "sse",
+          "nivel": "opcional"
+        },
+        "stream.texto.caminhoTexto": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.texto.igual": {
+          "escopo": "sse",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "stream.texto.tipoEvento": {
+          "escopo": "sse",
+          "nivel": "obrigatorio"
+        },
+        "stream.usage": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "uso de tokens informado no stream (ver ConfigUso)."
+        },
+        "stream.usage.entrada": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "stream.usage.saida": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "stream.usage.tipoEvento": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "versao": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "versaoFormato": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        }
+      }
+    },
+    "ferramenta": {
+      "campos": {
+        "atualizacao": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "atualizacao.url": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "baseUrlConfig": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Chave no chrome.storage de onde vem o baseURL."
+        },
+        "baseUrlOpcoes": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "URLs candidatas que a blueprint ja traz (ex.: dev/producao)."
+        },
+        "compatibilidade": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "compatibilidade.extensaoMaxima": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "compatibilidade.extensaoMinima": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "confirmacao": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Gating: se false, nao pede confirmacao."
+        },
+        "descricao": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Descricao para o LLM."
+        },
+        "execucao": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Modos de execucao (avaliados em ordem; primeiro `quando` que casar, senao `padrao`)."
+        },
+        "execucao.fanout": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Nome de um input array: executa o passo por item ({item}) e junta as respostas."
+        },
+        "execucao.juntar": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Separador do fan-out (default '\\n')."
+        },
+        "execucao.padrao": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Modo default (usado quando nenhum `quando` casa)."
+        },
+        "execucao.passo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "execucao.passo.caminho": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Caminho relativo ao baseURL; template (ex.: '/api/ai/processo/{item}')."
+        },
+        "execucao.passo.corpo": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Corpo (POST/PUT); template recursivo."
+        },
+        "execucao.passo.headers": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Headers; valores template (ex.: Authorization: 'Bearer {segredo:apiKey}')."
+        },
+        "execucao.passo.metodo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "execucao.passo.query": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Query string; valores template."
+        },
+        "execucao.quando": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Nome do input cuja PRESENCA (truthy / array nao-vazio) ativa este modo."
+        },
+        "experimental": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Marca a tool como experimental (UI mostra selo)."
+        },
+        "icone": {
+          "escopo": "comum",
+          "nivel": "recomendado",
+          "doc": "nome de icone (AppIco) ou URL https do icone ou do site, como no provider."
+        },
+        "id": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Id = nome da tool exposto ao LLM (ex.: 'buscar_juris_tjba')."
+        },
+        "inputSchema": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "JSON Schema dos inputs (mesma forma de FerramentaDef.input_schema)."
+        },
+        "inputSchema.properties": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "inputSchema.required": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "inputSchema.type": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "nome": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Nome proprio (UI)."
+        },
+        "resultado": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "PoC: so 'texto' (devolve a resposta como veio)."
+        },
+        "segredos": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Mapa nome-do-segredo -> chave no chrome.storage."
+        },
+        "site": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Endereco https do servico do plugin (a pagina que a pessoa abre no navegador)."
+        },
+        "versao": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        },
+        "versaoFormato": {
+          "escopo": "comum",
+          "nivel": "recomendado"
+        }
+      }
+    }
+  }
+}
