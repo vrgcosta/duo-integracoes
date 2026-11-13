@@ -1022,7 +1022,8 @@
         },
         "erros.limiteEscopo": {
           "escopo": "comum",
-          "nivel": "recomendado"
+          "nivel": "opcional",
+          "doc": "Escopo padrao do limite, para as regras que nao dizem o delas (cada regra pode trazer `escopo`)."
         },
         "erros.regras": {
           "escopo": "comum",
@@ -1316,7 +1317,7 @@
         },
         "modelos": {
           "escopo": "comum",
-          "nivel": "recomendado",
+          "nivel": "opcional",
           "doc": "Lista fixa."
         },
         "modelos.id": {
@@ -1863,7 +1864,8 @@
         },
         "pagina.rede.erros.limiteEscopo": {
           "escopo": "comum",
-          "nivel": "recomendado"
+          "nivel": "opcional",
+          "doc": "Escopo padrao do limite, para as regras que nao dizem o delas (cada regra pode trazer `escopo`)."
         },
         "pagina.rede.erros.regras": {
           "escopo": "comum",

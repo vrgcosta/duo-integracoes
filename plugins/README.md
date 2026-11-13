@@ -55,9 +55,9 @@ usa a tela como reserva.
 
 A **1.1.2** do ChatGPT web declara quantas sessões o plugin roda ao mesmo tempo: 2 por
 padrão e até 5, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas configurações
-do plugin. Cada turno em andamento usa uma aba do ChatGPT aberta pelo Duo, e o limite
-acompanha as 5 abas que o Duo abre por site. As versões da extensão sem esse recurso
-ignoram o campo.
+do plugin. Os turnos simultâneos dividem uma única aba do ChatGPT aberta pelo Duo (enviados
+pela rede, cada um na sua conversa); quem limita quantos rodam juntos é esse número. As
+versões da extensão sem esse recurso ignoram o campo.
 
 A **1.2.0** do Gemini web lê a lista de modelos da própria conta (`formulario.catalogo`, pela chamada RPC de catálogo da página): o nome no seletor, o id e a família de cada modelo vêm de lá, e um modelo renomeado pelo Google aparece com o nome novo sem mudar o plugin. A lista `modelos` fica só como reserva para quando o catálogo não responde. `catalogo.sobrepor` corrige o nome que o catálogo traz errado para um id (hoje o 4 Argon, que o catálogo chama de 4 Carbon), `porFamilia` leva os campos próprios do modo do Argon e `idNoMenu` diz o id do item no menu para o caminho da tela.
 
@@ -166,7 +166,7 @@ não levam datas para que os endereços sejam mantidos entre publicações.
 
 Antes de publicar uma mudança em qualquer plugin, rode na raiz do repositório:
 
-```
+```bash
 py -m unittest discover -s plugins/testes -v
 ```
 
