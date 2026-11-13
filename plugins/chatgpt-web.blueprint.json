@@ -387,6 +387,15 @@
       "campoAccessToken": "accessToken",
       "campoContaId": "account.id",
       "hostWs": "chatgpt.com",
+      "quadroWs": {
+        "texto": "payload.payload.encoded_item",
+        "conversa": [
+          "payload.payload.conversation_id",
+          "payload.conversation_id",
+          "conversation_id"
+        ]
+      },
+      "campoConversaStream": "conversation_id",
       "polling": {
         "campoConversaEnviada": "conversation_id",
         "campoMensagemEnviada": "messages.0.id",
@@ -609,7 +618,7 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.3.0",
+  "versao": "1.3.1",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

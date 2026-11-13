@@ -1477,6 +1477,11 @@
           "escopo": "pagina",
           "nivel": "opcional"
         },
+        "pagina.rede.campoConversaStream": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Nome do campo que traz o id da conversa no stream do envio (`\"campo\":\"id\"`): a conversa nova so aparece ali, e e por ela que o quadro do WebSocket acha o turno."
+        },
         "pagina.rede.envioDireto": {
           "escopo": "pagina",
           "nivel": "opcional",
@@ -2437,6 +2442,19 @@
         },
         "pagina.rede.quadros.versao": {
           "escopo": "interno",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.quadroWs": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Formato do quadro do WebSocket do handoff: o caminho do trecho do stream e os do id da conversa."
+        },
+        "pagina.rede.quadroWs.conversa": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.quadroWs.texto": {
+          "escopo": "pagina",
           "nivel": "obrigatorio"
         },
         "pagina.rede.reApiProibida": {
