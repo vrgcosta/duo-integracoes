@@ -6,7 +6,7 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.3.0**, Claude web na **1.3.0** e Gemini web na
+Formato **1**. ChatGPT web está na **1.3.1**, Claude web na **1.3.0** e Gemini web na
 **1.5.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
@@ -111,6 +111,14 @@ A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resp
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os
 trabalhos do Duo Forge só param quando o estado é de alerta ou quando a janela passa do teto
 (90%); dentro do limite, seguem.
+
+A **1.3.1** do ChatGPT web declara o formato do quadro do WebSocket por onde o ChatGPT às
+vezes continua a resposta (`pagina.rede.quadroWs`: o caminho do trecho do stream e os caminhos
+do id da conversa) e o campo da conversa no stream do envio (`campoConversaStream`). Antes, esse
+formato era fixo na extensão; agora o motor só segue o WebSocket com ele declarado, e cada
+trecho vai ao turno da conversa dele, mesmo com vários turnos na mesma aba. A extensão que ainda
+não lê esses campos os ignora; com a extensão nova e o plugin 1.3.0, a resposta continua chegando
+pelo envio e pela leitura da conversa, só sem a continuação pelo WebSocket.
 
 A **1.3.0** do ChatGPT web identifica a conta logada (`contexto` com a leitura da conta,
 `/backend-api/me`), e trocar de conta não mistura os vínculos processo→conversa. Os vínculos
