@@ -210,6 +210,11 @@ em que os recursos desse plugin foram testados. Para publicar:
 4. Só eleve `versaoFormato` quando o contrato do interpretador mudar de forma incompatível.
 5. Publique primeiro a extensão que oferece o suporte, depois o JSON que o exige.
 
+`site` é opcional: o endereço `https` da página do serviço (por exemplo
+`"site": "https://flow.vrgc.com.br"`). O detalhe do plugin mostra o link para a pessoa abrir
+o serviço, e o ícone usa o favicon desse endereço quando o plugin não declara `icone`.
+Extensões antigas ignoram o campo.
+
 `compatibilidade.extensaoMaxima` é opcional e inclusiva. Serve para um limite conhecido;
 não precisa acompanhar a versão mais recente da extensão. Se a publicação for
 incompatível com a extensão instalada, o Duo explica a exigência e bloqueia a instalação.
