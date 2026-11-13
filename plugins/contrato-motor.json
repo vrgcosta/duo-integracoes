@@ -1827,6 +1827,10 @@
           "nivel": "opcional",
           "livre": true
         },
+        "pagina.rede.envioSocket.abertura.erro": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
         "pagina.rede.envioSocket.abertura.registro": {
           "escopo": "envioSocket",
           "nivel": "obrigatorio",
@@ -1861,7 +1865,8 @@
         },
         "pagina.rede.envioSocket.catalogo.metodo": {
           "escopo": "envioSocket",
-          "nivel": "opcional"
+          "nivel": "opcional",
+          "doc": "Default: POST quando ha `corpo`, GET sem ele (GET com corpo e recusado na importacao)."
         },
         "pagina.rede.envioSocket.catalogo.opcoes": {
           "escopo": "envioSocket",
@@ -1923,7 +1928,7 @@
         "pagina.rede.envioSocket.separador": {
           "escopo": "envioSocket",
           "nivel": "opcional",
-          "doc": "Separador dos registros (default U+001E)."
+          "doc": "Separador dos registros: um caractere de controle (default U+001E)."
         },
         "pagina.rede.envioSocket.token": {
           "escopo": "envioSocket",
@@ -3169,7 +3174,7 @@
         "stream.registros": {
           "escopo": "registros",
           "nivel": "opcional",
-          "doc": "o corpo e decodificado pelo DecodificadorRegistros, configurado por ESTES dados (separador, registros de atualizacao, final e erro, caminhos das mensagens)."
+          "doc": "o corpo e decodificado pelo DecodificadorRegistros, configurado por ESTES dados (registros de atualizacao, final e erro, caminhos das mensagens)."
         },
         "stream.registros.atualizacao": {
           "escopo": "registros",
@@ -3297,11 +3302,6 @@
         "stream.registros.resposta.em": {
           "escopo": "registros",
           "nivel": "obrigatorio"
-        },
-        "stream.registros.separador": {
-          "escopo": "registros",
-          "nivel": "opcional",
-          "doc": "Separador dos registros (default U+001E)."
         },
         "stream.registros.texto": {
           "escopo": "registros",

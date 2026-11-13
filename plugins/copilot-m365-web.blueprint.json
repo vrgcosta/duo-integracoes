@@ -222,7 +222,8 @@
           "registro": {
             "protocol": "json",
             "version": 1
-          }
+          },
+          "erro": "error"
         },
         "pedido": [
           {
