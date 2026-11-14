@@ -540,7 +540,6 @@
             "standard",
             "min"
           ],
-          "reserva": "auto",
           "semRaciocinio": {
             "valor": "none",
             "preferidos": [
@@ -618,7 +617,7 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.3.2",
+  "versao": "1.3.3",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

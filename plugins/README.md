@@ -6,11 +6,15 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.3.2**, Claude web na **1.3.0** e Gemini web na
+Formato **1**. ChatGPT web está na **1.3.3**, Claude web na **1.3.0** e Gemini web na
 **1.5.2**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
+
+ChatGPT web **1.3.3** deixa de declarar `pagina.rede.envioDireto.modelos.reserva`: o motor não manda mais o
+modelo genérico "auto" (que o provedor resolvia por conta própria, trocando o modelo e tirando o raciocínio sem
+aviso). O modelo sai sempre do catálogo da conta, pelo nome; sem modelo que sirva, o envio pela rede não sai e diz por quê.
 
 A extensão mínima **3.71.146** é a versão prevista para a entrega que lê a seção `erros`;
 confira o número quando essa versão da extensão for publicada e ajuste os três JSONs se

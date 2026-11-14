@@ -1696,11 +1696,6 @@
           "nivel": "opcional",
           "doc": "Com pensamento: moldes dos modelos a tentar primeiro ({padrao}); depois, os demais ajustaveis na ordem do catalogo."
         },
-        "pagina.rede.envioDireto.modelos.reserva": {
-          "escopo": "pagina",
-          "nivel": "obrigatorio",
-          "doc": "Modelo quando o catalogo nao ajuda (ou o escolhido for recusado)."
-        },
         "pagina.rede.envioDireto.modelos.semRaciocinio": {
           "escopo": "pagina",
           "nivel": "opcional",
