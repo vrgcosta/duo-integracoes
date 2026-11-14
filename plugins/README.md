@@ -6,8 +6,8 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.3.1**, Claude web na **1.3.0** e Gemini web na
-**1.5.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
+Formato **1**. ChatGPT web está na **1.3.2**, Claude web na **1.3.0** e Gemini web na
+**1.5.2**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -83,6 +83,12 @@ rede, com a conversa listada entre as do Gem). Pela tela, que é só a reserva, 
 ainda nasce fora do Gem. As listas de conversas (geral, do Gem e a busca) seguem as páginas
 seguintes da chamada RPC (`rpc.paginas`: o marcador da próxima página vem na resposta e volta
 na chamada), até 5 páginas de 100 conversas na lista e 3 na busca.
+
+A **1.3.2** do ChatGPT web e a **1.5.2** do Gemini web sobem o limite dos resultados de ferramenta no corpo da
+mensagem (`ferramentas.limiteInline`) de 24 mil para 140 mil e 400 mil caracteres. Medido em 2026-11-14, texto numa
+mensagem pela rede: o ChatGPT web lê inteiro até cerca de 160 mil e o servidor recusa 200 mil (413
+`message_length_exceeds_limit`); o Gemini web lê inteiro ao menos 750 mil. Com 24 mil, o que passava ia para o
+arquivo anexado, que o site não lê inteiro, e o modelo pedia de novo as peças que ficaram lá.
 
 A **1.5.1** do Gemini web diz quais recusas da chamada RPC significam "conversa que não existe"
 (`rpc.envelope.naoEncontrado`, com o código lido em `codigoErro`): a leitura de uma conversa
