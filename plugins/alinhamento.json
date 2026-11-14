@@ -12,6 +12,14 @@
     },
     "gemini-web.blueprint.json": {
       "stream.limite": "A cota do Gemini vem pela consulta de liberacao (erros.consultaLiberacao), e nao pelo stream."
+    },
+    "copilot-m365-web.blueprint.json": {
+      "niveisPensamento": "O raciocinio do Copilot e escolhido no proprio modelo (os ids Chat/Reasoning e os do GPT e do Claude), e nao num nivel a parte.",
+      "stream.limite": "O Copilot nao informa cota da conta no stream: o throttling dele e por conversa (600 mensagens), sem percentual (conferido em 2026-11-13).",
+      "conversas.listar": "PENDENTE: a lista do Copilot vem por POST na mesma origem (/resources/app-shell-action, GetConversationPageHistoryList, com marcador de pagina em syncState), e o motor so lista por GET ou pela RPC do formulario.",
+      "conversas.buscar": "PENDENTE: depende da lista por POST (ver conversas.listar).",
+      "conversas.renomear": "PENDENTE: a acao de renomear do Copilot (POST na mesma origem) ainda nao foi capturada.",
+      "conversas.excluir": "PENDENTE: a acao de excluir do Copilot (POST na mesma origem) ainda nao foi capturada."
     }
   }
 }

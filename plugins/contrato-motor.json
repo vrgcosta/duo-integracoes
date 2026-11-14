@@ -12,6 +12,8 @@
     "envioDireto",
     "quadros",
     "sse",
+    "registros",
+    "envioSocket",
     "interno"
   ],
   "niveis": [
@@ -58,6 +60,14 @@
       "sse": {
         "campo": "stream.framing",
         "igual": "sse"
+      },
+      "registros": {
+        "campo": "stream.framing",
+        "igual": "registros"
+      },
+      "envioSocket": {
+        "campo": "pagina.rede.envioSocket",
+        "existe": true
       }
     },
     "ferramenta": {}
@@ -414,6 +424,11 @@
         "conversas.ler.arvore.raiz": {
           "escopo": "comum",
           "nivel": "obrigatorio"
+        },
+        "conversas.ler.arvore.sequencial": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "os itens ja vem na ordem da conversa, sem o campo do pai (lista simples): cada mensagem e filha da anterior (a primeira, da raiz)."
         },
         "conversas.ler.arvore.uuid": {
           "escopo": "comum",
@@ -1463,6 +1478,12 @@
           "nivel": "obrigatorio",
           "doc": "Prefixo permitido para leituras autenticadas (o prefixo de API do provedor)."
         },
+        "pagina.rede.cabecalhosApi": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "cabecalhos das leituras pela aba (listar/ler...)."
+        },
         "pagina.rede.caminhoSessao": {
           "escopo": "pagina",
           "nivel": "obrigatorio",
@@ -1476,6 +1497,11 @@
         "pagina.rede.campoContaId": {
           "escopo": "pagina",
           "nivel": "opcional"
+        },
+        "pagina.rede.campoConversaStream": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Nome do campo que traz o id da conversa no stream do envio (`\"campo\":\"id\"`): a conversa nova so aparece ali, e e por ela que o quadro do WebSocket acha o turno."
         },
         "pagina.rede.envioDireto": {
           "escopo": "pagina",
@@ -1785,6 +1811,153 @@
         "pagina.rede.envioDireto.sentinela.verificacao.valor": {
           "escopo": "pagina",
           "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "ENVIO POR WEBSOCKET, de dentro da aba (ver ConfigEnvioSocket)."
+        },
+        "pagina.rede.envioSocket.abertura": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "Registro mandado ao abrir a conexao; o pedido so sai depois de chegar a resposta a ele: o registro que casa `aceito`, ou, sem `aceito`, o primeiro registro que "
+        },
+        "pagina.rede.envioSocket.abertura.aceito": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.abertura.erro": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.abertura.registro": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.catalogo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "catalogo de modelos da conta lido por um pedido da mesma origem (ver CatalogoRede)."
+        },
+        "pagina.rede.envioSocket.catalogo.cabecalhos": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.catalogo.caminho": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.corpo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.catalogo.grupo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.catalogo.id": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.metodo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "Default: POST quando ha `corpo`, GET sem ele (GET com corpo e recusado na importacao)."
+        },
+        "pagina.rede.envioSocket.catalogo.opcoes": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.rotulo": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.sobrepor": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "id do modelo -> nome no seletor do Duo, quando o catalogo o rotula mal."
+        },
+        "pagina.rede.envioSocket.contexto": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "vars lidas de objeto global da pagina (var -> caminho a partir de `window`)."
+        },
+        "pagina.rede.envioSocket.esperaMaxMin": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "Minutos de espera maxima do turno (default 15)."
+        },
+        "pagina.rede.envioSocket.fim": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Registros que encerram o turno: a aba fecha a conexao e da o fim."
+        },
+        "pagina.rede.envioSocket.modeloPadrao": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "Id do modelo quando o Duo nao escolheu nenhum (o padrao da conta)."
+        },
+        "pagina.rede.envioSocket.pedido": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Registros do pedido do turno (moldes), mandados juntos."
+        },
+        "pagina.rede.envioSocket.ping": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "registro que pede resposta para manter a conexao (`quando`) e a resposta."
+        },
+        "pagina.rede.envioSocket.ping.quando": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.ping.resposta": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.separador": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "Separador dos registros: um caractere de controle (default U+001E)."
+        },
+        "pagina.rede.envioSocket.token": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "A credencial: o token (Bearer) que a propria pagina manda nos pedidos dela, guardado so em memoria na aba pela audiencia (claim `aud`); nunca sai da aba nem vai"
+        },
+        "pagina.rede.envioSocket.token.audiencia": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.token.claims": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.token.esperaSeg": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.url": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "Molde do endereco (wss://) da conexao do turno."
+        },
+        "pagina.rede.envioSocket.vars": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "vars fixas dos moldes."
         },
         "pagina.rede.erros": {
           "escopo": "interno",
@@ -2439,6 +2612,19 @@
           "escopo": "interno",
           "nivel": "obrigatorio"
         },
+        "pagina.rede.quadroWs": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Formato do quadro do WebSocket do handoff: o caminho do trecho do stream e os do id da conversa."
+        },
+        "pagina.rede.quadroWs.conversa": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.quadroWs.texto": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
         "pagina.rede.reApiProibida": {
           "escopo": "pagina",
           "nivel": "opcional",
@@ -2983,6 +3169,147 @@
         },
         "stream.quadros.versao": {
           "escopo": "quadros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "o corpo e decodificado pelo DecodificadorRegistros, configurado por ESTES dados (registros de atualizacao, final e erro, caminhos das mensagens)."
+        },
+        "stream.registros.atualizacao": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "doc": "Registro de atualizacao do turno e onde estao os dados dele (caminho no registro)."
+        },
+        "stream.registros.atualizacao.dados": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.atualizacao.quando": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "stream.registros.conversa": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "caminho, nos dados, do id da conversa."
+        },
+        "stream.registros.entreMensagens": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "Separador entre o texto de duas mensagens de resposta do mesmo turno (default '\\n\\n')."
+        },
+        "stream.registros.erro": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "Registros que encerram o turno com erro; `mensagem` e o caminho do texto do erro."
+        },
+        "stream.registros.erro.mensagem": {
+          "escopo": "registros",
+          "nivel": "opcional"
+        },
+        "stream.registros.erro.quando": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "stream.registros.final": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "doc": "Registro que encerra o turno com o resultado."
+        },
+        "stream.registros.final.dados": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.final.mensagem": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "Texto do resultado: a resposta quando o stream nao a trouxe, e a mensagem do erro."
+        },
+        "stream.registros.final.quando": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "stream.registros.final.resultado": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "Caminho do resultado; valor fora de `sucesso` vira erro."
+        },
+        "stream.registros.final.sucesso": {
+          "escopo": "registros",
+          "nivel": "opcional"
+        },
+        "stream.registros.final.titulo": {
+          "escopo": "registros",
+          "nivel": "opcional"
+        },
+        "stream.registros.idMensagem": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "Campo do id da mensagem (separa varias mensagens de resposta no mesmo turno)."
+        },
+        "stream.registros.mensagens": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "doc": "Nos dados (da atualizacao e do final): a lista de mensagens do turno."
+        },
+        "stream.registros.raciocinio": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "mensagens de raciocinio (condicoes) e o campo do texto acumulado delas."
+        },
+        "stream.registros.raciocinio.condicoes": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.raciocinio.condicoes.caminho": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.raciocinio.condicoes.em": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.raciocinio.texto": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.recusa": {
+          "escopo": "registros",
+          "nivel": "opcional",
+          "doc": "mensagem que diz que o provedor RECUSOU continuar (condicoes): vira erro."
+        },
+        "stream.registros.recusa.caminho": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.recusa.em": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.resposta": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "doc": "Condicoes de uma mensagem que e a RESPOSTA (as outras: progresso, referencias...)."
+        },
+        "stream.registros.resposta.caminho": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.resposta.em": {
+          "escopo": "registros",
+          "nivel": "obrigatorio"
+        },
+        "stream.registros.texto": {
+          "escopo": "registros",
+          "nivel": "obrigatorio",
+          "doc": "Campo do texto (acumulado) da mensagem."
+        },
+        "stream.registros.versao": {
+          "escopo": "registros",
           "nivel": "obrigatorio"
         },
         "stream.texto": {
