@@ -253,7 +253,7 @@
         "is_error": false
       }
     },
-    "prazoResultadoMs": 240000
+    "prazoResultadoMs": 480000
   },
   "retryTransitorio": {
     "padrao": "invalid authorization",
