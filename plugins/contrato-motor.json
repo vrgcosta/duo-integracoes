@@ -76,9 +76,9 @@
     "provedor": {
       "campos": {
         "anexos": {
-          "escopo": "servidor",
-          "nivel": "recomendado",
-          "doc": "envio de documentos."
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "anexos do plugin, a saber o envio de documentos do plugin de servidor e o que qualquer plugin declara da LEITURA do anexo."
         },
         "anexos.attachment": {
           "escopo": "servidor",
@@ -95,6 +95,83 @@
           "escopo": "servidor",
           "nivel": "obrigatorio",
           "doc": "Campo do corpo do envio que recebe o array de ids dos binarios."
+        },
+        "anexos.leituraParcial": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Como o provedor avisa, no texto da resposta, que parou de ler o anexo: padroes (regex, sem diferenciar maiusculas) que o motor procura na resposta para dizer ao"
+        },
+        "anexos.leituraParcial.padroes": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "anexos.limiteLeitura": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Quanto o provedor le de um anexo de uma vez, medido ou publicado por ele."
+        },
+        "anexos.limiteLeitura.caracteres": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Caracteres de texto lidos de uma vez (vira tokens quando o teto e usado)."
+        },
+        "anexos.limiteLeitura.fonte": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "De onde veio, em uma frase, como a tela a mostra (\"Medido em 14/11/2026, no processo ...\")."
+        },
+        "anexos.limiteLeitura.linhas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "As linhas da tela do plugin."
+        },
+        "anexos.limiteLeitura.linhas.destaque": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "anexos.limiteLeitura.linhas.detalhe": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "anexos.limiteLeitura.linhas.exemplos": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "anexos.limiteLeitura.linhas.exemplos.rotulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "anexos.limiteLeitura.linhas.exemplos.valor": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "anexos.limiteLeitura.linhas.rotulo": {
+          "escopo": "comum",
+          "nivel": "obrigatorio"
+        },
+        "anexos.limiteLeitura.linhas.texto": {
+          "escopo": "comum",
+          "nivel": "opcional"
+        },
+        "anexos.limiteLeitura.medidoEm": {
+          "escopo": "comum",
+          "nivel": "obrigatorio",
+          "doc": "Quando foi medido ou publicado (AAAA-MM-DD)."
+        },
+        "anexos.limiteLeitura.orientacao": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "A caixa de orientacao da tela (\"Acima disso, o Duo divide o processo em volumes...\")."
+        },
+        "anexos.limiteLeitura.paginas": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Paginas de PDF lidas de uma vez (valor de teto: o mais baixo da faixa medida)."
+        },
+        "anexos.limiteLeitura.tokens": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "Tokens lidos de uma vez."
         },
         "anexos.maxArquivoMB": {
           "escopo": "servidor",
@@ -1638,6 +1715,11 @@
         "pagina.rede.envioDireto.modelos.campoAjustavel": {
           "escopo": "pagina",
           "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioDireto.modelos.campoLimiteEntrada": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "campo de cada modelo do catalogo com o limite de entrada, em tokens."
         },
         "pagina.rede.envioDireto.modelos.campoTipo": {
           "escopo": "pagina",

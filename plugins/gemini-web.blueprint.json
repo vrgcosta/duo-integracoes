@@ -731,12 +731,45 @@
       "95a4c0abcba24364": "argon"
     }
   },
+  "anexos": {
+    "limiteLeitura": {
+      "paginas": 100,
+      "caracteres": 380000,
+      "medidoEm": "2026-11-14",
+      "fonte": "Medido em 14/11/2026, no processo 8001088-30.2024.8.05.0082.",
+      "orientacao": "Acima disso, o Duo divide o processo em volumes e anexa um por vez. Quando o primeiro estiver lido, você pede o seguinte. Nada é bloqueado.",
+      "linhas": [
+        {
+          "rotulo": "PDF anexado",
+          "destaque": "Lê cerca de 100 a 130 páginas",
+          "detalhe": "Varia com o conteúdo de cada página."
+        },
+        {
+          "rotulo": "Páginas digitalizadas",
+          "texto": "Lê também a imagem das páginas, sem depender de texto por OCR."
+        },
+        {
+          "rotulo": "Arquivo de texto",
+          "destaque": "Lê cerca de 380 mil caracteres"
+        },
+        {
+          "rotulo": "Ao passar do limite",
+          "texto": "O Gemini avisa no texto da resposta que parou de ler (por exemplo, que certas páginas não foram carregadas)."
+        }
+      ]
+    },
+    "leituraParcial": {
+      "padroes": [
+        "(\\d+)\\s+(?:(?:a|at[ée])\\s+\\d+|em\\s+diante)\\s+n[ãa]o\\s+foram\\s+carregadas?"
+      ]
+    }
+  },
   "sessoes": {
     "padrao": 4,
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.5.2",
+  "versao": "1.6.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

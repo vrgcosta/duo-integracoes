@@ -243,6 +243,28 @@
       }
     ]
   },
+  "anexos": {
+    "limiteLeitura": {
+      "medidoEm": "2026-11-14",
+      "fonte": "PDF medido em 14/11/2026. Limites de entrada: catálogo do site, lido na hora (valores de 14/11/2026).",
+      "orientacao": "Se o processo passar do limite do modelo escolhido, o Duo divide em volumes. Um modelo de raciocínio comporta bem mais que o padrão da conta. Nada é bloqueado.",
+      "linhas": [
+        {
+          "rotulo": "PDF anexado",
+          "destaque": "Leu 349 páginas inteiras",
+          "detalhe": "Com OCR das páginas digitalizadas, que pode errar caracteres. Levou cerca de 20 minutos."
+        },
+        {
+          "rotulo": "Entrada por modelo",
+          "texto": "Lida do próprio site na hora de enviar; varia com a conta. Exemplos:",
+          "exemplos": [
+            { "rotulo": "Padrão da conta", "valor": "52.815 tokens" },
+            { "rotulo": "Modelos de raciocínio", "valor": "262.144 tokens" }
+          ]
+        }
+      ]
+    }
+  },
   "sessoes": {
     "padrao": 2,
     "limite": 5,
@@ -553,7 +575,8 @@
             "campo": "reasoning_type",
             "valor": "auto",
             "rotulo": "title"
-          }
+          },
+          "campoLimiteEntrada": "max_tokens"
         },
         "anexos": {
           "campo": "messages.0.metadata.attachments",
@@ -617,7 +640,7 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.3.3",
+  "versao": "1.4.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
