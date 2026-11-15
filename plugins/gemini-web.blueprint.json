@@ -750,7 +750,7 @@
         },
         {
           "rotulo": "Arquivo de texto",
-          "destaque": "Lê cerca de 380 mil caracteres"
+          "destaque": "Lê cerca de 108 mil tokens"
         },
         {
           "rotulo": "Ao passar do limite",

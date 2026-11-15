@@ -18,7 +18,7 @@ aviso). O modelo sai sempre do catálogo da conta, pelo nome; sem modelo que sir
 
 ChatGPT web **1.4.0** e Gemini web **1.6.0** declaram quanto o provedor lê de um anexo de uma vez (`anexos.limiteLeitura`,
 com `medidoEm` e `fonte`; é só informação, nada bloqueia). O Gemini web: PDF de cerca de 100 a 130 páginas (o Duo usa 100 como
-teto) e arquivo de texto de cerca de 380 mil caracteres, medidos em 14/11/2026 no processo 8001088-30.2024.8.05.0082; acima
+teto) e arquivo de texto de cerca de 108 mil tokens (380 mil caracteres no dado anexos.limiteLeitura.caracteres; a tela mostra em tokens), medidos em 14/11/2026 no processo 8001088-30.2024.8.05.0082; acima
 disso o Duo divide o processo em volumes. `anexos.leituraParcial.padroes` traz a frase com que o Gemini avisa, no texto da
 resposta, que parou de ler ("105 a 300 não foram carregadas"). O ChatGPT web leu 349 páginas inteiras (cerca de 20 minutos,
 com OCR das digitalizadas), sem teto de páginas; o limite de entrada por modelo vem do catálogo da conta
