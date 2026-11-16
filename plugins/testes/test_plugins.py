@@ -263,6 +263,8 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             "O limite de chamadas de ferramentas atingiu o teto.",
             "Atingi o limite de ferramenta nesta conversa.",
             "Tool call limit reached.",
+            "Contudo, não foi possível verificar o teor do que ela decidiu, pois a ferramenta anexar_processo_pdf entregou apenas o Volume 1 de 7 (páginas 1 a 100 de um total de 643 páginas), não havendo mais chamadas de ferramentas disponíveis nesta etapa para carregar o volume final ou extrair o texto isolado do referido ID.",
+            "Não há mais chamadas de ferramenta nesta etapa.",
         ):
             with self.subTest(frase=frase):
                 self.assertRegex(self.norm(frase), self.rx)
@@ -273,6 +275,7 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             "Jornada com limite de 20 horas semanais.",
             "Há um limite de 100 itens por chamada.",
             "O autor extrapolou o limite da razoabilidade. Ferramentas de trabalho foram apreendidas.",
+            "Não há mais chamadas telefônicas registradas; as ferramentas foram devolvidas.",
         ):
             with self.subTest(frase=frase):
                 self.assertNotRegex(self.norm(frase), self.rx)
