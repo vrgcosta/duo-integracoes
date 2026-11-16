@@ -1268,9 +1268,9 @@
           "doc": "(emulacao) teto de rodadas de ferramenta por turno."
         },
         "ferramentas.prazoResultadoMs": {
-          "escopo": "nativo",
+          "escopo": "comum",
           "nivel": "recomendado",
-          "doc": "Quanto o servidor do plugin espera o resultado de uma ferramenta antes de desistir dela (ms)."
+          "doc": "Quanto tempo o plugin aceita esperar o resultado de uma ferramenta (ms)."
         },
         "ferramentas.toolCall": {
           "escopo": "nativo",

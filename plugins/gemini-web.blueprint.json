@@ -285,7 +285,8 @@
   "ferramentas": {
     "emulacao": "cercas",
     "limiteInline": 400000,
-    "maxRodadas": 15
+    "maxRodadas": 15,
+    "prazoResultadoMs": 480000
   },
   "configuraveis": [
     {

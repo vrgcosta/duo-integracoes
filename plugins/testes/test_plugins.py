@@ -209,8 +209,8 @@ class TestConferencia(unittest.TestCase):
         self.assertIn("sesoes: campo que o motor nao conhece", self._problemas(self.base))
 
     def test_campo_de_outro_mecanismo(self) -> None:
-        self.base["ferramentas"]["prazoResultadoMs"] = 240000
-        self.assertIn("ferramentas.prazoResultadoMs: campo de nativo", self._problemas(self.base))
+        self.base["ferramentas"]["enviarResultado"] = {"caminho": "/x", "corpo": {}}
+        self.assertIn("ferramentas.enviarResultado: campo de nativo", self._problemas(self.base))
 
     def test_campo_interno(self) -> None:
         self.base["pagina"]["rede"]["quadros"] = {}
