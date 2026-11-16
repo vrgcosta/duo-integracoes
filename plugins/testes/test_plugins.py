@@ -265,6 +265,8 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             "Tool call limit reached.",
             "Contudo, não foi possível verificar o teor do que ela decidiu, pois a ferramenta anexar_processo_pdf entregou apenas o Volume 1 de 7 (páginas 1 a 100 de um total de 643 páginas), não havendo mais chamadas de ferramentas disponíveis nesta etapa para carregar o volume final ou extrair o texto isolado do referido ID.",
             "Não há mais chamadas de ferramenta nesta etapa.",
+            "O processo integral em PDF possui 643 páginas divididas em 7 volumes, e as chamadas de ferramentas disponíveis permitiram apenas a obtenção e leitura do Volume 1 (páginas 1 a 100).",
+            "As chamadas de ferramentas se esgotaram antes do volume final.",
         ):
             with self.subTest(frase=frase):
                 self.assertRegex(self.norm(frase), self.rx)

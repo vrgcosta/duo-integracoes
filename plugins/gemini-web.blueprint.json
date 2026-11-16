@@ -347,7 +347,7 @@
       {
         "tipo": "falha_pronta",
         "origem": "resposta",
-        "texto": "limite[^.]{0,40}(chamadas?|execucao|execucoes|uso)[^.]{0,30}ferramentas?|limite[^.]{0,20}ferramentas?|(nao ha|nao havia|nao havendo|sem|nao restam|nao restavam) mais chamadas? de ferramentas?|tool[ -]?calls? limit|limit (of|on) tool calls",
+        "texto": "limite[^.]{0,40}(chamadas?|execucao|execucoes|uso)[^.]{0,30}ferramentas?|limite[^.]{0,20}ferramentas?|(nao ha|nao havia|nao havendo|sem|nao restam|nao restavam) mais chamadas? de ferramentas?|chamadas? de ferramentas?[^.]{0,30}(disponiveis|permit|esgot|restant|atingid)|tool[ -]?calls? limit|limit (of|on) tool calls",
         "maxCaracteres": 2000,
         "continuar": "Não há limite de chamadas de ferramentas no Duo. Continue usando as ferramentas (blocos duo-ferramenta) até concluir a tarefa e só responda quando tiver o que ela pede.",
         "tentativas": 2
