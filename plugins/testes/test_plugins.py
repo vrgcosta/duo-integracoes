@@ -229,5 +229,54 @@ class TestConferencia(unittest.TestCase):
         self.assertNotIn("enviar.corpo", self._problemas(self.base))
 
 
+class TestRegraLimiteFerramentas(unittest.TestCase):
+    """A regra falha_pronta do Gemini web para o falso 'limite de chamadas de ferramentas'."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import re
+        import unicodedata
+
+        plugin = _ler(PLUGINS / "gemini-web.blueprint.json")
+        regras = [
+            r for r in plugin["erros"]["regras"]
+            if r.get("tipo") == "falha_pronta" and "ferramenta" in r.get("texto", "")
+        ]
+        assert len(regras) == 1, "regra do limite de ferramentas ausente"
+        cls.regra = regras[0]
+        cls.rx = re.compile(cls.regra["texto"])
+        cls.norm = staticmethod(
+            lambda s: "".join(
+                c for c in unicodedata.normalize("NFD", s.lower()) if not unicodedata.combining(c)
+            )
+        )
+
+    def test_parametros(self) -> None:
+        self.assertEqual(self.regra["maxCaracteres"], 2000)
+        self.assertEqual(self.regra["tentativas"], 2)
+        self.assertEqual(self.regra["origem"], "resposta")
+
+    def test_casa_as_frases_reais(self) -> None:
+        for frase in (
+            "Não foi possível extrair o conteúdo decisório da sentença, pois o limite de execução de ferramentas foi atingido antes da leitura do texto do documento 96922725.",
+            "Não foi possível acessar os documentos do processo, pois o limite de chamadas de ferramentas disponíveis para este subagente foi atingido antes da consulta aos autos",
+            "O limite de chamadas de ferramentas atingiu o teto.",
+            "Atingi o limite de ferramenta nesta conversa.",
+            "Tool call limit reached.",
+        ):
+            with self.subTest(frase=frase):
+                self.assertRegex(self.norm(frase), self.rx)
+
+    def test_nao_casa_texto_juridico(self) -> None:
+        for frase in (
+            "O prazo tem como data limite 30/11.",
+            "Jornada com limite de 20 horas semanais.",
+            "Há um limite de 100 itens por chamada.",
+            "O autor extrapolou o limite da razoabilidade. Ferramentas de trabalho foram apreendidas.",
+        ):
+            with self.subTest(frase=frase):
+                self.assertNotRegex(self.norm(frase), self.rx)
+
+
 if __name__ == "__main__":
     unittest.main()
