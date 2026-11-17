@@ -291,7 +291,7 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
 
     def test_casa_as_frases_reais(self) -> None:
         for frase in (
-            "Não foi possível extrair o conteúdo decisório da sentença, pois o limite de execução de ferramentas foi atingido antes da leitura do texto do documento 96922725.",
+            "Não foi possível extrair o conteúdo decisório da sentença, pois o limite de execução de ferramentas foi atingido antes da leitura do texto do documento 12345678.",
             "Não foi possível acessar os documentos do processo, pois o limite de chamadas de ferramentas disponíveis para este subagente foi atingido antes da consulta aos autos",
             "O limite de chamadas de ferramentas atingiu o teto.",
             "Atingi o limite de ferramenta nesta conversa.",
@@ -326,7 +326,7 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
         ]
         texto = "\n\n".join(
             f'{cerca}duo-ferramenta\n{{"nome": "{nome}", "argumentos": '
-            f'{{"numero_processo": "8049312-80.2026.8.05.0000", "limite": {limite}}}}}\n{cerca}'
+            f'{{"numero_processo": "0001234-56.2026.8.99.0000", "limite": {limite}}}}}\n{cerca}'
             for nome, limite in blocos
         )
         self.assertNotRegex(self.norm(texto), self.rx)

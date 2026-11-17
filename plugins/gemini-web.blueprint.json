@@ -745,7 +745,7 @@
       "paginas": 100,
       "caracteres": 380000,
       "medidoEm": "2026-11-14",
-      "fonte": "Medido em 14/11/2026, no processo 8001088-30.2024.8.05.0082.",
+      "fonte": "Medido em 14/11/2026, com os autos de um processo do PJe.",
       "orientacao": "Acima disso, o Duo divide o processo em volumes e anexa um por vez. Quando o primeiro estiver lido, você pede o seguinte. Nada é bloqueado.",
       "linhas": [
         {
@@ -778,7 +778,7 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.6.1",
+  "versao": "1.6.2",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

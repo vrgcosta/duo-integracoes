@@ -7,7 +7,7 @@ consulta busca apenas o arquivo público no GitHub.
 ## Plugins disponíveis
 
 Formato **1**. ChatGPT web está na **1.4.0**, Claude web na **1.3.2** e Gemini web na
-**1.6.1**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
+**1.6.2**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -16,6 +16,9 @@ ChatGPT web **1.3.3** deixa de declarar `pagina.rede.envioDireto.modelos.reserva
 modelo genérico "auto" (que o provedor resolvia por conta própria, trocando o modelo e tirando o raciocínio sem
 aviso). O modelo sai sempre do catálogo da conta, pelo nome; sem modelo que sirva, o envio pela rede não sai e diz por quê.
 
+Gemini web **1.6.2** tira da fonte da medição de leitura o número do processo usado nela: a informação do
+plugin é genérica.
+
 Gemini web **1.6.1** corrige a regra do falso limite de ferramentas: ela casava o argumento `"limite"` de um pedido
 de ferramenta com o rótulo `duo-ferramenta` da cerca seguinte, e o Duo tratava o pedido como o falso aviso de limite
 (não rodava as ferramentas e reenviava "Não há limite..."). Os trechos livres da regra não atravessam mais aspas,
@@ -23,7 +26,7 @@ chaves nem crases (texto de JSON e de cerca).
 
 ChatGPT web **1.4.0** e Gemini web **1.6.0** declaram quanto o provedor lê de um anexo de uma vez (`anexos.limiteLeitura`,
 com `medidoEm` e `fonte`; é só informação, nada bloqueia). O Gemini web: PDF de cerca de 100 a 130 páginas (o Duo usa 100 como
-teto) e arquivo de texto de cerca de 108 mil tokens (380 mil caracteres no dado anexos.limiteLeitura.caracteres; a tela mostra em tokens), medidos em 14/11/2026 no processo 8001088-30.2024.8.05.0082; acima
+teto) e arquivo de texto de cerca de 108 mil tokens (380 mil caracteres no dado anexos.limiteLeitura.caracteres; a tela mostra em tokens), medidos em 14/11/2026 com os autos de um processo do PJe; acima
 disso o Duo divide o processo em volumes. `anexos.leituraParcial.padroes` traz a frase com que o Gemini avisa, no texto da
 resposta, que parou de ler ("105 a 300 não foram carregadas"). O ChatGPT web leu 349 páginas inteiras (cerca de 20 minutos,
 com OCR das digitalizadas), sem teto de páginas; o limite de entrada por modelo vem do catálogo da conta
