@@ -120,6 +120,29 @@
       }
     ]
   },
+  "anexos": {
+    "limiteLeitura": {
+      "caracteres": 600000,
+      "medidoEm": "2026-11-17",
+      "fonte": "Medido em 17/11/2026 com texto de teste: o Copilot leu inteiras mensagens de até 802 mil caracteres e falhou ao responder com 1,6 milhão.",
+      "orientacao": "Acima disso, o Duo divide o processo em volumes e manda um por vez. Quando o primeiro estiver lido, você pede o seguinte. Nada é bloqueado.",
+      "linhas": [
+        {
+          "rotulo": "Texto do processo",
+          "destaque": "Leu inteiras mensagens de até 802 mil caracteres",
+          "detalhe": "O Duo usa 600 mil como teto: o texto real, com acentos, gasta mais tokens por caractere que o do teste."
+        },
+        {
+          "rotulo": "PDF",
+          "texto": "Não chega ao Copilot por este plugin, que só envia texto: o Duo usa o texto do processo ou de cada peça."
+        },
+        {
+          "rotulo": "Ao passar do limite",
+          "texto": "O Copilot não recusa a mensagem: guarda e falha ao responder (\"Desculpe, não consegui responder a isso\")."
+        }
+      ]
+    }
+  },
   "sessoes": {
     "padrao": 2,
     "limite": 5,
@@ -331,7 +354,7 @@
       }
     }
   },
-  "versao": "1.0.3",
+  "versao": "1.0.4",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

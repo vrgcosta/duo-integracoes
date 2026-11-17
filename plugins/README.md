@@ -162,6 +162,13 @@ de cada modelo (`item.throttling.metering`), ainda não lida pelo plugin.
 A **1.0.3** do Copilot web em copilot.cloud.microsoft passa a se chamar só **Copilot** no Duo (`rotulo`). O
 `id` não muda: a instalação, os vínculos processo→conversa e as configurações continuam os mesmos.
 
+A **1.0.4** do Copilot declara quanto ele lê de uma vez (`anexos.limiteLeitura`): 600 mil caracteres, o
+mesmo teto do `limiteInline`, medido em 2026-11-17 (ver a 1.0.2). Com ele, o Duo divide o processo inteiro em
+volumes que cabem numa mensagem, em vez de mandar tudo num resultado só, que acima de cerca de 800 mil
+caracteres faz o Copilot falhar ao responder. A tela do plugin mostra a medição. Este plugin só envia texto
+(o WebSocket não leva arquivo): o PDF não chega ao Copilot, e o Duo usa o texto do processo ou de cada peça.
+As extensões sem esse campo o ignoram, e o processo vai num arquivo só, como antes.
+
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os
