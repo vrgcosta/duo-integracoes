@@ -128,7 +128,7 @@ que tem Claude além do GPT mostra os dois. Os turnos simultâneos dividem a aba
 2026-11-13 na aba logada de uma conta Copilot Chat (Básico): conversa nova e continuação na mesma
 conversa, e três turnos ao mesmo tempo com modelos diferentes (Automático, Resposta rápida e
 GPT-5.6 Sol), cada um com a própria resposta. Ainda não: lista, busca, renomear e excluir conversas
-(ver `alinhamento.json`) e anexos.
+(ver `contrato/alinhamento.json`) e anexos.
 
 A **1.0.0** do Microsoft 365 Copilot web em copilot.cloud.microsoft (`copilot-mcloud-web.blueprint.json`)
 é o mesmo plugin para a conta que a Microsoft levou para o endereço novo: em 2026-11-17, numa conta
@@ -180,6 +180,10 @@ Conferido em 2026-11-17 com PDFs fictícios: o modelo leu o código escrito dent
 sem a interface do site (e não leu quando a anotação levava só a URL). O texto continua indo dentro da
 mensagem, a leitura medida inteira; o quanto o Copilot lê de um PDF não foi medido. As extensões sem esse
 recurso ignoram `anexos` e seguem mandando só texto: o pedido do turno não muda quando não há arquivo.
+
+A **1.1.1** do Copilot passa a mostrar na tela os tamanhos medidos em tokens, como o resto do Duo (cerca de
+229 mil tokens lidos inteiros, 171 mil de teto), em vez de caracteres. O teto que divide o processo em volumes
+não muda (`caracteres: 600000`, que o Duo converte).
 
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
@@ -262,6 +266,17 @@ desta tabela no campo **Link de atualização** e depois usar **Atualizar**. O D
 aprovada localmente e não troca essa origem silenciosamente. Os nomes dos arquivos
 não levam datas para que os endereços sejam mantidos entre publicações.
 
+## Estrutura da pasta
+
+- `plugins/`: só os plugins (`*.blueprint.json`) e este README. Os plugins ficam aqui porque o link de
+  atualização de cada instalação aponta para `plugins/<nome>.blueprint.json`: mudar um de lugar quebra a
+  atualização de quem já o instalou.
+- `plugins/contrato/`: o contrato do motor (`contrato-motor.json`, gerado pelo PJe✚R) e o alinhamento de
+  cada plugin com ele (`alinhamento.json`).
+- `plugins/testes/`: o teste dos plugins.
+
+O teste falha se aparecer na raiz de `plugins/` outro arquivo que não seja plugin ou este README.
+
 ## Teste dos plugins
 
 Antes de publicar uma mudança em qualquer plugin, rode na raiz do repositório:
@@ -270,7 +285,7 @@ Antes de publicar uma mudança em qualquer plugin, rode na raiz do repositório:
 py -m unittest discover -s plugins/testes -v
 ```
 
-O teste confere cada JSON contra `contrato-motor.json`, o contrato do motor do Duo, gerado no
+O teste confere cada JSON contra `contrato/contrato-motor.json`, o contrato do motor do Duo, gerado no
 PJe✚R por `apps/extension/scripts/exportar-contrato-plugins.ts` (não edite à mão). O contrato diz,
 campo a campo, a quem ele se aplica (`escopo`: `comum` a todos, ou um mecanismo como `pagina`,
 `servidor`, `emulacao`, `nativo`, `formulario`, `quadros`, `sse`) e se precisa estar lá
@@ -279,7 +294,7 @@ campo a campo, a quem ele se aplica (`escopo`: `comum` a todos, ou um mecanismo 
 - com campo que o motor não conhece (erro de digitação, ou campo que saiu do motor);
 - com campo de um mecanismo que o plugin não usa (cópia errada de outro plugin);
 - com campo obrigatório ausente;
-- com campo recomendado ausente sem motivo em `alinhamento.json`. Quando o motor ganha um campo
+- com campo recomendado ausente sem motivo em `contrato/alinhamento.json`. Quando o motor ganha um campo
   recomendado, ou um plugin passa a usar um, os outros param aqui até adotar o campo ou registrar
   por que ele não se aplica. Motivo com **PENDENTE** é lacuna conhecida, a resolver;
 - com o JSON mudado em relação à `origin/main` sem subir a `versao`, com o link de atualização

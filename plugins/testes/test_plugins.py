@@ -1,4 +1,4 @@
-"""Confere os plugins publicados contra o contrato do motor do Duo (contrato-motor.json).
+"""Confere os plugins publicados contra o contrato do motor do Duo (contrato/contrato-motor.json).
 
 O contrato vem do PJe+R (apps/extension/scripts/exportar-contrato-plugins.ts) e diz, campo a campo,
 a quem ele se aplica (`escopo`: comum ou um mecanismo, como pagina, servidor, emulacao, nativo,
@@ -8,11 +8,17 @@ formulario) e se precisa estar no plugin (`nivel`: obrigatorio, recomendado, opc
 - falha com campo que o motor nao conhece (erro de digitacao ou campo que saiu do motor), com campo
   interno do motor e com campo de mecanismo que o plugin nao usa (copia errada de outro plugin);
 - falha com campo obrigatorio ausente e com campo recomendado ausente sem motivo em
-  alinhamento.json: quando o motor ganha um campo comum recomendado, ou um plugin passa a usar um,
-  os outros plugins do mesmo tipo param aqui ate adotar o campo ou registrar por que nao se aplica;
+  contrato/alinhamento.json: quando o motor ganha um campo comum recomendado, ou um plugin passa a
+  usar um, os outros plugins do mesmo tipo param aqui ate adotar o campo ou registrar por que nao
+  se aplica;
 - confere os metadados de publicacao: id unico, link de atualizacao apontando para o proprio
   arquivo, versao com tres numeros, versao nova quando o JSON mudou em relacao a origin/main, e a
-  versao atual citada no README.
+  versao atual citada no README;
+- mantem a pasta em ordem: na raiz de plugins/ so os plugins (*.blueprint.json) e o README; o resto
+  em subpastas (contrato/, testes/). Os plugins nao saem da raiz: o link de atualizacao de cada
+  instalacao aponta para plugins/<nome>.blueprint.json;
+- aplica as regras de tela do Duo aos textos que o plugin leva a tela (anexos.limiteLeitura): tamanho
+  em tokens, nunca em caracteres.
 
 Rodar na raiz do repositorio:  py -m unittest discover -s plugins/testes -v
 """
@@ -24,9 +30,13 @@ from pathlib import Path
 
 PLUGINS = Path(__file__).resolve().parents[1]
 RAIZ = PLUGINS.parent
-CONTRATO = json.loads((PLUGINS / "contrato-motor.json").read_text(encoding="utf-8"))
-ALINHAMENTO = json.loads((PLUGINS / "alinhamento.json").read_text(encoding="utf-8"))
+CONTRATO = json.loads((PLUGINS / "contrato" / "contrato-motor.json").read_text(encoding="utf-8"))
+ALINHAMENTO = json.loads((PLUGINS / "contrato" / "alinhamento.json").read_text(encoding="utf-8"))
 ARQUIVOS = sorted(PLUGINS.glob("*.blueprint.json"))
+# Na raiz de plugins/, alem dos plugins, so isto.
+RAIZ_PERMITIDOS = {"README.md"}
+# A regra da tela do Duo: tamanho em tokens, nunca em caracteres (a mesma do teste sem-caracteres-na-tela do motor).
+RE_CARACTERES = re.compile(r"\bcaracteres\b|\bcar\.|\bchars\b", re.IGNORECASE)
 NIVEIS_EXIGIDOS = ("obrigatorio", "recomendado")
 
 
@@ -185,6 +195,29 @@ class TestPublicacao(unittest.TestCase):
                         publicado.get("versao"),
                         "o JSON mudou em relacao a origin/main sem subir a versao",
                     )
+
+    def test_raiz_so_tem_plugins(self) -> None:
+        # Os plugins ficam na raiz (o link de atualizacao de cada instalacao aponta para ela); o resto, em subpastas.
+        sobrando = sorted(
+            p.name
+            for p in PLUGINS.iterdir()
+            if p.is_file() and not p.name.endswith(".blueprint.json") and p.name not in RAIZ_PERMITIDOS
+        )
+        self.assertEqual(sobrando, [], "na raiz de plugins/ so os plugins e o README; mova o resto para uma subpasta")
+
+    def test_textos_de_tela_em_tokens(self) -> None:
+        # As linhas da secao "Leitura de anexo" vao a tela do Duo como estao: tamanho em tokens, nunca em caracteres.
+        # O dado `caracteres` pode ficar no JSON (dimensiona os volumes); o texto mostrado, nao.
+        for arquivo in ARQUIVOS:
+            with self.subTest(plugin=arquivo.name):
+                limite = _valor(_ler(arquivo), "anexos.limiteLeitura") or {}
+                textos = [limite.get("orientacao"), limite.get("fonte")]
+                for linha in limite.get("linhas") or []:
+                    textos += [linha.get(c) for c in ("rotulo", "destaque", "texto", "detalhe")]
+                    for exemplo in linha.get("exemplos") or []:
+                        textos += [exemplo.get("rotulo"), exemplo.get("valor")]
+                achados = [t for t in textos if isinstance(t, str) and RE_CARACTERES.search(t)]
+                self.assertEqual(achados, [], "a tela fala em tokens, nao em caracteres")
 
     def test_readme_cita_a_versao_atual(self) -> None:
         readme = (PLUGINS / "README.md").read_text(encoding="utf-8")
