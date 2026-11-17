@@ -282,6 +282,22 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             with self.subTest(frase=frase):
                 self.assertNotRegex(self.norm(frase), self.rx)
 
+    def test_nao_casa_pedido_de_ferramentas(self) -> None:
+        # Resposta real de 2026-11-17: tres pedidos de ferramenta com o argumento "limite". A regra casava
+        # 'limite": 30}}' com o rotulo 'duo-ferramenta' da cerca seguinte, e o Duo nao rodava as ferramentas.
+        cerca = "`" * 3
+        blocos = [
+            ("listar_documentos_processo", 100),
+            ("listar_expedientes_processo", 30),
+            ("listar_movimentos_processo_pje", 100),
+        ]
+        texto = "\n\n".join(
+            f'{cerca}duo-ferramenta\n{{"nome": "{nome}", "argumentos": '
+            f'{{"numero_processo": "8049312-80.2026.8.05.0000", "limite": {limite}}}}}\n{cerca}'
+            for nome, limite in blocos
+        )
+        self.assertNotRegex(self.norm(texto), self.rx)
+
 
 if __name__ == "__main__":
     unittest.main()
