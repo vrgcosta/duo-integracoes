@@ -130,6 +130,18 @@ conversa, e três turnos ao mesmo tempo com modelos diferentes (Automático, Res
 GPT-5.6 Sol), cada um com a própria resposta. Ainda não: lista, busca, renomear e excluir conversas
 (ver `alinhamento.json`) e anexos.
 
+A **1.0.0** do Microsoft 365 Copilot web em copilot.cloud.microsoft (`copilot-mcloud-web.blueprint.json`)
+é o mesmo plugin para a conta que a Microsoft levou para o endereço novo: em 2026-11-17, numa conta
+Copilot Chat (Básico), `m365.cloud.microsoft` (a raiz e o `/chat/`) passou a redirecionar para
+`copilot.cloud.microsoft/chat` (`redirfrom=mcmToCcm`). Com o plugin do m365, a aba que o Duo abre termina
+fora da origem do `baseURL`: não recebe os scripts do Duo, o envio para em "a aba do provedor não carregou"
+e cada tentativa deixa outra aba fixada. Mudam o endereço (`baseURL`, `site`, `icone`) e a identificação
+do cliente no pedido: `clientPlatform` `ccmcopilot-web` e `clientEntrypoint` `ccmcopilot-officeweb`, que a
+página nova monta a partir do `referrer` dela (`ccmcopilot`; no m365 era `mcmcopilot`). Conferido na
+origem nova, sem enviar mensagem: catálogo de modelos (`GetAgentList`), credencial
+`https://substrate.office.com/sydney`, hub `m365Copilot/Chathub` e `sydneyWebScenario`. Ainda não: o envio
+de ponta a ponta pelo Duo. Tem `id` próprio e instala ao lado do plugin do m365.
+
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os
@@ -190,6 +202,7 @@ o JSON para importar por arquivo:
 | Claude web | [claude-web.blueprint.json](claude-web.blueprint.json) | [Importar Claude](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json) |
 | ChatGPT web | [chatgpt-web.blueprint.json](chatgpt-web.blueprint.json) | [Importar ChatGPT](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json) |
 | Microsoft 365 Copilot web | [copilot-m365-web.blueprint.json](copilot-m365-web.blueprint.json) | [Importar Copilot](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-m365-web.blueprint.json) |
+| Microsoft 365 Copilot web (copilot.cloud.microsoft) | [copilot-mcloud-web.blueprint.json](copilot-mcloud-web.blueprint.json) | [Importar Copilot (copilot.cloud)](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-mcloud-web.blueprint.json) |
 | Gemini web | [gemini-web.blueprint.json](gemini-web.blueprint.json) | [Importar Gemini](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json) |
 | Jurisprudência TJBA | [buscar-juris-tjba.blueprint.json](buscar-juris-tjba.blueprint.json) | [Importar TJBA](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-tjba.blueprint.json) |
 | Jurisprudência STJ/STF | [buscar-juris-stj-stf.blueprint.json](buscar-juris-stj-stf.blueprint.json) | [Importar STJ/STF](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json) |
