@@ -142,6 +142,13 @@ origem nova, sem enviar mensagem: catálogo de modelos (`GetAgentList`), credenc
 `https://substrate.office.com/sydney`, hub `m365Copilot/Chathub` e `sydneyWebScenario`. Ainda não: o envio
 de ponta a ponta pelo Duo. Tem `id` próprio e instala ao lado do plugin do m365.
 
+A **1.0.1** do Copilot web em copilot.cloud.microsoft sobe o limite dos resultados de ferramenta no corpo da
+mensagem (`ferramentas.limiteInline`) de 24 mil para 120 mil caracteres. O envio por WebSocket ainda não leva
+anexos, e com 24 mil o que passava ia para o arquivo anexado: a rodada falhava com "anexos não declarados no
+envio por WebSocket" (visto em 2026-11-17 com sete leituras de documento, cerca de 20 mil tokens). O teto
+vem do editor da própria página, que aceita até 128 mil caracteres (`charCountLimit`, lido no código da
+página em 2026-11-17); 120 mil deixa margem para o envelope dos resultados. Não foi medido no servidor.
+
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os

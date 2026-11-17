@@ -127,7 +127,7 @@
   },
   "ferramentas": {
     "emulacao": "cercas",
-    "limiteInline": 24000,
+    "limiteInline": 120000,
     "maxRodadas": 15
   },
   "configuraveis": [
@@ -331,7 +331,7 @@
       }
     }
   },
-  "versao": "1.0.0",
+  "versao": "1.0.1",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
