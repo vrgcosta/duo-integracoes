@@ -159,6 +159,9 @@ do teto não há recusa por tamanho, e sim essa falha. 600 mil deixa margem para
 gasta mais tokens por caractere que o texto do teste. O registro final do stream também traz a cota restante
 de cada modelo (`item.throttling.metering`), ainda não lida pelo plugin.
 
+A **1.0.3** do Copilot web em copilot.cloud.microsoft passa a se chamar só **Copilot** no Duo (`rotulo`). O
+`id` não muda: a instalação, os vínculos processo→conversa e as configurações continuam os mesmos.
+
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os
@@ -219,7 +222,7 @@ o JSON para importar por arquivo:
 | Claude web | [claude-web.blueprint.json](claude-web.blueprint.json) | [Importar Claude](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json) |
 | ChatGPT web | [chatgpt-web.blueprint.json](chatgpt-web.blueprint.json) | [Importar ChatGPT](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json) |
 | Microsoft 365 Copilot web | [copilot-m365-web.blueprint.json](copilot-m365-web.blueprint.json) | [Importar Copilot](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-m365-web.blueprint.json) |
-| Microsoft 365 Copilot web (copilot.cloud.microsoft) | [copilot-mcloud-web.blueprint.json](copilot-mcloud-web.blueprint.json) | [Importar Copilot (copilot.cloud)](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-mcloud-web.blueprint.json) |
+| Copilot (copilot.cloud.microsoft) | [copilot-mcloud-web.blueprint.json](copilot-mcloud-web.blueprint.json) | [Importar Copilot (copilot.cloud)](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-mcloud-web.blueprint.json) |
 | Gemini web | [gemini-web.blueprint.json](gemini-web.blueprint.json) | [Importar Gemini](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json) |
 | Jurisprudência TJBA | [buscar-juris-tjba.blueprint.json](buscar-juris-tjba.blueprint.json) | [Importar TJBA](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-tjba.blueprint.json) |
 | Jurisprudência STJ/STF | [buscar-juris-stj-stf.blueprint.json](buscar-juris-stj-stf.blueprint.json) | [Importar STJ/STF](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json) |
