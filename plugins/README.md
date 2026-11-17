@@ -149,6 +149,16 @@ envio por WebSocket" (visto em 2026-11-17 com sete leituras de documento, cerca 
 vem do editor da própria página, que aceita até 128 mil caracteres (`charCountLimit`, lido no código da
 página em 2026-11-17); 120 mil deixa margem para o envelope dos resultados. Não foi medido no servidor.
 
+A **1.0.2** do Copilot web em copilot.cloud.microsoft sobe o `limiteInline` para 600 mil caracteres, agora
+medido no servidor (2026-11-17, conta Copilot Chat Básico, pelo mesmo WebSocket do plugin, com resultados de
+ferramenta fictícios em blocos `duo-resultado`): o limite de 128 mil é só do editor da página. Até 802 mil
+caracteres o Copilot guarda a mensagem inteira e o modelo lê tudo (Resposta rápida e Automático contaram os
+blocos e citaram o último parágrafo do documento do meio e do último). Com 1,6 milhão ele guarda a mensagem,
+mas falha ao responder (`InternalError`, "Desculpe, não consegui responder a isso"), nos dois modelos: acima
+do teto não há recusa por tamanho, e sim essa falha. 600 mil deixa margem para texto real, que tem acentos e
+gasta mais tokens por caractere que o texto do teste. O registro final do stream também traz a cota restante
+de cada modelo (`item.throttling.metering`), ainda não lida pelo plugin.
+
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os
