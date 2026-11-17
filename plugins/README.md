@@ -165,9 +165,21 @@ A **1.0.3** do Copilot web em copilot.cloud.microsoft passa a se chamar só **Co
 A **1.0.4** do Copilot declara quanto ele lê de uma vez (`anexos.limiteLeitura`): 600 mil caracteres, o
 mesmo teto do `limiteInline`, medido em 2026-11-17 (ver a 1.0.2). Com ele, o Duo divide o processo inteiro em
 volumes que cabem numa mensagem, em vez de mandar tudo num resultado só, que acima de cerca de 800 mil
-caracteres faz o Copilot falhar ao responder. A tela do plugin mostra a medição. Este plugin só envia texto
-(o WebSocket não leva arquivo): o PDF não chega ao Copilot, e o Duo usa o texto do processo ou de cada peça.
+caracteres faz o Copilot falhar ao responder. A tela do plugin mostra a medição. Até a 1.1.0, o plugin ainda
+não enviava arquivo (o envio por WebSocket do Duo não subia arquivos; o Copilot lê PDF), e o Duo usava o texto
+do processo ou de cada peça.
 As extensões sem esse campo o ignoram, e o processo vai num arquivo só, como antes.
+
+A **1.1.0** do Copilot envia PDF (`pagina.rede.envioSocket.anexos`). Para cada arquivo, a aba do Copilot abre
+uma sessão de upload no OneDrive da conta (Microsoft Graph, `createUploadSession` na pasta especial do
+Copilot), com a credencial que a própria página manda ao Graph; os bytes vão sem credencial, em partes de
+10 MiB, para o endereço que a sessão devolve; o Duo lê o item (`sharepointIds`) e a mensagem do turno leva a
+anotação `LocalFile` dele, com o `id` `SPO_<base64 de siteId,webId,listId>_<id do item>`, a URL e o nome. O
+arquivo fica na pasta “Arquivos de Chat do Microsoft Copilot” do OneDrive, como quando se anexa pelo site.
+Conferido em 2026-11-17 com PDFs fictícios: o modelo leu o código escrito dentro de um PDF subido e anotado
+sem a interface do site (e não leu quando a anotação levava só a URL). O texto continua indo dentro da
+mensagem, a leitura medida inteira; o quanto o Copilot lê de um PDF não foi medido. As extensões sem esse
+recurso ignoram `anexos` e seguem mandando só texto: o pedido do turno não muda quando não há arquivo.
 
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em

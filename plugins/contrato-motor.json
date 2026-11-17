@@ -1913,6 +1913,94 @@
           "nivel": "obrigatorio",
           "livre": true
         },
+        "pagina.rede.envioSocket.anexos": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "os arquivos do turno (ver AnexosSocket)."
+        },
+        "pagina.rede.envioSocket.anexos.anotacao": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Molde da anotacao de cada arquivo."
+        },
+        "pagina.rede.envioSocket.anexos.base64": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Vars em base64 (UTF-8, sem `=` no fim): var -> molde com as outras vars."
+        },
+        "pagina.rede.envioSocket.anexos.campo": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "Onde a lista de anotacoes entra no primeiro registro do pedido (dot-path)."
+        },
+        "pagina.rede.envioSocket.anexos.consulta": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "leitura do item depois do envio (GET no molde, host da audiencia, com a credencial)."
+        },
+        "pagina.rede.envioSocket.anexos.consulta.url": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.anexos.envio": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "Os bytes: PUT no endereco da sessao, SEM credencial (o endereco ja autoriza), em partes de `tamanhoParte` bytes (default 10 MiB) com Content-Range."
+        },
+        "pagina.rede.envioSocket.anexos.envio.tamanhoParte": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.anexos.sessao": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "Abre a sessao: POST JSON no molde (https://, host da audiencia) com a credencial."
+        },
+        "pagina.rede.envioSocket.anexos.sessao.corpo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true
+        },
+        "pagina.rede.envioSocket.anexos.sessao.url": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.anexos.sessao.urlEnvio": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.anexos.tipos": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "Tipos (MIME) que as ferramentas entregam como arquivo; '*' = qualquer."
+        },
+        "pagina.rede.envioSocket.anexos.token": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "doc": "A credencial do servidor de arquivos: o token que a propria pagina manda a ele, pela audiencia (https://host), guardado so em memoria na aba, como o `token` do "
+        },
+        "pagina.rede.envioSocket.anexos.token.audiencia": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.anexos.token.esperaSeg": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.anexos.vars": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio",
+          "livre": true,
+          "doc": "Vars do arquivo (var -> caminho) na resposta da consulta, ou da ultima parte sem consulta."
+        },
+        "pagina.rede.envioSocket.anexos.varsEnvio": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Vars lidas da resposta da ultima parte (var -> caminho): valem no molde da consulta."
+        },
         "pagina.rede.envioSocket.catalogo": {
           "escopo": "envioSocket",
           "nivel": "opcional",

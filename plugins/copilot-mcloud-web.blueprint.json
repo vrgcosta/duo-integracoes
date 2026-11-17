@@ -134,7 +134,8 @@
         },
         {
           "rotulo": "PDF",
-          "texto": "Não chega ao Copilot por este plugin, que só envia texto: o Duo usa o texto do processo ou de cada peça."
+          "destaque": "Vai como arquivo, para o OneDrive da sua conta",
+          "detalhe": "O Duo o sobe para a pasta “Arquivos de Chat do Microsoft Copilot”, como o site faz quando você anexa um arquivo, e ele fica lá. O quanto o Copilot lê de um PDF não foi medido."
         },
         {
           "rotulo": "Ao passar do limite",
@@ -350,11 +351,55 @@
           "grupo": "itemGroup",
           "id": "id",
           "rotulo": "menuItemTitle"
+        },
+        "anexos": {
+          "tipos": [
+            "application/pdf"
+          ],
+          "token": {
+            "audiencia": "https://graph.microsoft.com"
+          },
+          "sessao": {
+            "url": "https://graph.microsoft.com/v1.0/me/drive/special/copilotuploads:/{nome}:/createUploadSession",
+            "corpo": {
+              "item": {
+                "@microsoft.graph.conflictBehavior": "replace",
+                "name": "{nome}"
+              }
+            },
+            "urlEnvio": "uploadUrl"
+          },
+          "envio": {
+            "tamanhoParte": 10485760
+          },
+          "varsEnvio": {
+            "itemId": "id"
+          },
+          "consulta": {
+            "url": "https://graph.microsoft.com/v1.0/me/drive/items/{itemId}?$select=id,webUrl,sharepointIds"
+          },
+          "vars": {
+            "itemId": "id",
+            "webUrl": "webUrl",
+            "siteId": "sharepointIds.siteId",
+            "webId": "sharepointIds.webId",
+            "listId": "sharepointIds.listId"
+          },
+          "base64": {
+            "lista": "{siteId},{webId},{listId}"
+          },
+          "anotacao": {
+            "messageAnnotationType": "LocalFile",
+            "id": "SPO_{lista}_{itemId}",
+            "text": "{nome}",
+            "url": "{webUrl}"
+          },
+          "campo": "arguments.0.message.messageAnnotations"
         }
       }
     }
   },
-  "versao": "1.0.4",
+  "versao": "1.1.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"
