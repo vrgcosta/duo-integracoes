@@ -1102,11 +1102,23 @@
         },
         "erros.espera": {
           "escopo": "pagina",
-          "nivel": "opcional"
+          "nivel": "opcional",
+          "doc": "Prazos de espera do turno pela aba do provedor, contados pela vigia do envio."
+        },
+        "erros.espera.aceiteSeg": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Segundos de quando a pergunta sai ate o provedor aceita-la (padrao 20, de 5 a 120); estourado, a conversa e conferida."
         },
         "erros.espera.primeiroDadoSeg": {
           "escopo": "pagina",
-          "nivel": "opcional"
+          "nivel": "opcional",
+          "doc": "Segundos do aceite ate o primeiro dado da resposta (padrao 60, de 5 a 600); estourado, a aba e sondada."
+        },
+        "erros.espera.respostaMaxMin": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Minutos do aceite ate o fim da resposta (padrao 30, de 1 a 120), no lugar do `esperaMaxMin` antigo de cada caminho."
         },
         "erros.foraDoLimite": {
           "escopo": "comum",
@@ -2190,11 +2202,23 @@
         },
         "pagina.rede.erros.espera": {
           "escopo": "pagina",
-          "nivel": "opcional"
+          "nivel": "opcional",
+          "doc": "Prazos de espera do turno pela aba do provedor, contados pela vigia do envio."
+        },
+        "pagina.rede.erros.espera.aceiteSeg": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Segundos de quando a pergunta sai ate o provedor aceita-la (padrao 20, de 5 a 120); estourado, a conversa e conferida."
         },
         "pagina.rede.erros.espera.primeiroDadoSeg": {
           "escopo": "pagina",
-          "nivel": "opcional"
+          "nivel": "opcional",
+          "doc": "Segundos do aceite ate o primeiro dado da resposta (padrao 60, de 5 a 600); estourado, a aba e sondada."
+        },
+        "pagina.rede.erros.espera.respostaMaxMin": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Minutos do aceite ate o fim da resposta (padrao 30, de 1 a 120), no lugar do `esperaMaxMin` antigo de cada caminho."
         },
         "pagina.rede.erros.foraDoLimite": {
           "escopo": "comum",

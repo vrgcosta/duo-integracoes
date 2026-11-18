@@ -56,6 +56,14 @@ frase, a rede fica pausada por 60 minutos e o turno vai pela tela) e a regra `bl
 `erros` dá o tipo do erro, que só aparece se a tela também falhar. Não há aviso em dobro: a
 pausa não mostra nada ao usuário.
 
+Os prazos do turno pela aba ficam em `erros.espera`. Além de `primeiroDadoSeg` (do aceite ao primeiro
+pedaço da resposta, padrão 60 s), o motor lê `aceiteSeg` (de quando a pergunta sai até o provedor
+aceitá-la, padrão 20 s; estourado, o Duo confere a conversa antes de reenviar) e `respostaMaxMin` (do
+aceite ao fim da resposta, padrão 30 min, de 1 a 120). Com `respostaMaxMin` declarado, ele vale no lugar
+do `esperaMaxMin` de `formulario.tela`, `formulario.envio` e `envioSocket`, que ficam obsoletos. Sem
+ele, vale o maior `esperaMaxMin` declarado: o Copilot e o Gemini web, que declaram 15, seguem com 15
+minutos. Extensões antigas ignoram os campos novos, e nenhum plugin precisou mudar.
+
 A **1.1.0** do Claude web declara quantas sessões o plugin roda ao mesmo tempo: 4 por
 padrão e até 6, valor que o usuário ajusta em **Sessões ao mesmo tempo**, nas
 configurações do plugin. Declara também o prazo que o claude.ai dá ao resultado de uma
