@@ -188,6 +188,18 @@ A **1.1.1** do Copilot passa a mostrar na tela os tamanhos medidos em tokens, co
 229 mil tokens lidos inteiros, 171 mil de teto), em vez de caracteres. O teto que divide o processo em volumes
 não muda (`caracteres: 600000`, que o Duo converte).
 
+A **1.1.2** do Copilot e a **1.0.1** do Microsoft 365 Copilot web tiram da resposta a âncora de citação do
+Copilot (`stream.limpezaTexto`). Quando o modelo usa uma fonte (o arquivo enviado ou uma busca na web), ele
+marca o trecho com o identificador dela, como `turn1search1` ("turno 1, resultado de busca 1"), e a página do
+Copilot troca a marca por uma nota numerada com link. Pelo WebSocket que o Duo usa (`Chathub`), a âncora chega
+como HTML, `<cite>turn1search1</cite>`, fica guardada assim na conversa e aparecia no Duo, em itálico, no fim de
+cada parágrafo. A conversa feita pela própria página (o socket novo dela, `StreamHub`) traz o formato da OpenAI,
+com caracteres de uso privado (`U+E200` `cite` `U+E202` `turn1search1` `U+E202` `turn1search6` `U+E201`), que a
+regra antiga já tirava e continua tirando. A regra com o espaço na frente (` <cite>`) leva junto o espaço que
+sobraria antes da âncora. Conferido em 2026-11-18 numa conta Copilot Chat (Básico): uma conversa aberta pelo
+Duo com o PDF anexado e uma pergunta de teste com busca na web feita na página. A leitura da conversa ao
+reabrir passa pela mesma limpeza, então as conversas antigas também aparecem sem a âncora.
+
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
 porcentagem, e o estado dela vira a severidade do Duo (dentro do limite, perto, esgotado). Os

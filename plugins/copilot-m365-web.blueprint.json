@@ -115,6 +115,14 @@
     },
     "limpezaTexto": [
       {
+        "de": " <cite>",
+        "ate": "</cite>"
+      },
+      {
+        "de": "<cite>",
+        "ate": "</cite>"
+      },
+      {
         "de": "",
         "ate": ""
       }
@@ -331,7 +339,7 @@
       }
     }
   },
-  "versao": "1.0.0",
+  "versao": "1.0.1",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

@@ -18,7 +18,9 @@ formulario) e se precisa estar no plugin (`nivel`: obrigatorio, recomendado, opc
   em subpastas (contrato/, testes/). Os plugins nao saem da raiz: o link de atualizacao de cada
   instalacao aponta para plugins/<nome>.blueprint.json;
 - aplica as regras de tela do Duo aos textos que o plugin leva a tela (anexos.limiteLeitura): tamanho
-  em tokens, nunca em caracteres.
+  em tokens, nunca em caracteres;
+- passa a limpeza de texto dos plugins do Copilot (`stream.limpezaTexto`) por uma copia do limpador do
+  motor, com o texto inteiro e em pedacos: a ancora de citacao sai, o resto do texto fica.
 
 Rodar na raiz do repositorio:  py -m unittest discover -s plugins/testes -v
 """
@@ -330,6 +332,109 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             for nome, limite in blocos
         )
         self.assertNotRegex(self.norm(texto), self.rx)
+
+
+class LimpadorTexto:
+    """Copia do LimpadorTexto do motor (engine/limpeza-texto.ts): remove de `de` ate `ate`, inclusive, com o
+    texto chegando em pedacos. Segura o buffer a partir de um `de` sem `ate` e a cauda que ainda pode virar um
+    `de`; marcador que nunca fecha sai cru no `finalizar` (fail-open, como no motor)."""
+
+    def __init__(self, regras: list) -> None:
+        self.regras = regras
+        self.buf = ""
+        self.maior_de = max((len(r["de"]) for r in regras), default=0)
+
+    def _proxima_abertura(self):
+        achado = None
+        for regra in self.regras:
+            i = self.buf.find(regra["de"])
+            if i != -1 and (achado is None or i < achado[0]):
+                achado = (i, regra)
+        return achado
+
+    def _cauda_suspeita(self) -> int:
+        for n in range(min(self.maior_de - 1, len(self.buf)), 0, -1):
+            cauda = self.buf[-n:]
+            if any(r["de"].startswith(cauda) for r in self.regras):
+                return n
+        return 0
+
+    def alimentar(self, trecho: str) -> str:
+        if not self.regras:
+            return trecho
+        self.buf += trecho
+        saida = ""
+        while True:
+            achado = self._proxima_abertura()
+            if achado is None:
+                break
+            i, regra = achado
+            fim = self.buf.find(regra["ate"], i + len(regra["de"]))
+            saida += self.buf[:i]
+            if fim == -1:
+                self.buf = self.buf[i:]
+                return saida
+            self.buf = self.buf[fim + len(regra["ate"]):]
+        cauda = self._cauda_suspeita()
+        saida += self.buf[: len(self.buf) - cauda]
+        self.buf = self.buf[len(self.buf) - cauda:]
+        return saida
+
+    def finalizar(self) -> str:
+        resto, self.buf = self.buf, ""
+        return resto
+
+
+class TestLimpezaCitacaoCopilot(unittest.TestCase):
+    """A ancora de citacao do Copilot sai do texto: `<cite>turn1search1</cite>` pelo Chathub (o socket do Duo)
+    e o formato da OpenAI com caracteres de uso privado pelo StreamHub (o socket novo da pagina)."""
+
+    PLUGINS_COPILOT = ("copilot-mcloud-web.blueprint.json", "copilot-m365-web.blueprint.json")
+    INICIO, SEPARADOR, FIM = chr(0xE200), chr(0xE202), chr(0xE201)
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.regras = {nome: _ler(PLUGINS / nome)["stream"]["limpezaTexto"] for nome in cls.PLUGINS_COPILOT}
+
+    def _limpar(self, regras: list, texto: str, passo: int = 0) -> str:
+        limpador = LimpadorTexto(regras)
+        pedacos = [texto] if not passo else [texto[i : i + passo] for i in range(0, len(texto), passo)]
+        return "".join(limpador.alimentar(p) for p in pedacos) + limpador.finalizar()
+
+    def _conferir(self, texto: str, esperado: str) -> None:
+        for nome, regras in self.regras.items():
+            for passo in (0, 1, 2, 3, 7):
+                with self.subTest(plugin=nome, passo=passo):
+                    self.assertEqual(self._limpar(regras, texto, passo), esperado)
+
+    def test_os_dois_plugins_tem_as_mesmas_regras(self) -> None:
+        mcloud, m365 = (self.regras[n] for n in self.PLUGINS_COPILOT)
+        self.assertEqual(mcloud, m365)
+
+    def test_cite_do_chathub_sai_com_o_espaco_antes(self) -> None:
+        texto = (
+            "- Pedido: tutela recursal para o fornecimento do medicamento. <cite>turn1search1</cite>\n"
+            "- Contrarrazoes: pede o desprovimento.<cite>turn1search1</cite><cite>turn1search3</cite>\n"
+            "Conclusao sem fonte."
+        )
+        esperado = (
+            "- Pedido: tutela recursal para o fornecimento do medicamento.\n"
+            "- Contrarrazoes: pede o desprovimento.\n"
+            "Conclusao sem fonte."
+        )
+        self._conferir(texto, esperado)
+
+    def test_formato_da_openai_do_streamhub(self) -> None:
+        ancora = f"{self.INICIO}cite{self.SEPARADOR}turn1search1{self.SEPARADOR}turn1search6{self.FIM}"
+        self._conferir(f"Promulgada em 1988. {ancora}\n- Segundo ponto.", "Promulgada em 1988. \n- Segundo ponto.")
+
+    def test_texto_sem_ancora_nao_muda(self) -> None:
+        texto = "O juiz determinou que a parte cite a fonte; a <citacao> do art. 178 e o termo turn1search1 ficam."
+        self._conferir(texto, texto)
+
+    def test_cite_que_nao_fecha_sai_cru(self) -> None:
+        # Fail-open do motor: melhor mostrar a marca do que engolir o resto da resposta.
+        self._conferir("Texto final. <cite>turn1search1", "Texto final. <cite>turn1search1")
 
 
 if __name__ == "__main__":
