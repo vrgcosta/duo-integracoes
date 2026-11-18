@@ -272,7 +272,8 @@
   },
   "ferramentas": {
     "emulacao": "cercas",
-    "limiteInline": 140000,
+    "limiteInline": 80000,
+    "maxChamadasPorRodada": 4,
     "maxRodadas": 15,
     "prazoResultadoMs": 480000
   },
@@ -284,6 +285,14 @@
       "tipo": "numero",
       "min": 1,
       "max": 200
+    },
+    {
+      "caminho": "ferramentas.maxChamadasPorRodada",
+      "rotulo": "Ferramentas por vez",
+      "descricao": "Quantas ferramentas a IA pode usar de uma vez antes de analisar o que veio. Mais rende rodadas mais longas, que podem passar do tamanho de mensagem que o ChatGPT aceita.",
+      "tipo": "numero",
+      "min": 1,
+      "max": 20
     }
   ],
   "erros": {
@@ -641,7 +650,7 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.4.0",
+  "versao": "1.5.0",
   "versaoFormato": 1,
   "compatibilidade": {
     "extensaoMinima": "3.71.146"

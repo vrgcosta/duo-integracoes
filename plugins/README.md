@@ -6,11 +6,27 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.4.0**, Claude web na **1.3.2** e Gemini web na
-**1.6.2**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
+Formato **1**. ChatGPT web está na **1.5.0**, Claude web na **1.3.2** e Gemini web na
+**1.6.3**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
+
+ChatGPT web **1.5.0** faz o modelo ler aos poucos. `ferramentas.maxChamadasPorRodada: 4`: as chamadas além de quatro
+numa mesma resposta não rodam, e o modelo as pede de novo depois de analisar as outras (ajustável na tela do plugin, em
+"Ferramentas por vez"). `ferramentas.limiteInline` cai de 140 mil para 80 mil caracteres: com peças reais, o ChatGPT
+recusou pela rede mensagens de cerca de 139 mil caracteres (em 14/11 e em 18/11/2026, num subagente que pediu dez peças
+de uma vez); os 140 mil vinham de uma medição com texto de preenchimento, que gasta menos tokens. Pela tela do site,
+texto de lei de 230 mil caracteres passou (18/11/2026), mas o Duo envia pela rede. O que passa do limite não vai mais
+para um anexo: fica para a próxima mensagem, e o modelo o recebe ao pedir de novo, sem nova consulta (entrega em lotes
+da extensão). Extensões sem esse recurso ignoram `maxChamadasPorRodada` e seguem mandando o excedente num anexo; a
+extensão mínima não muda.
+
+Gemini web **1.6.3**: a regra do falso limite de ferramentas olha só o começo da resposta (`inicioCaracteres: 400`),
+qualquer que seja o tamanho dela. Antes, a frase que abria uma análise parcial de uns 3 mil caracteres passava do teto
+de 2000 (`maxCaracteres`) e chegava ao Duo como resposta final (visto em 18/11/2026, numa conta gratuita). A regra
+também reconhece "0 remaining" e "sistema de ferramentas ... bloqueado". Extensões sem esse recurso ignoram o campo e
+seguem com o `maxCaracteres`.
 
 ChatGPT web **1.3.3** deixa de declarar `pagina.rede.envioDireto.modelos.reserva`: o motor não manda mais o
 modelo genérico "auto" (que o provedor resolvia por conta própria, trocando o modelo e tirando o raciocínio sem

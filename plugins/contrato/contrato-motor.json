@@ -1172,6 +1172,11 @@
           "escopo": "comum",
           "nivel": "opcional"
         },
+        "erros.regras.inicioCaracteres": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So 'falha_pronta': a regra olha so os primeiros N caracteres da resposta, de qualquer tamanho (o `maxCaracteres` deixa de valer)."
+        },
         "erros.regras.jsonNoTexto": {
           "escopo": "comum",
           "nivel": "opcional",
@@ -1272,7 +1277,12 @@
         "ferramentas.limiteInline": {
           "escopo": "emulacao",
           "nivel": "opcional",
-          "doc": "(emulacao) limite, em chars, do resultado inline antes de virar anexo."
+          "doc": "(emulacao) tamanho, em chars, dos resultados no corpo de UMA mensagem."
+        },
+        "ferramentas.maxChamadasPorRodada": {
+          "escopo": "emulacao",
+          "nivel": "opcional",
+          "doc": "(emulacao) teto de chamadas de ferramenta executadas por mensagem do modelo."
         },
         "ferramentas.maxRodadas": {
           "escopo": "emulacao",
@@ -2271,6 +2281,11 @@
         "pagina.rede.erros.regras.igual": {
           "escopo": "comum",
           "nivel": "opcional"
+        },
+        "pagina.rede.erros.regras.inicioCaracteres": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "So 'falha_pronta': a regra olha so os primeiros N caracteres da resposta, de qualquer tamanho (o `maxCaracteres` deixa de valer)."
         },
         "pagina.rede.erros.regras.jsonNoTexto": {
           "escopo": "comum",
@@ -3558,7 +3573,7 @@
         "baseUrlConfig": {
           "escopo": "comum",
           "nivel": "obrigatorio",
-          "doc": "Chave no chrome.storage de onde vem o baseURL."
+          "doc": "Nome do campo do baseURL."
         },
         "baseUrlOpcoes": {
           "escopo": "comum",
@@ -3690,7 +3705,7 @@
           "escopo": "comum",
           "nivel": "opcional",
           "livre": true,
-          "doc": "Mapa nome-do-segredo -> chave no chrome.storage."
+          "doc": "Mapa nome-do-segredo -> nome do campo."
         },
         "site": {
           "escopo": "comum",

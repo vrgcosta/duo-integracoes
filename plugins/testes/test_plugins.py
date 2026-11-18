@@ -288,8 +288,21 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
 
     def test_parametros(self) -> None:
         self.assertEqual(self.regra["maxCaracteres"], 2000)
+        self.assertEqual(self.regra["inicioCaracteres"], 400)
         self.assertEqual(self.regra["tentativas"], 2)
         self.assertEqual(self.regra["origem"], "resposta")
+
+    def test_resposta_longa_que_abre_com_o_falso_limite(self) -> None:
+        # Visto em 2026-11-18: a frase abriu uma analise parcial de uns 3 mil caracteres, e o teto de 2000 a deixou
+        # passar como resposta final. Com inicioCaracteres, o motor olha so o comeco (a extensao velha ignora o campo
+        # e segue com o maxCaracteres).
+        resposta = (
+            "Não foi possível ler o texto integral das peças do processo porque o limite de chamadas de ferramentas "
+            "se esgotou após a listagem inicial dos documentos, expedientes e movimentos. "
+            + "Com base nos metadados, segue o levantamento parcial. " * 60
+        )
+        self.assertGreater(len(resposta), self.regra["maxCaracteres"])
+        self.assertRegex(self.norm(resposta[: self.regra["inicioCaracteres"]]), self.rx)
 
     def test_casa_as_frases_reais(self) -> None:
         for frase in (
@@ -302,6 +315,8 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             "Não há mais chamadas de ferramenta nesta etapa.",
             "O processo integral em PDF possui 643 páginas divididas em 7 volumes, e as chamadas de ferramentas disponíveis permitiram apenas a obtenção e leitura do Volume 1 (páginas 1 a 100).",
             "As chamadas de ferramentas se esgotaram antes do volume final.",
+            "Não foi possível ler os documentos de IDs 12345678 e 87654321 porque o limite de chamadas de ferramentas disponível nesta execução é zero (0 remaining), impedindo a invocação de obter_texto_documento.",
+            "Não foi possível executar obter_texto_documento nos IDs 12345678 e 87654321 porque o sistema interno de ferramentas permanece bloqueado com 0 remaining chamadas disponíveis neste ambiente, impedindo a emissão de novos blocos duo-ferramenta.",
         ):
             with self.subTest(frase=frase):
                 self.assertRegex(self.norm(frase), self.rx)
@@ -313,6 +328,8 @@ class TestRegraLimiteFerramentas(unittest.TestCase):
             "Há um limite de 100 itens por chamada.",
             "O autor extrapolou o limite da razoabilidade. Ferramentas de trabalho foram apreendidas.",
             "Não há mais chamadas telefônicas registradas; as ferramentas foram devolvidas.",
+            "Restam 10 parcelas, e o sistema de cobrança foi bloqueado pelo juízo.",
+            "O sistema de ferramentas de busca da Receita indicou bens.",
         ):
             with self.subTest(frase=frase):
                 self.assertNotRegex(self.norm(frase), self.rx)
