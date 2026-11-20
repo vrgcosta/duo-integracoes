@@ -14,6 +14,8 @@
     "sse",
     "registros",
     "envioSocket",
+    "http",
+    "mcp",
     "interno"
   ],
   "niveis": [
@@ -23,7 +25,7 @@
   ],
   "detectarTipo": {
     "ferramenta": {
-      "campo": "inputSchema",
+      "campo": "baseUrlConfig",
       "existe": true
     }
   },
@@ -70,7 +72,16 @@
         "existe": true
       }
     },
-    "ferramenta": {}
+    "ferramenta": {
+      "http": {
+        "campo": "mcp",
+        "existe": false
+      },
+      "mcp": {
+        "campo": "mcp",
+        "existe": true
+      }
+    }
   },
   "tipos": {
     "provedor": {
@@ -3602,59 +3613,64 @@
           "nivel": "obrigatorio",
           "doc": "Descricao para o LLM."
         },
+        "escrita": {
+          "escopo": "http",
+          "nivel": "opcional",
+          "doc": "Marca a ferramenta como de escrita (grava ou altera algo no servico)."
+        },
         "execucao": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio",
           "doc": "Modos de execucao (avaliados em ordem; primeiro `quando` que casar, senao `padrao`)."
         },
         "execucao.fanout": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "doc": "Nome de um input array: executa o passo por item ({item}) e junta as respostas."
         },
         "execucao.juntar": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "doc": "Separador do fan-out (default '\\n')."
         },
         "execucao.padrao": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "doc": "Modo default (usado quando nenhum `quando` casa)."
         },
         "execucao.passo": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio"
         },
         "execucao.passo.caminho": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio",
           "doc": "Caminho relativo ao baseURL; template (ex.: '/api/ai/processo/{item}')."
         },
         "execucao.passo.corpo": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "livre": true,
           "doc": "Corpo (POST/PUT); template recursivo."
         },
         "execucao.passo.headers": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "livre": true,
           "doc": "Headers; valores template (ex.: Authorization: 'Bearer {segredo:apiKey}')."
         },
         "execucao.passo.metodo": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio"
         },
         "execucao.passo.query": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "livre": true,
           "doc": "Query string; valores template."
         },
         "execucao.quando": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional",
           "doc": "Nome do input cuja PRESENCA (truthy / array nao-vazio) ativa este modo."
         },
@@ -3674,22 +3690,121 @@
           "doc": "Id = nome da tool exposto ao LLM (ex.: 'buscar_juris_tjba')."
         },
         "inputSchema": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio",
           "doc": "JSON Schema dos inputs (mesma forma de FerramentaDef.input_schema)."
         },
         "inputSchema.properties": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio",
           "livre": true
         },
         "inputSchema.required": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "opcional"
         },
         "inputSchema.type": {
-          "escopo": "comum",
+          "escopo": "http",
           "nivel": "obrigatorio"
+        },
+        "mcp": {
+          "escopo": "mcp",
+          "nivel": "opcional",
+          "doc": "Servidor MCP remoto: as ferramentas vem da listagem do servico, no lugar de `execucao`."
+        },
+        "mcp.caminho": {
+          "escopo": "mcp",
+          "nivel": "obrigatorio",
+          "doc": "Caminho depois do endereco do servico (baseUrlConfig); comeca com '/', nao termina com '/' e aceita {segredo:nome}."
+        },
+        "mcp.ferramentas": {
+          "escopo": "mcp",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Politica por nome de ferramenta no servico."
+        },
+        "mcp.headers": {
+          "escopo": "mcp",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Cabecalhos extras; valores template (ex.: Authorization: 'Bearer {segredo:chave}')."
+        },
+        "mcp.instantaneo": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "A listagem lida do servico, guardada aqui."
+        },
+        "mcp.instantaneo.ferramentas": {
+          "escopo": "interno",
+          "nivel": "obrigatorio"
+        },
+        "mcp.instantaneo.ferramentas.anotacoes": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "`annotations` do servico (readOnlyHint, destructiveHint...), como vieram."
+        },
+        "mcp.instantaneo.ferramentas.descricao": {
+          "escopo": "interno",
+          "nivel": "obrigatorio"
+        },
+        "mcp.instantaneo.ferramentas.hash": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "doc": "Resumo de revisao (SHA-256 em 64 digitos hexadecimais, `hashDeRevisao`) de nome, titulo, descricao, esquema, anotacoes e host: o que mudou desde a ultima revisa"
+        },
+        "mcp.instantaneo.ferramentas.inputSchema": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "livre": true
+        },
+        "mcp.instantaneo.ferramentas.nome": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "doc": "Nome no servico (sem o prefixo do plugin)."
+        },
+        "mcp.instantaneo.ferramentas.titulo": {
+          "escopo": "interno",
+          "nivel": "opcional"
+        },
+        "mcp.instantaneo.hashInstrucoes": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Resumo de revisao (SHA-256, `hashDeRevisao`) das instrucoes: a pessoa revisa este texto."
+        },
+        "mcp.instantaneo.host": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "doc": "Host do servico quando a lista foi lida: a confianca fica presa a ele."
+        },
+        "mcp.instantaneo.instrucoes": {
+          "escopo": "interno",
+          "nivel": "opcional",
+          "doc": "Instrucoes que o servico declarou (`initialize`), sem segredo."
+        },
+        "mcp.instantaneo.protocolo": {
+          "escopo": "interno",
+          "nivel": "obrigatorio",
+          "doc": "Versao do protocolo MCP negociada."
+        },
+        "mcp.instantaneo.servidor": {
+          "escopo": "interno",
+          "nivel": "opcional"
+        },
+        "mcp.prefixo": {
+          "escopo": "mcp",
+          "nivel": "obrigatorio",
+          "doc": "Prefixo dos nomes expostos ao modelo: `<prefixo>__<nome no servico>`."
+        },
+        "mcp.somenteListadas": {
+          "escopo": "mcp",
+          "nivel": "opcional",
+          "doc": "So as ferramentas citadas em `ferramentas` entram; as outras que o servico listar ficam de fora."
+        },
+        "mcp.usarInstrucoesDoServidor": {
+          "escopo": "mcp",
+          "nivel": "opcional",
+          "doc": "Usa as instrucoes do servidor no prompt (so de fonte marcada como orientacao e revisada)."
         },
         "nome": {
           "escopo": "comum",
@@ -3697,8 +3812,8 @@
           "doc": "Nome proprio (UI)."
         },
         "resultado": {
-          "escopo": "comum",
-          "nivel": "obrigatorio",
+          "escopo": "http",
+          "nivel": "opcional",
           "doc": "PoC: so 'texto' (devolve a resposta como veio)."
         },
         "segredos": {

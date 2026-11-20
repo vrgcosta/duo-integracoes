@@ -17,8 +17,12 @@ formulario) e se precisa estar no plugin (`nivel`: obrigatorio, recomendado, opc
 - mantem a pasta em ordem: na raiz de plugins/ so os plugins (*.blueprint.json) e o README; o resto
   em subpastas (contrato/, testes/). Os plugins nao saem da raiz: o link de atualizacao de cada
   instalacao aponta para plugins/<nome>.blueprint.json;
-- aplica as regras de tela do Duo aos textos que o plugin leva a tela (anexos.limiteLeitura): tamanho
-  em tokens, nunca em caracteres;
+- aplica as regras de tela do Duo aos textos que o plugin leva a tela (anexos.limiteLeitura e, nos
+  servidores MCP, a descricao, os textos de cada ferramenta e os avisos): tamanho em tokens, nunca em
+  caracteres;
+- confere os plugins de servidor MCP (bloco `mcp` no lugar de `execucao`) no que o contrato nao diz:
+  prefixo (a identidade do plugin na governanca, que nao pode mudar), caminho, segredos citados,
+  enderecos, chaves de politica e quais ferramentas do cortex gravam dados;
 - passa a limpeza de texto dos plugins do Copilot (`stream.limpezaTexto`) por uma copia do limpador do
   motor, com o texto inteiro e em pedacos: a ancora de citacao sai, o resto do texto fica.
 
@@ -262,6 +266,198 @@ class TestConferencia(unittest.TestCase):
     def test_molde_livre_nao_e_conferido(self) -> None:
         self.base["enviar"]["corpo"] = {"qualquer": {"coisa": 1}}
         self.assertNotIn("enviar.corpo", self._problemas(self.base))
+
+
+class TestMcp(unittest.TestCase):
+    """Os plugins de servidor MCP (bloco `mcp` no lugar de `execucao`): o que o contrato nao diz.
+
+    O contrato ja separa os campos de cada forma (`http` x `mcp`) e barra o `instantaneo`; aqui entram as regras
+    de valor que o motor aplica ao importar (prefixo, caminho) e as que protegem a instalacao de quem ja usa o
+    plugin (prefixo estavel, segredos que existem, quais ferramentas gravam)."""
+
+    CORTEX = "inovajur-cortex.blueprint.json"
+    # Letra minuscula e ate 16 letras, numeros ou "_": o nome exposto ao modelo e `<prefixo>__<nome>`, de ate 64.
+    RE_PREFIXO = re.compile(r"^[a-z][a-z0-9_]{0,15}$")
+    RE_SEGREDO = re.compile(r"\{segredo:([^}]+)\}")
+    CHAVES_POLITICA = {"exibir", "escrita", "descricao", "destino", "aviso"}
+    # No cortex so estas gravam; as outras sete so leem. Dado de escrita sem a marca pularia a confirmacao.
+    ESCRITA_CORTEX = {"escrever_memoria", "mover", "renomear"}
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.plugins = {a.name: _ler(a) for a in ARQUIVOS}
+        cls.mcp = {n: p for n, p in cls.plugins.items() if tipo_do_plugin(p) == "ferramenta" and "mcp" in p}
+
+    def test_cortex_esta_publicado(self) -> None:
+        self.assertIn(self.CORTEX, self.mcp, "o plugin do cortex precisa ser uma ferramenta com bloco mcp")
+
+    def test_uma_forma_por_ferramenta(self) -> None:
+        # O motor aceita `execucao` (com `inputSchema`) ou `mcp`, nunca os dois nem nenhum. O contrato deixa os campos
+        # das duas formas como opcionais (cada um so existe numa), entao a exigencia da forma e conferida aqui.
+        for arquivo in ARQUIVOS:
+            plugin = self.plugins[arquivo.name]
+            if tipo_do_plugin(plugin) != "ferramenta":
+                continue
+            with self.subTest(plugin=arquivo.name):
+                if "mcp" in plugin:
+                    for campo in ("execucao", "inputSchema", "resultado", "escrita"):
+                        self.assertNotIn(campo, plugin, f"{campo} e da forma HTTP; o plugin e MCP")
+                else:
+                    self.assertTrue(plugin.get("execucao"), "ferramenta sem execucao nem mcp")
+                    self.assertIn("inputSchema", plugin, "ferramenta HTTP sem inputSchema")
+
+    def test_prefixo(self) -> None:
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                mcp = plugin["mcp"]
+                self.assertRegex(mcp.get("prefixo", ""), self.RE_PREFIXO)
+                for ferramenta in mcp.get("ferramentas", {}):
+                    exposto = f"{mcp['prefixo']}__{ferramenta}"
+                    self.assertLessEqual(len(exposto), 64, f"nome exposto passa de 64: {exposto}")
+
+    def test_caminho(self) -> None:
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                caminho = plugin["mcp"].get("caminho", "")
+                self.assertTrue(caminho.startswith("/"), f"o caminho comeca com barra: {caminho}")
+                self.assertFalse(caminho.endswith("/"), f"o servico responde 404 a caminho com barra no fim: {caminho}")
+
+    def test_segredos_citados_existem(self) -> None:
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                mcp = plugin["mcp"]
+                usados = set(self.RE_SEGREDO.findall(mcp.get("caminho", "")))
+                for valor in (mcp.get("headers") or {}).values():
+                    usados |= set(self.RE_SEGREDO.findall(valor))
+                faltam = usados - set(plugin.get("segredos", {}))
+                self.assertEqual(faltam, set(), f"segredo citado e nao declarado em `segredos`: {sorted(faltam)}")
+
+    def test_enderecos_do_servico(self) -> None:
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                opcoes = plugin.get("baseUrlOpcoes", [])
+                self.assertTrue(opcoes, "baseUrlOpcoes vazio: a pessoa nao teria o endereco do servico")
+                for url in opcoes:
+                    self.assertTrue(url.startswith("https://"), f"o segredo vai no caminho: so https ({url})")
+                    self.assertFalse(url.endswith("/"), f"a conexao e endereco + caminho: sem barra no fim ({url})")
+
+    def test_chaves_de_politica(self) -> None:
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                for ferramenta, politica in plugin["mcp"].get("ferramentas", {}).items():
+                    self.assertLessEqual(
+                        set(politica) - self.CHAVES_POLITICA,
+                        set(),
+                        f"{ferramenta}: chave de politica que o motor nao conhece",
+                    )
+
+    def test_sem_instantaneo(self) -> None:
+        # A listagem do servidor e do motor (guardada no registro do plugin), nunca do arquivo publicado.
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                self.assertNotIn("instantaneo", plugin["mcp"])
+
+    def test_prefixo_nao_muda_em_relacao_a_main(self) -> None:
+        # O prefixo e a identidade do plugin na governanca: ferramentas revisadas, marcas e politicas da pessoa
+        # ficam presas a ele. Mudar o prefixo de um plugin publicado orfana tudo isso.
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                publicado = _na_main(PLUGINS / nome)
+                if publicado is None or "mcp" not in publicado:
+                    continue
+                self.assertEqual(
+                    plugin["mcp"]["prefixo"],
+                    publicado["mcp"]["prefixo"],
+                    "o prefixo mudou em relacao a origin/main: quem ja instalou perde a revisao e as marcas",
+                )
+
+    def test_textos_de_tela_em_tokens(self) -> None:
+        # A descricao e os textos por ferramenta (descricao, aviso) vao a tela do Duo: nada de tamanho em caracteres.
+        for nome, plugin in self.mcp.items():
+            with self.subTest(plugin=nome):
+                textos = [plugin.get("descricao")]
+                for politica in plugin["mcp"].get("ferramentas", {}).values():
+                    textos += [politica.get("descricao"), politica.get("aviso")]
+                achados = [t for t in textos if isinstance(t, str) and RE_CARACTERES.search(t)]
+                self.assertEqual(achados, [], "a tela fala em tokens, nao em caracteres")
+
+    def test_cortex_so_grava_em_tres_ferramentas(self) -> None:
+        politicas = self.mcp[self.CORTEX]["mcp"]["ferramentas"]
+        gravam = {nome for nome, politica in politicas.items() if politica.get("escrita") is True}
+        self.assertEqual(gravam, self.ESCRITA_CORTEX)
+        for nome in self.ESCRITA_CORTEX:
+            self.assertTrue(politicas[nome].get("destino"), f"{nome}: a confirmacao precisa mostrar onde grava")
+        self.assertTrue(
+            politicas["escrever_memoria"].get("aviso"),
+            "escrever_memoria substitui a memoria de mesmo titulo: a confirmacao avisa",
+        )
+
+
+class TestConferenciaMcp(unittest.TestCase):
+    """O verificador com a forma MCP, num plugin ficticio (o servico `mcp.exemplo.test` nao existe)."""
+
+    NOME = "memoria-exemplo.blueprint.json"
+
+    def setUp(self) -> None:
+        self.base = {
+            "id": "memoria_exemplo",
+            "nome": "Memoria de exemplo",
+            "icone": "https://mcp.exemplo.test",
+            "site": "https://mcp.exemplo.test",
+            "descricao": "Memoria ficticia, so para o teste.",
+            "baseUrlConfig": "MEMORIA_EXEMPLO_URL",
+            "baseUrlOpcoes": ["https://mcp.exemplo.test"],
+            "segredos": {"chave": "MEMORIA_EXEMPLO_CHAVE"},
+            "mcp": {
+                "caminho": "/s/{segredo:chave}",
+                "prefixo": "memoria",
+                "ferramentas": {
+                    "ler_nota": {},
+                    "gravar_nota": {"escrita": True, "destino": ["pasta", "titulo"], "aviso": "Substitui a nota."},
+                },
+                "somenteListadas": False,
+                "usarInstrucoesDoServidor": True,
+            },
+            "experimental": True,
+            "versao": "1.0.0",
+            "versaoFormato": 1,
+            "compatibilidade": {"extensaoMinima": "3.71.142"},
+            "atualizacao": {
+                "url": "https://raw.githubusercontent.com/exemplo/exemplo/main/plugins/memoria-exemplo.blueprint.json"
+            },
+        }
+
+    def _problemas(self, plugin: dict) -> str:
+        return "\n".join(conferir(plugin, self.NOME))
+
+    def test_plugin_mcp_completo_passa(self) -> None:
+        self.assertEqual(tipo_do_plugin(self.base), "ferramenta")
+        self.assertEqual(mecanismos(self.base, "ferramenta"), {"comum", "mcp"})
+        self.assertEqual(conferir(self.base, self.NOME), [])
+
+    def test_execucao_e_campo_de_http(self) -> None:
+        self.base["execucao"] = [{"padrao": True, "passo": {"metodo": "GET", "caminho": "/x"}}]
+        self.assertIn("execucao: campo de http", self._problemas(self.base))
+
+    def test_instantaneo_e_campo_interno(self) -> None:
+        self.base["mcp"]["instantaneo"] = {"host": "mcp.exemplo.test", "protocolo": "2025-06-18", "ferramentas": []}
+        self.assertIn("mcp.instantaneo: campo interno", self._problemas(self.base))
+
+    def test_prefixo_ausente(self) -> None:
+        del self.base["mcp"]["prefixo"]
+        self.assertIn("mcp.prefixo: obrigatorio para mcp e ausente", self._problemas(self.base))
+
+    def test_campo_de_mcp_numa_ferramenta_http(self) -> None:
+        # Cada forma so usa os campos dela: o `mcp` aparece, e a ferramenta HTTP deixa de ser HTTP para o contrato.
+        http = _ler(PLUGINS / "buscar-juris-tjba.blueprint.json")
+        http["mcp"] = {"caminho": "/s", "prefixo": "juris"}
+        problemas = "\n".join(conferir(http, "buscar-juris-tjba.blueprint.json"))
+        self.assertIn("execucao: campo de http", problemas)
+        self.assertIn("inputSchema: campo de http", problemas)
+
+    def test_ferramenta_http_continua_sem_campos_de_mcp(self) -> None:
+        http = _ler(PLUGINS / "buscar-juris-tjba.blueprint.json")
+        self.assertEqual(mecanismos(http, "ferramenta"), {"comum", "http"})
 
 
 class TestRegraLimiteFerramentas(unittest.TestCase):

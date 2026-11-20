@@ -1,0 +1,62 @@
+{
+  "id": "inovajur_cortex",
+  "nome": "InovaJur Cortex",
+  "icone": "https://inovajurcortex.com",
+  "site": "https://inovajurcortex.com",
+  "descricao": "Memória da equipe no InovaJur Cortex: guias de triagem, orientações de minuta, decisões e entendimentos escritos pelos próprios usuários do Duo, organizados em córtex, áreas e projetos. Consulte antes de redigir ou decidir e siga a orientação encontrada. Busque com buscar_memorias e, se o trecho devolvido já responder, use-o; abra a memória inteira com ler_memoria só quando faltar parte. Uma busca vazia não prova que a orientação não existe: peça à pessoa que confira o córtex ativo no painel do serviço. Gravar, mover ou renomear altera a memória da equipe e sempre pede confirmação.",
+  "baseUrlConfig": "INOVAJUR_CORTEX_URL",
+  "baseUrlOpcoes": [
+    "https://inovajurcortex.com"
+  ],
+  "segredos": {
+    "chave": "INOVAJUR_CORTEX_CHAVE"
+  },
+  "mcp": {
+    "caminho": "/s/{segredo:chave}",
+    "prefixo": "cortex",
+    "somenteListadas": false,
+    "usarInstrucoesDoServidor": true,
+    "ferramentas": {
+      "listar_cortex": {},
+      "listar_areas": {},
+      "listar_projetos": {},
+      "listar_conteudo": {},
+      "listar_memorias": {},
+      "buscar_memorias": {},
+      "ler_memoria": {},
+      "escrever_memoria": {
+        "escrita": true,
+        "destino": [
+          "cortex_id",
+          "caminho",
+          "titulo"
+        ],
+        "aviso": "Se já existe memória com esse título no córtex, o conteúdo dela é substituído."
+      },
+      "mover": {
+        "escrita": true,
+        "destino": [
+          "cortex_id",
+          "destino"
+        ]
+      },
+      "renomear": {
+        "escrita": true,
+        "destino": [
+          "cortex_id",
+          "origem",
+          "novo_nome"
+        ]
+      }
+    }
+  },
+  "experimental": true,
+  "versao": "1.0.0",
+  "versaoFormato": 1,
+  "compatibilidade": {
+    "extensaoMinima": "3.71.147"
+  },
+  "atualizacao": {
+    "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/inovajur-cortex.blueprint.json"
+  }
+}

@@ -12,6 +12,14 @@ com extensão mínima **3.71.141**. As definições foram validadas pelos schema
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
 
+InovaJur Cortex **1.0.0** é o primeiro plugin de servidor MCP: a memória da equipe (guias de triagem, orientações de
+minuta, decisões e entendimentos, escritos pelos próprios usuários do Duo) vira ferramentas do Duo. É uma ferramenta
+com o bloco `mcp` no lugar de `execucao` (ver [Servidor MCP](#servidor-mcp)), marcada como experimental. A extensão
+mínima **3.71.147** é a versão que traz o suporte a MCP; confira o número quando ela for publicada e ajuste o JSON se ela
+sair com outro. Extensões sem o suporte recusam o plugin na importação com "JSON não reconhecido como plugin de provider
+ou ferramenta.", sem dizer qual versão ele exige: elas só reconhecem a ferramenta que traz `inputSchema` e `execucao`,
+e param antes de conferir a extensão mínima.
+
 ChatGPT web **1.5.0** faz o modelo ler aos poucos. `ferramentas.maxChamadasPorRodada: 4`: as chamadas além de quatro
 numa mesma resposta não rodam, e o modelo as pede de novo depois de analisar as outras (ajustável na tela do plugin, em
 "Ferramentas por vez"). `ferramentas.limiteInline` cai de 140 mil para 80 mil caracteres: com peças reais, o ChatGPT
@@ -288,13 +296,55 @@ o JSON para importar por arquivo:
 | Gemini web | [gemini-web.blueprint.json](gemini-web.blueprint.json) | [Importar Gemini](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json) |
 | Jurisprudência TJBA | [buscar-juris-tjba.blueprint.json](buscar-juris-tjba.blueprint.json) | [Importar TJBA](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-tjba.blueprint.json) |
 | Jurisprudência STJ/STF | [buscar-juris-stj-stf.blueprint.json](buscar-juris-stj-stf.blueprint.json) | [Importar STJ/STF](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/buscar-juris-stj-stf.blueprint.json) |
+| InovaJur Cortex (servidor MCP) | [inovajur-cortex.blueprint.json](inovajur-cortex.blueprint.json) | [Importar InovaJur Cortex](https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/inovajur-cortex.blueprint.json) |
 
 Os IDs foram preservados para reconhecer as instalações existentes. Quem já tem um
 desses plugins pode colar o Raw correspondente no campo **Link de atualização** do plugin
 e depois usar **Atualizar**.
 As ferramentas de jurisprudência mantêm as chaves de configuração `JURIS_VRGC_URL`,
-`JURIS_VRGC_API_KEY`, `FLOW_VRGC_URL` e `FLOW_VRGC_API_KEY`: os valores continuam locais.
+`JURIS_VRGC_API_KEY`, `FLOW_VRGC_URL` e `FLOW_VRGC_API_KEY`: os valores continuam locais. O InovaJur Cortex
+usa `INOVAJUR_CORTEX_URL` e `INOVAJUR_CORTEX_CHAVE`, também locais.
 Os providers web usam a sessão do usuário nos respectivos serviços.
+
+### Servidor MCP
+
+A blueprint de uma ferramenta tem duas formas, e nunca as duas juntas:
+
+- **HTTP** (`execucao` e `inputSchema`): a ferramenta que o próprio plugin descreve, como as de jurisprudência.
+- **MCP** (bloco `mcp`): um servidor MCP remoto. O Duo conecta, lê a lista de ferramentas que o servidor publica e as
+  oferece ao modelo como `<prefixo>__<nome no servidor>`. O plugin não traz o esquema das ferramentas: ele vem do
+  servidor, e a lista lida fica guardada no registro do plugin na extensão (`mcp.instantaneo`, que o motor preenche e
+  um arquivo publicado nunca leva).
+
+O endereço do serviço e a chave seguem como nas ferramentas HTTP: `baseUrlConfig` (com `baseUrlOpcoes` para o seletor)
+e `segredos`, no dispositivo, isolados por plugin. O bloco `mcp` diz o resto:
+
+| Campo | Obrigatório | O que faz |
+|---|---|---|
+| `caminho` | sim | O que vem depois do endereço do serviço. Começa com `/`, não termina com `/` (o serviço responde 404) e aceita `{segredo:nome}`: no Cortex a chave vai no caminho, `/s/{segredo:chave}`. |
+| `prefixo` | sim | Letra minúscula e até 16 letras, números ou `_` (o motor aceita mais; aqui é mais estrito para `<prefixo>__<nome>` caber nos 64 do nome de ferramenta). É a identidade do plugin na governança do Duo: as revisões, as marcas e a política que a pessoa definiu ficam presas a ele. **Não mude depois de publicado**: o teste compara com a `origin/main`. |
+| `headers` | não | Cabeçalhos extras; os valores aceitam `{segredo:nome}`. |
+| `ferramentas` | não | A política de cada ferramenta pelo nome no servidor: `exibir`, `escrita`, `descricao`, `destino` e `aviso`. |
+| `somenteListadas` | não | Com `true`, só entram as ferramentas citadas em `ferramentas`; as outras que o servidor listar ficam de fora. |
+| `usarInstrucoesDoServidor` | não | Usa as instruções que o servidor declara no prompt, só de fonte marcada como orientação e já revisada. Por padrão, usa. |
+
+Leitura e gravação: ferramenta com `escrita: true` grava ou altera dados no serviço e sempre pede confirmação, que mostra
+o texto inteiro, os valores dos argumentos listados em `destino` (onde a gravação cai) e o `aviso`. Ferramenta que o
+servidor lista e a blueprint não cita conta como escrita; o que o servidor declara sobre si (as anotações da
+ferramenta) só aumenta a cautela, nunca a tira. Como `{segredo:chave}` vai na URL, os endereços de `baseUrlOpcoes` são
+`https` e não terminam com `/`.
+
+Na aba Plugins do Duo, a pessoa preenche o endereço e a chave e usa **Conectar**. As ferramentas listadas entram
+desligadas e fora das conversas até serem revisadas (**Marcar como revisadas**), e uma que o servidor mude volta a pedir
+revisão. Marcar o servidor como **Fonte de orientação** faz o que ele devolve chegar ao modelo como orientação de
+trabalho, e não como dado a conferir; sem a marca, o resultado segue como dado.
+
+**InovaJur Cortex** (`inovajur-cortex.blueprint.json`): id `inovajur_cortex`, prefixo `cortex`, `experimental: true`.
+São dez ferramentas: sete de leitura (`listar_cortex`, `listar_areas`, `listar_projetos`, `listar_conteudo`,
+`listar_memorias`, `buscar_memorias` e `ler_memoria`) e três de gravação (`escrever_memoria`, `mover` e `renomear`),
+cada uma com o destino que a confirmação mostra. `escrever_memoria` avisa que o conteúdo substitui o da memória de mesmo
+título no córtex. A chave é pessoal e fica só no dispositivo: o repositório não tem chave, endereço de teste nem
+memória real, e os testes usam um servidor fictício (`https://mcp.exemplo.test`).
 
 ### Migrar uma instalação da publicação privada de revisão
 
@@ -327,8 +377,8 @@ py -m unittest discover -s plugins/testes -v
 O teste confere cada JSON contra `contrato/contrato-motor.json`, o contrato do motor do Duo, gerado no
 PJe✚R por `apps/extension/scripts/exportar-contrato-plugins.ts` (não edite à mão). O contrato diz,
 campo a campo, a quem ele se aplica (`escopo`: `comum` a todos, ou um mecanismo como `pagina`,
-`servidor`, `emulacao`, `nativo`, `formulario`, `quadros`, `sse`) e se precisa estar lá
-(`nivel`: `obrigatorio`, `recomendado`, `opcional`). O teste falha:
+`servidor`, `emulacao`, `nativo`, `formulario`, `quadros`, `sse`; na ferramenta, a forma `http` ou `mcp`) e se
+precisa estar lá (`nivel`: `obrigatorio`, `recomendado`, `opcional`). O teste falha:
 
 - com campo que o motor não conhece (erro de digitação, ou campo que saiu do motor);
 - com campo de um mecanismo que o plugin não usa (cópia errada de outro plugin);
@@ -337,7 +387,11 @@ campo a campo, a quem ele se aplica (`escopo`: `comum` a todos, ou um mecanismo 
   recomendado, ou um plugin passa a usar um, os outros param aqui até adotar o campo ou registrar
   por que ele não se aplica. Motivo com **PENDENTE** é lacuna conhecida, a resolver;
 - com o JSON mudado em relação à `origin/main` sem subir a `versao`, com o link de atualização
-  apontando para outro arquivo, ou com a versão atual ausente deste README.
+  apontando para outro arquivo, ou com a versão atual ausente deste README;
+- com plugin de servidor MCP fora das regras do bloco `mcp`: ferramenta com as duas formas ou nenhuma, `prefixo` fora
+  do formato ou diferente do publicado na `origin/main`, `caminho` sem `/` no começo ou com `/` no fim, `{segredo:x}`
+  que `segredos` não declara, endereço sem `https` ou com `/` no fim, chave de política desconhecida e texto de tela
+  em caracteres (a tela fala em tokens). No Cortex, só `escrever_memoria`, `mover` e `renomear` podem gravar.
 
 Quando o motor mudar o formato, gere o contrato de novo no PJe✚R e publique-o aqui junto.
 
