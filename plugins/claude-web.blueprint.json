@@ -8,13 +8,19 @@
     "origin": "https://claude.ai"
   },
   "modelosEndpoint": {
-    "caminho": "/api/bootstrap",
-    "itens": "account.memberships.0.organization.claude_ai_bootstrap_models_config",
-    "id": "model",
+    "caminho": "/api/organizations/{orgId}/model_selector/chat",
+    "itens": "model_selector_config.0.models",
+    "id": "id",
     "label": "name",
     "ignorarSe": [
-      "inactive"
-    ]
+      "disabled_reason"
+    ],
+    "niveis": {
+      "em": "thinking.effort_options",
+      "valor": "id",
+      "rotulo": "name",
+      "padrao": "recommended"
+    }
   },
   "contexto": [
     {
@@ -367,10 +373,10 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.3.2",
+  "versao": "1.4.0",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.146"
+    "extensaoMinima": "3.71.147"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json"

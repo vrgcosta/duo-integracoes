@@ -1478,10 +1478,78 @@
           "escopo": "servidor",
           "nivel": "obrigatorio"
         },
+        "modelosEndpoint.niveis": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "Onde, no item de cada modelo, ficam os niveis de raciocinio que a conta oferece para ele (ver DeclaracaoNiveis)."
+        },
+        "modelosEndpoint.niveis.campo": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "Nome antigo de `valor` (o blueprint do envio pela rede ja o usa)."
+        },
+        "modelosEndpoint.niveis.detalhe": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelosEndpoint.niveis.em": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.niveis.estatico": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Niveis por modelo declarados no blueprint, para o que a rede nao traz: id do modelo (aceita `*` como curinga) -> valores."
+        },
+        "modelosEndpoint.niveis.fonte": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "doc": "De onde vem a lista de niveis."
+        },
+        "modelosEndpoint.niveis.padrao": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelosEndpoint.niveis.rotulo": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelosEndpoint.niveis.tabela": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelosEndpoint.niveis.tabela.chave": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.niveis.tabela.chaveItem": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.niveis.tabela.em": {
+          "escopo": "servidor",
+          "nivel": "obrigatorio"
+        },
+        "modelosEndpoint.niveis.valor": {
+          "escopo": "servidor",
+          "nivel": "opcional"
+        },
+        "modelosEndpoint.sobrepor": {
+          "escopo": "servidor",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "O blueprint corrige o que a rede diz dos modelos (nome, ordem, esconder, padrao, niveis): ver SobreporModelos."
+        },
         "niveisPensamento": {
           "escopo": "comum",
           "nivel": "recomendado",
           "doc": "Niveis de raciocinio que o provedor oferece, na ordem."
+        },
+        "niveisPensamento.chave": {
+          "escopo": "comum",
+          "nivel": "opcional",
+          "doc": "O valor que o catalogo de modelos do provedor usa para este nivel, quando difere de `valor` (que e o que o Duo guarda e o blueprint converte ao enviar)."
         },
         "niveisPensamento.detalhe": {
           "escopo": "comum",
@@ -1556,6 +1624,10 @@
           "escopo": "pagina",
           "nivel": "opcional",
           "doc": "niveis de raciocinio que a UI do provedor oferece, na ordem."
+        },
+        "pagina.niveisPensamento.chave": {
+          "escopo": "pagina",
+          "nivel": "opcional"
         },
         "pagina.niveisPensamento.detalhe": {
           "escopo": "pagina",
@@ -1824,6 +1896,12 @@
           "escopo": "pagina",
           "nivel": "obrigatorio"
         },
+        "pagina.rede.envioDireto.modelos.sobrepor": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "O blueprint corrige o que o catalogo diz dos modelos listados (nome, ordem, esconder, padrao, niveis): ver SobreporModelos."
+        },
         "pagina.rede.envioDireto.modelos.valorRaciocinio": {
           "escopo": "pagina",
           "nivel": "obrigatorio"
@@ -2065,6 +2143,63 @@
           "escopo": "envioSocket",
           "nivel": "opcional",
           "doc": "Default: POST quando ha `corpo`, GET sem ele (GET com corpo e recusado na importacao)."
+        },
+        "pagina.rede.envioSocket.catalogo.niveis": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "os niveis de raciocinio que a conta oferece para o modelo, lidos do item (ver DeclaracaoNiveis)."
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.campo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "Nome antigo de `valor` (o blueprint do envio pela rede ja o usa)."
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.detalhe": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.em": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.estatico": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Niveis por modelo declarados no blueprint, para o que a rede nao traz: id do modelo (aceita `*` como curinga) -> valores."
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.fonte": {
+          "escopo": "envioSocket",
+          "nivel": "opcional",
+          "doc": "De onde vem a lista de niveis."
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.padrao": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.rotulo": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.tabela": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.tabela.chave": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.tabela.chaveItem": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.tabela.em": {
+          "escopo": "envioSocket",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.envioSocket.catalogo.niveis.valor": {
+          "escopo": "envioSocket",
+          "nivel": "opcional"
         },
         "pagina.rede.envioSocket.catalogo.opcoes": {
           "escopo": "envioSocket",
@@ -2409,6 +2544,63 @@
           "escopo": "pagina",
           "nivel": "obrigatorio",
           "doc": "A lista de modelos na carga (\"\" = a carga e a lista)."
+        },
+        "pagina.rede.formulario.catalogo.niveis": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "os niveis de raciocinio que a conta oferece para o modelo, lidos do item (ver DeclaracaoNiveis)."
+        },
+        "pagina.rede.formulario.catalogo.niveis.campo": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "Nome antigo de `valor` (o blueprint do envio pela rede ja o usa)."
+        },
+        "pagina.rede.formulario.catalogo.niveis.detalhe": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.catalogo.niveis.em": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.catalogo.niveis.estatico": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "livre": true,
+          "doc": "Niveis por modelo declarados no blueprint, para o que a rede nao traz: id do modelo (aceita `*` como curinga) -> valores."
+        },
+        "pagina.rede.formulario.catalogo.niveis.fonte": {
+          "escopo": "pagina",
+          "nivel": "opcional",
+          "doc": "De onde vem a lista de niveis."
+        },
+        "pagina.rede.formulario.catalogo.niveis.padrao": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.catalogo.niveis.rotulo": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.catalogo.niveis.tabela": {
+          "escopo": "pagina",
+          "nivel": "opcional"
+        },
+        "pagina.rede.formulario.catalogo.niveis.tabela.chave": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.catalogo.niveis.tabela.chaveItem": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.catalogo.niveis.tabela.em": {
+          "escopo": "pagina",
+          "nivel": "obrigatorio"
+        },
+        "pagina.rede.formulario.catalogo.niveis.valor": {
+          "escopo": "pagina",
+          "nivel": "opcional"
         },
         "pagina.rede.formulario.catalogo.nome": {
           "escopo": "pagina",

@@ -6,8 +6,8 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.5.0**, Claude web na **1.3.2** e Gemini web na
-**1.6.3**, os três com extensão mínima **3.71.146**; os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
+Formato **1**. ChatGPT web está na **1.5.0** (extensão mínima **3.71.146**), Claude web na **1.4.0** e Gemini web na
+**1.7.0** (os dois com extensão mínima **3.71.147**); os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
 com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
 verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
 serviços autenticados dos provedores.
@@ -19,6 +19,20 @@ mínima **3.71.147** é a versão que traz o suporte a MCP; confira o número qu
 sair com outro. Extensões sem o suporte recusam o plugin na importação com "JSON não reconhecido como plugin de provider
 ou ferramenta.", sem dizer qual versão ele exige: elas só reconhecem a ferramenta que traz `inputSchema` e `execucao`,
 e param antes de conferir a extensão mínima.
+
+Claude web **1.4.0** lê os níveis de raciocínio de cada modelo da própria conta. A lista de modelos passa a vir de
+`/api/organizations/{orgId}/model_selector/chat`, e o `modelosEndpoint.niveis` diz onde ficam os níveis de cada um
+(`thinking.effort_options`, com o nome e o "recomendado" que o claude.ai informa). A tela só oferece o que o modelo aceita
+(o Opus 4.6 e o Sonnet 4.6 não têm `xhigh`, e o Opus 4.5 só tem `low`, `medium` e `high`) e, no envio, o nível que o
+modelo não tem vai para o mais próximo. Conferido em 2026-11-20 numa conta Ultra, com a lista de 15 modelos. A extensão
+mínima passa para **3.71.147**, que traz a leitura de `niveis` (ver [Níveis de raciocínio, modelos e correções do
+blueprint](#níveis-de-raciocínio-modelos-e-correções-do-blueprint)).
+
+Gemini web **1.7.0** lê os níveis de raciocínio de cada modelo da própria conta. Eles vêm do mesmo RPC do catálogo
+(`otAQ7b`), numa tabela à parte (`carga[24][1]`) ligada ao modelo pelo número do modo (`item[17]`); cada nível do plugin
+ganha `chave` (1, 4 e 2 no Gemini: o Duo continua guardando 0, 1 e 2, e o blueprint converte ao enviar). O Auto e os
+modos fora do plano da conta ficam sem lista, e vale a escala do plugin. Conferido em 2026-11-20 numa conta Pro, com o
+4 Hydrogen e o Neon. A extensão mínima passa para **3.71.147**.
 
 ChatGPT web **1.5.0** faz o modelo ler aos poucos. `ferramentas.maxChamadasPorRodada: 4`: as chamadas além de quatro
 numa mesma resposta não rodam, e o modelo as pede de novo depois de analisar as outras (ajustável na tela do plugin, em
@@ -354,6 +368,120 @@ instalou da branch de revisão do repositório anterior deve colar o Raw corresp
 desta tabela no campo **Link de atualização** e depois usar **Atualizar**. O Duo mantém a origem
 aprovada localmente e não troca essa origem silenciosamente. Os nomes dos arquivos
 não levam datas para que os endereços sejam mantidos entre publicações.
+
+## Níveis de raciocínio, modelos e correções do blueprint
+
+Tudo o que é específico de um provedor mora no blueprint; o Duo só tem abstrações. Para os níveis de
+raciocínio (e, se preciso, para os modelos) isso vale assim: **o que o provedor informa pela rede vence a
+declaração fixa** (a rede fica sempre atualizada; o texto fixo envelhece a cada mudança do provedor), e o que a
+rede não der se resolve **só no blueprint**, que se atualiza sem nova versão da extensão. Vale a partir da
+extensão **3.71.147**.
+
+### Quem vence
+
+| O quê | Quem vence |
+| --- | --- |
+| Quais níveis o modelo oferece | A rede (`niveis`) |
+| Rótulo, descrição e qual é o recomendado | A rede; sem eles na resposta, os do `niveisPensamento` do blueprint |
+| Um nível novo que o provedor passa a oferecer | Aparece sozinho, no fim da escala, com o nome que a rede deu. Para enviá-lo, o corpo do blueprint precisa usar `{nivelPensamento}` |
+| O valor que o Duo guarda e envia e a ordem de força | O blueprint (`niveisPensamento`, da mais fraca para a mais forte) |
+| `estatico` | Só quando a rede não traz lista para aquele modelo |
+| `sobrepor` | Sempre, depois da rede e do `estatico` |
+| `fonte: "blueprint"` | Desliga a rede para os níveis do plugin: valem só `estatico` e `sobrepor` |
+
+Sem informação da conta para um modelo, vale a escala `niveisPensamento` do plugin inteira: o Duo nunca
+esconde um controle de que não tem certeza. O que a rede disser vale por modelo: a escala do chat, dos
+subagentes e das preferências segue o modelo escolhido, e no envio o nível pedido que o modelo não tem vai
+para o mais forte abaixo dele (senão o mais próximo acima).
+
+### Declarar de onde vêm os níveis: `niveis`
+
+Uma só declaração, igual em qualquer catálogo de modelos: `modelosEndpoint.niveis`,
+`pagina.rede.formulario.catalogo.niveis` e `pagina.rede.envioSocket.catalogo.niveis`. Só caminhos, sem código:
+
+| Campo | O que diz |
+| --- | --- |
+| `em` | Caminho da lista de níveis (no item do modelo; com `tabela`, dentro de cada entrada da tabela) |
+| `valor` | Caminho do valor do nível dentro de cada entrada da lista. Sem ele, a própria entrada é o nível (`campo` é o nome antigo) |
+| `rotulo`, `detalhe` | Caminhos do nome e da descrição de cada nível |
+| `padrao` | Caminho de um booleano "recomendado" em cada nível |
+| `tabela` | A lista não está no item, e sim numa tabela da mesma resposta: `{ "em": caminho da tabela, "chave": caminho da chave em cada entrada, "chaveItem": caminho da chave no item }` |
+| `estatico` | Níveis por modelo, para o que a rede não diz: `{ "id-do-modelo": ["low", "high"] }`, com `*` como curinga (o id exato vale mais que o curinga) |
+| `fonte` | `"rede"` (padrão) ou `"blueprint"` |
+
+Quando o provedor usa, no catálogo, outro valor que o do Duo, o nível do `niveisPensamento` ganha `chave` com o
+valor do catálogo (o `valor` continua o que o Duo guarda e o blueprint converte ao enviar).
+
+Dentro do item do modelo, o catálogo do Claude web:
+
+```json
+"modelosEndpoint": {
+  "caminho": "/api/organizations/{orgId}/model_selector/chat",
+  "itens": "model_selector_config.0.models",
+  "id": "id",
+  "label": "name",
+  "ignorarSe": ["disabled_reason"],
+  "niveis": { "em": "thinking.effort_options", "valor": "id", "rotulo": "name", "padrao": "recommended" }
+}
+```
+
+Em tabela à parte, ligada por chave, o catálogo do Gemini web (o número do modo está em `item[17]`, e a tabela de
+modos em `carga[24][1]`, com `[valorNativo, rótulo, descrição]` em cada nível):
+
+```json
+"catalogo": {
+  "rpc": "otAQ7b", "itens": "15", "id": "0", "rotulo": "2", "familia": "17",
+  "niveis": {
+    "em": "1", "valor": "0", "rotulo": "1", "detalhe": "2",
+    "tabela": { "em": "24.1", "chave": "0.1", "chaveItem": "17" }
+  }
+}
+```
+
+com `niveisPensamento` tendo `{ "valor": 0, "chave": 1 }`, `{ "valor": 1, "chave": 4 }` e `{ "valor": 2, "chave": 2 }`.
+
+O envio pela rede com catálogo próprio (`pagina.rede.envioDireto.modelos`) escolhe o modelo de raciocínio pelo
+catálogo e tem a sua forma (`niveis: { em, campo }` e `ordemNiveis`); a declaração acima é para os demais.
+
+### Quando o blueprint precisa vencer a rede: `sobrepor`
+
+O mesmo `sobrepor` em qualquer catálogo (`modelosEndpoint`, `formulario.catalogo`, `envioSocket.catalogo` e
+`envioDireto.modelos`), aplicado depois da rede. A chave é o id do modelo, com `*` como curinga (o id exato vale
+mais que o curinga):
+
+| Campo | O que faz |
+| --- | --- |
+| `label` | Nome do modelo no seletor |
+| `rotulo` | Outro nome aceito na conferência do modelo servido (o que já existia) |
+| `ocultar` | `true` tira o modelo da lista |
+| `ordem` | Número; o menor vem primeiro (sem ele, 0), e entre iguais vale a ordem da rede |
+| `padrao` | `true` marca o modelo padrão da conta e o leva ao topo |
+| `niveis` | Corrige os níveis do modelo, nesta ordem: `forcar` (substitui a lista inteira, mantendo o que a rede disse dos que ficam), `ocultar` (lista de valores), `rotulos` (`{ "valor": "nome" }`) e `padrao` (o único recomendado) |
+
+```json
+"sobrepor": {
+  "claude-opus-4-*": { "label": "Opus 4 (legado)", "ordem": 90, "niveis": { "ocultar": ["max"], "rotulos": { "high": "Alto" }, "padrao": "medium" } },
+  "claude-3-opus": { "ocultar": true },
+  "modelo-x": { "niveis": { "forcar": ["low", "high"] } }
+}
+```
+
+Esconder todos os níveis de um modelo o deixa sem lista (vale a escala do plugin). O nível que o blueprint
+esconde também não é enviado: o ajuste do envio já o enxerga como indisponível. No `envioDireto.modelos` o
+`sobrepor` de modelo vale na lista; o de `niveis` vale só na tela, porque ali a aba escolhe o nível pelo
+catálogo.
+
+### Quando o provedor muda o formato
+
+1. A tela do plugin mostra o aviso (por exemplo, "os modelos de raciocínio não trazem a lista de níveis em
+   `...`"). O envio pela rede explica pelo nome do campo declarado o que não bateu, e segue com o nível pedido
+   quando só a lista some.
+2. Corrija o caminho (`em`, `valor`, `tabela`...) no blueprint e publique; quem instalou atualiza pelo link.
+3. Se a rede não der o que o plugin precisa, `estatico` por modelo e, no limite, `fonte: "blueprint"` (desliga a
+   rede para os níveis deste plugin). Sempre sem nova versão da extensão.
+
+O blueprint que vence a rede nunca fica calado: nas preferências do plugin aparece "Este plugin corrige o que o
+provedor informa: ..." com os modelos corrigidos, e a linha dos níveis quando `fonte` é `"blueprint"`.
 
 ## Estrutura da pasta
 

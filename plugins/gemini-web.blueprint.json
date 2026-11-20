@@ -27,17 +27,20 @@
   "niveisPensamento": [
     {
       "valor": 0,
+      "chave": 1,
       "rotulo": "Baixo",
       "detalhe": "Rápido e eficiente"
     },
     {
       "valor": 1,
+      "chave": 4,
       "rotulo": "Médio",
       "detalhe": "Aprofundamento equilibrado",
       "padrao": true
     },
     {
       "valor": 2,
+      "chave": 2,
       "rotulo": "Alto",
       "detalhe": "Muito detalhado"
     }
@@ -728,6 +731,17 @@
           "rotulo": "2",
           "nome": "1",
           "familia": "17",
+          "niveis": {
+            "em": "1",
+            "valor": "0",
+            "rotulo": "1",
+            "detalhe": "2",
+            "tabela": {
+              "em": "24.1",
+              "chave": "0.1",
+              "chaveItem": "17"
+            }
+          },
           "sobrepor": {
             "95a4c0abcba24364": {
               "label": "4 Argon",
@@ -779,10 +793,10 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.6.3",
+  "versao": "1.7.0",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.146"
+    "extensaoMinima": "3.71.147"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json"
