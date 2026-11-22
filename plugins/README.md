@@ -6,19 +6,21 @@ consulta busca apenas o arquivo público no GitHub.
 
 ## Plugins disponíveis
 
-Formato **1**. ChatGPT web está na **1.5.0** (extensão mínima **3.71.146**), Claude web na **1.4.0** e Gemini web na
-**1.7.0** (os dois com extensão mínima **3.71.147**); os de jurisprudência estão na **1.0.4** (STJ/STF) e na **1.0.2** (TJBA),
-com extensão mínima **3.71.141**. As definições foram validadas pelos schemas e pelo
-verificador de compatibilidade do Duo nessa versão do código. Essa validação não executa os
-serviços autenticados dos provedores.
+Formato **1**. ChatGPT web está na **1.5.1**, Claude web na **1.4.1**, Gemini web na **1.7.1**,
+Microsoft 365 Copilot web na **1.0.2**, Copilot web na **1.1.2**, InovaJur Cortex na **1.0.1**,
+e os plugins de jurisprudência na **1.0.4** (STJ/STF) e **1.0.2** (TJBA). Todos declaram
+extensão mínima **3.71.141**. Esse valor uniforme não garante suporte a todos os recursos dos
+plugins: alguns recursos exigem versões mais novas da extensão. As definições foram validadas
+pelos schemas e pelo verificador de compatibilidade do Duo nessa versão do código. Essa
+validação não executa os serviços autenticados dos provedores.
 
 InovaJur Cortex **1.0.0** é o primeiro plugin de servidor MCP: a memória da equipe (guias de triagem, orientações de
 minuta, decisões e entendimentos, escritos pelos próprios usuários do Duo) vira ferramentas do Duo. É uma ferramenta
-com o bloco `mcp` no lugar de `execucao` (ver [Servidor MCP](#servidor-mcp)), marcada como experimental. A extensão
-mínima **3.71.147** é a versão que traz o suporte a MCP; confira o número quando ela for publicada e ajuste o JSON se ela
-sair com outro. Extensões sem o suporte recusam o plugin na importação com "JSON não reconhecido como plugin de provider
-ou ferramenta.", sem dizer qual versão ele exige: elas só reconhecem a ferramenta que traz `inputSchema` e `execucao`,
-e param antes de conferir a extensão mínima.
+com o bloco `mcp` no lugar de `execucao` (ver [Servidor MCP](#servidor-mcp)), marcada como experimental. Embora todos
+os plugins declarem extensão mínima **3.71.141**, o suporte a MCP só existe a partir da versão **3.71.147**. Extensões
+sem esse suporte recusam o plugin na importação com "JSON não reconhecido como plugin de provider ou ferramenta", sem
+dizer qual versão ele exige: elas só reconhecem a ferramenta que traz `inputSchema` e `execucao`, e param antes de
+conferir a extensão mínima.
 
 Claude web **1.4.0** lê os níveis de raciocínio de cada modelo da própria conta. A lista de modelos passa a vir de
 `/api/organizations/{orgId}/model_selector/chat`, e o `modelosEndpoint.niveis` diz onde ficam os níveis de cada um

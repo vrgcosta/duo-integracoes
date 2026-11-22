@@ -188,6 +188,11 @@ class TestPublicacao(unittest.TestCase):
                     f"atualizacao.url deve apontar para o proprio arquivo: {url}",
                 )
 
+    def test_extensao_minima_uniforme(self) -> None:
+        for arquivo in ARQUIVOS:
+            with self.subTest(plugin=arquivo.name):
+                self.assertEqual(_valor(_ler(arquivo), "compatibilidade.extensaoMinima"), "3.71.141")
+
     def test_versao_sobe_quando_o_json_muda(self) -> None:
         for arquivo in ARQUIVOS:
             with self.subTest(plugin=arquivo.name):

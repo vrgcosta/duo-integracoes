@@ -51,10 +51,10 @@
     }
   },
   "experimental": true,
-  "versao": "1.0.0",
+  "versao": "1.0.1",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.147"
+    "extensaoMinima": "3.71.141"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/inovajur-cortex.blueprint.json"

@@ -339,10 +339,10 @@
       }
     }
   },
-  "versao": "1.0.1",
+  "versao": "1.0.2",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.146"
+    "extensaoMinima": "3.71.141"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/copilot-m365-web.blueprint.json"

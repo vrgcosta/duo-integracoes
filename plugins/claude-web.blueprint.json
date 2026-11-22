@@ -373,10 +373,10 @@
       "detalhe": "consome os limites mais rápido"
     }
   ],
-  "versao": "1.4.0",
+  "versao": "1.4.1",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.147"
+    "extensaoMinima": "3.71.141"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/claude-web.blueprint.json"
