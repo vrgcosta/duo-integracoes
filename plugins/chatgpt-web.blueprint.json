@@ -650,10 +650,10 @@
       "detalhe": "consome a cota mais rápido"
     }
   ],
-  "versao": "1.5.0",
+  "versao": "1.5.1",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.146"
+    "extensaoMinima": "3.71.141"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/chatgpt-web.blueprint.json"

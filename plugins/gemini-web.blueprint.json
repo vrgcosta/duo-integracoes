@@ -793,10 +793,10 @@
     "limite": 6,
     "intervaloInicioMs": 1000
   },
-  "versao": "1.7.0",
+  "versao": "1.7.1",
   "versaoFormato": 1,
   "compatibilidade": {
-    "extensaoMinima": "3.71.147"
+    "extensaoMinima": "3.71.141"
   },
   "atualizacao": {
     "url": "https://raw.githubusercontent.com/vrgcosta/duo-integracoes/main/plugins/gemini-web.blueprint.json"
