@@ -7,7 +7,7 @@ consulta busca apenas o arquivo público no GitHub.
 ## Plugins disponíveis
 
 Formato **1**. ChatGPT web está na **1.5.1**, Claude web na **1.4.1**, Gemini web na **1.7.1**,
-Microsoft 365 Copilot web na **1.0.2**, Copilot web na **1.1.2**, InovaJur Cortex na **1.0.1**,
+Microsoft 365 Copilot web na **1.0.2**, Copilot web na **1.1.3**, InovaJur Cortex na **1.0.1**,
 e os plugins de jurisprudência na **1.0.4** (STJ/STF) e **1.0.2** (TJBA). Todos declaram
 extensão mínima **3.71.141**. Esse valor uniforme não garante suporte a todos os recursos dos
 plugins: alguns recursos exigem versões mais novas da extensão. As definições foram validadas
@@ -247,6 +247,16 @@ regra antiga já tirava e continua tirando. A regra com o espaço na frente (` <
 sobraria antes da âncora. Conferido em 2026-11-18 numa conta Copilot Chat (Básico): uma conversa aberta pelo
 Duo com o PDF anexado e uma pergunta de teste com busca na web feita na página. A leitura da conversa ao
 reabrir passa pela mesma limpeza, então as conversas antigas também aparecem sem a âncora.
+
+A **1.1.3** do Copilot acompanha a página nova do copilot.cloud.microsoft. Em 2026-11-25 o site passou a
+rodar em outro roteador (TanStack Start: `__TSR_ROUTER__`, `__m365TanstackClientBooted`) e deixou de publicar
+`__staticRouterHydrationData`, de onde o plugin lia o cenário do pedido (`sydneyWebScenario`). Sem ele, a
+aba recusava o envio ("a página do provedor não publicou cenario"), recarregava e recusava de novo, e o Duo
+mostrava "Sua sessão no Copilot expirou" com a conta logada. O cenário continua no loader da rota raiz, agora
+em `__TSR_ROUTER__.state.matches.0.loaderData.store.scenarioContext.sydneyWebScenario`. O resto do que o plugin
+usa não mudou: a credencial `https://substrate.office.com/sydney` segue saindo da página (no
+`m365Copilot/EventListener`), o catálogo (`GetAgentList`) devolve as opções de modelo e a leitura da conversa
+segue em NDJSON. Conferido numa conta Copilot Chat, sem enviar mensagem pela página.
 
 A **1.3.0** do Claude web lê a cota que o claude.ai informa ao fim de cada resposta
 (`stream.limite`, evento `message_limit`): vale a janela mais usada (5 horas ou 7 dias), em
